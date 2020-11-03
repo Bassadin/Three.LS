@@ -1,7 +1,12 @@
 import * as THREE from 'three'
+import { Camera, Mesh, MeshNormalMaterial, Renderer, Scene } from 'three'
 
-let camera, scene, renderer
-let geometry, material, mesh
+let camera: Camera;
+let scene: Scene;
+let geometry: THREE.BoxGeometry;
+let material: MeshNormalMaterial;
+let renderer: Renderer;
+let mesh: Mesh;
 
 init()
 animate()
