@@ -1,8 +1,4 @@
-# three-js-webpack
-
-Starter project for Three.JS. Configured with Webpack 4 as a bundler.
-
-Great and easy way to bootstrap your Three.JS project.
+# Three.js HFU example
 
 ## Development
 
