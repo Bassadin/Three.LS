@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { Camera, Mesh, MeshNormalMaterial, Renderer, Scene } from 'three'
+import { Camera, Clock, Mesh, MeshNormalMaterial, Renderer, Scene } from 'three'
 
 let camera: Camera
 let scene: Scene
@@ -7,6 +7,8 @@ let geometry: THREE.BoxGeometry
 let material: MeshNormalMaterial
 let renderer: Renderer
 let mesh: Mesh
+
+let clock: Clock = new THREE.Clock()
 
 init()
 animate()
@@ -35,9 +37,13 @@ function init() {
 
 function animate() {
     requestAnimationFrame(animate)
+    let delta: number = clock.getDelta()
 
-    mesh.rotation.x += 0.01
-    mesh.rotation.y += 0.02
+    mesh.rotation.y += 1 * delta
+    mesh.rotation.x += 0.8 * delta
+
+    mesh.position.y = 0.35 * Math.sin(1.3 * clock.getElapsedTime())
+    mesh.position.x = 0.5 * Math.cos(1.3 * clock.getElapsedTime())
 
     renderer.render(scene, camera)
 }
