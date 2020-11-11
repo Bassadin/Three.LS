@@ -1,39 +1,62 @@
 import * as THREE from 'three'
 import { Clock, Renderer, Scene, Vector3 } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { Turtle } from './Turtle' //Warum braucht es das? Bei LSystem gehts doch auch...
+import { Rule } from './Rule'
+import { LSystem } from './LSystem'
+import { Utils } from './Utils'
 
 let camera: THREE.PerspectiveCamera
 let scene: Scene
 let renderer: Renderer
 let line: THREE.Line
 let controls: OrbitControls
-
 let clock: Clock = new THREE.Clock()
 
-let current: String = 'ABBB'
-let count: number = 0
-let generationIterations: number = 3
+//L System stuff
+let generations: number = 2
+let ruleset: Rule[] = []
 
-function makeTree() {
-    let next: String[] = []
+// Square
+// ruleset.push(new Rule('F', 'F[F]-F+F[--F]+F-F'))
+// let lsys: LSystem = new LSystem('F-F-F-F', ruleset)
+// for (let i: number = 0; i < generations; i++) {
+//     lsys.generate()
+//     console.log(lsys.getSentence())
+// }
+// let turtle: Turtle = new Turtle(lsys.getSentence(), 0.5, Math.PI / 2)
 
-    for (let index = 0; index < current.length; index++) {
-        let c: String = current[index]
+// Triangle
+// ruleset.push(new Rule('F', 'F--F--F--G'))
+// ruleset.push(new Rule('G', 'GG'))
+// let lsys: LSystem = new LSystem('F--F--F', ruleset)
+// for (let i: number = 0; i < generations; i++) {
+//     lsys.generate()
+//     console.log(lsys.getSentence())
+// }
+// let turtle: Turtle = new Turtle(lsys.getSentence(), 0.5, (2 * Math.PI) / 3)
 
-        if (c === 'A') next.push('ABA')
-        else if (c === 'B') next.push('BBB')
-    }
+// Tree
+// ruleset.push(new Rule('F', 'FF+[+F-F-F]-[-F+F+F]'))
+// let lsys: LSystem = new LSystem('F', ruleset)
+// for (let i: number = 0; i < generations; i++) {
+//     lsys.generate()
+//     console.log(lsys.getSentence())
+// }
+// let turtle: Turtle = new Turtle(
+//     lsys.getSentence(),
+//     0.5,
+//     Utils.degreesToRadians(25)
+// )
 
-    current = next.join('')
-    count++
-    console.log('Generation ' + count + ': ' + current)
+//Debugging
+ruleset.push(new Rule('F', 'F[F]-F+F[--F]+F-F'))
+let lsys: LSystem = new LSystem('F-F-F-F', ruleset)
+for (let i: number = 0; i < generations; i++) {
+    lsys.generate()
+    console.log(lsys.getSentence())
 }
-
-console.log('Generation ' + count + ': ' + current)
-
-for (let index = 0; index < generationIterations; index++) {
-    makeTree()
-}
+let turtle: Turtle = new Turtle(lsys.getSentence(), 0.5, Math.PI / 2)
 
 init()
 animate()
@@ -56,39 +79,8 @@ function init() {
 
     scene = new THREE.Scene()
 
-    //create a blue LineBasicMaterial
-    const material: THREE.LineBasicMaterial = new THREE.LineBasicMaterial({
-        color: 0xffffff,
-        linewidth: 100,
-        linecap: 'round',
-        linejoin: 'round',
-    })
+    turtle.render(scene)
 
-    const points: Vector3[] = []
-
-    let startPoint: Vector3 = new Vector3(0, -4, 0)
-
-    points.push(startPoint)
-
-    let lastY: number = startPoint.y
-    let lastX: number = startPoint.x
-
-    for (let index = 0; index < current.length; index++) {
-        lastY += 8 / current.length
-        if (current[index] === 'A') {
-            lastX += 8 / current.length
-        } else if (current[index] === 'B') {
-            lastX -= 7 / current.length
-        }
-        points.push(new THREE.Vector3(lastX, lastY, 0))
-    }
-
-    console.log('Points', points)
-    const geometry = new THREE.BufferGeometry().setFromPoints(points)
-
-    line = new THREE.Line(geometry, material)
-
-    scene.add(line)
     renderer.render(scene, camera)
 
     window.addEventListener('resize', onWindowResize, false)
@@ -96,9 +88,7 @@ function init() {
 
 function animate() {
     requestAnimationFrame(animate)
-
     controls.update()
-
     renderer.render(scene, camera)
 }
 

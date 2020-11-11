@@ -1,8 +1,8 @@
-class Rule {
-    a: String
-    b: String
+export class Rule {
+    a: string
+    b: string
 
-    constructor(a_: String, b_: String) {
+    constructor(a_: string, b_: string) {
         if (a_.length != 1) {
             throw new Error('a must be 1 character')
         }
@@ -10,11 +10,11 @@ class Rule {
         this.b = b_
     }
 
-    getA(): String {
+    getA(): string {
         return this.a
     }
 
-    getB(): String {
+    getB(): string {
         return this.b
     }
 }
