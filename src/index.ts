@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { Clock, Renderer, Scene, Vector3 } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { Turtle } from './Turtle' //Warum braucht es das? Bei LSystem gehts doch auch...
+import { Turtle } from './Turtle'
 import { Rule } from './Rule'
 import { LSystem } from './LSystem'
 import { Utils } from './Utils'

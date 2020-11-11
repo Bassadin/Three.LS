@@ -1,7 +1,6 @@
 import * as THREE from 'three'
 import { Vector3 } from 'three'
-import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline'
-import { Utils } from './Utils'
+import { MeshLine, MeshLineMaterial } from 'three.meshline'
 
 export class Turtle {
     instructionString: string
