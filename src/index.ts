@@ -1,8 +1,8 @@
 import * as THREE from 'three'
-import { Camera, Clock, Mesh, MeshNormalMaterial, Renderer, Scene} from 'three'
-import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
+import { Clock, Renderer, Scene, Vector3 } from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
-let camera: Camera
+let camera: THREE.PerspectiveCamera
 let scene: Scene
 let renderer: Renderer
 let line: THREE.Line
@@ -10,91 +10,101 @@ let controls: OrbitControls
 
 let clock: Clock = new THREE.Clock()
 
-let current: String = "A"
+let current: String = 'ABBB'
 let count: number = 0
+let generationIterations: number = 3
 
 function makeTree() {
-    let next: String[] = [];
+    let next: String[] = []
 
     for (let index = 0; index < current.length; index++) {
         let c: String = current[index]
-        
-        if(c === 'A')
-            next.push("ABA")
-        else if(c === 'B')
-            next.push("BBB")
+
+        if (c === 'A') next.push('ABA')
+        else if (c === 'B') next.push('BBB')
     }
 
-    current = next.join("");
-    count++;
-    console.log("Generation " + count + ": " + current)
+    current = next.join('')
+    count++
+    console.log('Generation ' + count + ': ' + current)
 }
 
-function randomNumber(min: number, max: number) {  
-    return Math.random() * (max - min) + min; 
-}
+console.log('Generation ' + count + ': ' + current)
 
-console.log("Generation " + count + ": " + current)
-
-for (let index = 0; index < 3; index++) {
-    makeTree();
+for (let index = 0; index < generationIterations; index++) {
+    makeTree()
 }
 
 init()
 animate()
 
 function init() {
-    renderer = new THREE.WebGLRenderer();
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    document.body.appendChild( renderer.domElement );
+    renderer = new THREE.WebGLRenderer()
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    document.body.appendChild(renderer.domElement)
 
-    camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+    camera = new THREE.PerspectiveCamera(
+        50,
+        window.innerWidth / window.innerHeight,
+        1,
+        10000
+    )
 
-    controls = new OrbitControls( camera, renderer.domElement );
-    camera.position.set( 0, 10, 10 );
-    controls.update();
+    controls = new OrbitControls(camera, renderer.domElement)
+    camera.position.set(0, 0, 10)
+    controls.update()
 
-    scene = new THREE.Scene();
+    scene = new THREE.Scene()
 
     //create a blue LineBasicMaterial
-    const material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+    const material: THREE.LineBasicMaterial = new THREE.LineBasicMaterial({
+        color: 0xffffff,
+        linewidth: 100,
+        linecap: 'round',
+        linejoin: 'round',
+    })
 
-    const points = [];
-    let aTemp = 0;
-    let bTemp = 0;
+    const points: Vector3[] = []
+
+    let startPoint: Vector3 = new Vector3(0, -4, 0)
+
+    points.push(startPoint)
+
+    let lastY: number = startPoint.y
+    let lastX: number = startPoint.x
 
     for (let index = 0; index < current.length; index++) {
-        if(current[index] === "A") {
-            points.push( new THREE.Vector3( 0, aTemp, 0 ) );
-            aTemp = randomNumber(1, 4)
-            points.push( new THREE.Vector3( aTemp, 0, randomNumber(1, 7) ) );
+        lastY += 8 / current.length
+        if (current[index] === 'A') {
+            lastX += 8 / current.length
+        } else if (current[index] === 'B') {
+            lastX -= 7 / current.length
         }
-        else if(current[index] === "B") {
-            bTemp = randomNumber(1, 4)
-            points.push( new THREE.Vector3( 0, bTemp, 0 ) );
-            points.push( new THREE.Vector3( randomNumber(1, 5), 0, bTemp ) );
-        }
+        points.push(new THREE.Vector3(lastX, lastY, 0))
     }
 
-    const geometry = new THREE.BufferGeometry().setFromPoints( points );
+    console.log('Points', points)
+    const geometry = new THREE.BufferGeometry().setFromPoints(points)
 
-    line = new THREE.Line( geometry, material );
+    line = new THREE.Line(geometry, material)
 
-    scene.add( line );
-    renderer.render( scene, camera );
+    scene.add(line)
+    renderer.render(scene, camera)
+
+    window.addEventListener('resize', onWindowResize, false)
 }
 
 function animate() {
     requestAnimationFrame(animate)
-    let delta: number = clock.getDelta()
 
-    controls.update();
+    controls.update()
 
     renderer.render(scene, camera)
+}
 
-    // mesh.rotation.y += 1 * delta
-    // mesh.rotation.x += 0.8 * delta
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight
+    camera.updateProjectionMatrix()
 
-    // mesh.position.y = 0.35 * Math.sin(1.3 * clock.getElapsedTime())
-    // mesh.position.x = 0.5 * Math.cos(1.3 * clock.getElapsedTime())
+    renderer.setSize(window.innerWidth, window.innerHeight)
 }
