@@ -37,26 +37,26 @@ let ruleset: Rule[] = []
 // let turtle: Turtle = new Turtle(lsys.getSentence(), 0.5, (2 * Math.PI) / 3)
 
 // Tree
-// ruleset.push(new Rule('F', 'FF+[+F-F-F]-[-F+F+F]'))
-// let lsys: LSystem = new LSystem('F', ruleset)
-// for (let i: number = 0; i < generations; i++) {
-//     lsys.generate()
-//     console.log(lsys.getSentence())
-// }
-// let turtle: Turtle = new Turtle(
-//     lsys.getSentence(),
-//     0.5,
-//     Utils.degreesToRadians(25)
-// )
-
-//Debugging
-ruleset.push(new Rule('F', 'F[F]-F+F[--F]+F-F'))
-let lsys: LSystem = new LSystem('F-F-F-F', ruleset)
+ruleset.push(new Rule('F', 'FF+[+F-F-F]-[-F+F+F]'))
+let lsys: LSystem = new LSystem('F', ruleset)
 for (let i: number = 0; i < generations; i++) {
     lsys.generate()
     console.log(lsys.getSentence())
 }
-let turtle: Turtle = new Turtle(lsys.getSentence(), 0.5, Math.PI / 2)
+let turtle: Turtle = new Turtle(
+    lsys.getSentence(),
+    0.5,
+    Utils.degreesToRadians(25)
+)
+
+//Debugging
+// ruleset.push(new Rule('F', 'F[F]-F+F[--F]+F-F'))
+// let lsys: LSystem = new LSystem('F-F-F-F', ruleset)
+// for (let i: number = 0; i < generations; i++) {
+//     lsys.generate()
+//     console.log(lsys.getSentence())
+// }
+// let turtle: Turtle = new Turtle(lsys.getSentence(), 0.5, Math.PI / 2)
 
 init()
 animate()
