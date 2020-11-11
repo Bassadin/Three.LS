@@ -58,7 +58,9 @@ export class Turtle {
                     this.currentRotation -= this.rotationStepSize
                     break
                 case '[': //Save state
-                    this.positionSaveStateArray.push(this.currentPosition.clone())
+                    this.positionSaveStateArray.push(
+                        this.currentPosition.clone()
+                    )
                     this.rotationSaveStateArray.push(this.currentRotation)
                     break
                 case ']': //Load state

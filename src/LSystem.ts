@@ -14,7 +14,7 @@ export class LSystem {
 
     // Generate the next generation
     generate() {
-        let nextGenerationString: string = ""
+        let nextGenerationString: string = ''
         for (let i: number = 0; i < this.sentence.length; i++) {
             let currentCharacter: string = this.sentence.charAt(i)
             let replace: string = currentCharacter

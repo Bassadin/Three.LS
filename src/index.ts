@@ -45,8 +45,8 @@ for (let i: number = 0; i < generations; i++) {
 }
 let turtle: Turtle = new Turtle(
     lsys.getSentence(),
-    0.5,
-    Utils.degreesToRadians(25)
+    0.3,
+    Utils.DegreesToRadians(25)
 )
 
 //Debugging
