@@ -30,7 +30,7 @@ export class Turtle {
         //Set the line material
         const material = new MeshLineMaterial({
             color: 0xffffff,
-            lineWidth: 0.02,
+            lineWidth: 0.05,
         })
 
         for (let i: number = 0; i < this.instructionString.length; i++) {
