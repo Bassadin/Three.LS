@@ -45,7 +45,7 @@ for (let i: number = 0; i < generations; i++) {
 }
 let turtle: Turtle = new Turtle(
     lsys.getSentence(),
-    0.3,
+    0.2,
     Utils.DegreesToRadians(25)
 )
 
@@ -74,7 +74,7 @@ function init() {
     )
 
     controls = new OrbitControls(camera, renderer.domElement)
-    camera.position.set(0, 0, 10)
+    camera.position.set(0, 0, 15)
     controls.update()
 
     scene = new THREE.Scene()

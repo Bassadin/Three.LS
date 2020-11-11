@@ -12,7 +12,7 @@ export class Turtle {
     private rotationSaveStateArray: number[] = []
 
     //Position
-    private currentPosition: Vector3 = new Vector3(0, -3, 0)
+    private currentPosition: Vector3 = new Vector3(0, -4, 0)
     private positionSaveStateArray: Vector3[] = []
 
     constructor(
