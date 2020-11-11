@@ -10,11 +10,11 @@ export class Turtle {
 
     //Rotation
     private currentRotation: number = 0
-    private rotationSaveState: number
+    private rotationSaveStateArray: number[] = []
 
     //Position
     private currentPosition: Vector3 = new Vector3(0, -3, 0)
-    private positionSaveState: Vector3
+    private positionSaveStateArray: Vector3[] = []
 
     constructor(
         instructionString: string,
@@ -58,17 +58,17 @@ export class Turtle {
                     this.currentRotation -= this.rotationStepSize
                     break
                 case '[': //Save state
-                    this.positionSaveState = this.currentPosition.clone()
-                    this.rotationSaveState = this.currentRotation
+                    this.positionSaveStateArray.push(this.currentPosition.clone())
+                    this.rotationSaveStateArray.push(this.currentRotation)
                     break
                 case ']': //Load state
-                    if (!this.positionSaveState) {
+                    if (this.positionSaveStateArray.length == 0) {
                         throw new Error(
                             'Cannot load state before it has been written at least once'
                         )
                     }
-                    this.currentPosition = this.positionSaveState.clone()
-                    this.currentRotation = this.rotationSaveState
+                    this.currentPosition = this.positionSaveStateArray.pop()
+                    this.currentRotation = this.rotationSaveStateArray.pop()
                     break
                 default:
                     break

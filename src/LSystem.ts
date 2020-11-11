@@ -6,36 +6,29 @@ export class LSystem {
     generation: number // Keeping track of the generation #
 
     // Construct an LSystem with a startin sentence and a ruleset
-    constructor(axiom: string, r: Rule[]) {
+    constructor(axiom: string, rule: Rule[]) {
         this.sentence = axiom
-        this.ruleset = r
+        this.ruleset = rule
         this.generation = 0
     }
 
     // Generate the next generation
     generate() {
-        // An empty StringBuffer that we will fill
-        let nextgen: string = ""
-        // For every character in the sentence
+        let nextGenerationString: string = ""
         for (let i: number = 0; i < this.sentence.length; i++) {
-            // What is the character
-            let curr: string = this.sentence.charAt(i)
-            // We will replace it with itself unless it matches one of our rules
-            let replace: string = '' + curr
-            // Check every rule
+            let currentCharacter: string = this.sentence.charAt(i)
+            let replace: string = currentCharacter
             for (let j: number = 0; j < this.ruleset.length; j++) {
-                let a: string = this.ruleset[j].getA()
-                // if we match the Rule, get the replacement string out of the Rule
-                if (a == curr) {
+                if (this.ruleset[j].getA() == currentCharacter) {
                     replace = this.ruleset[j].getB()
                     break
                 }
             }
             // Append replacement string
-            nextgen = nextgen.concat(replace)
+            nextGenerationString = nextGenerationString.concat(replace)
         }
         // Replace sentence
-        this.sentence = nextgen.toString()
+        this.sentence = nextGenerationString.toString()
         // Increment generation
         this.generation++
     }
