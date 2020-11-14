@@ -1,9 +1,9 @@
 import { Rule } from './Rule'
 
 export class LSystem {
-    sentence: string // The sentence (a string)
-    ruleset: Rule[] // The ruleset (an array of Rule objects)
-    generation: number // Keeping track of the generation #
+    private sentence: string // The sentence (a string)
+    private ruleset: Rule[] // The ruleset (an array of Rule objects)
+    private generation: number // Keeping track of the generation #
 
     // Construct an LSystem with a startin sentence and a ruleset
     constructor(axiom: string, rule: Rule[]) {
@@ -14,9 +14,9 @@ export class LSystem {
 
     // Generate the next generation
     generate() {
-        let nextGenerationString: string = ''
+        let nextGenerationString: string[] = []
         for (let i: number = 0; i < this.sentence.length; i++) {
-            let currentCharacter: string = this.sentence.charAt(i)
+            let currentCharacter: string = this.sentence[i]
             let replace: string = currentCharacter
             for (let j: number = 0; j < this.ruleset.length; j++) {
                 if (this.ruleset[j].getA() == currentCharacter) {
@@ -25,10 +25,10 @@ export class LSystem {
                 }
             }
             // Append replacement string
-            nextGenerationString = nextGenerationString.concat(replace)
+            nextGenerationString.push(replace)
         }
         // Replace sentence
-        this.sentence = nextGenerationString.toString()
+        this.sentence = nextGenerationString.join()
         // Increment generation
         this.generation++
     }

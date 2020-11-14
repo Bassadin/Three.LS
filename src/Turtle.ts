@@ -3,9 +3,9 @@ import { Vector3 } from 'three'
 import { MeshLine, MeshLineMaterial } from 'three.meshline'
 
 export class Turtle {
-    instructionString: string
-    stepLength: number
-    rotationStepSize: number //In radians
+    private instructionString: string
+    private stepLength: number
+    private rotationStepSize: number //In radians
 
     //Rotation
     private currentRotation: number = 0

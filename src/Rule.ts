@@ -1,6 +1,6 @@
 export class Rule {
-    a: string
-    b: string
+    private a: string
+    private b: string
 
     constructor(a_: string, b_: string) {
         if (a_.length != 1) {
