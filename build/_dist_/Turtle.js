@@ -16,14 +16,18 @@ export class Turtle {
       color: 16777215,
       lineWidth: 0.05
     });
-    let points = [];
     for (let i = 0; i < this.instructionString.length; i++) {
       let currentCharacter = this.instructionString.charAt(i);
       switch (currentCharacter) {
         case "F":
+          let points = [];
           points.push(this.currentPosition.clone());
           this.move();
           points.push(this.currentPosition.clone());
+          const line = new MeshLine();
+          line.setPoints(points);
+          const mesh = new THREE.Mesh(line, material);
+          scene.add(mesh);
           break;
         case "G":
           this.move();
@@ -49,10 +53,6 @@ export class Turtle {
           break;
       }
     }
-    const line = new MeshLine();
-    line.setPoints(points);
-    const mesh = new THREE.Mesh(line, material);
-    scene.add(mesh);
   }
   move() {
     let newPosition = this.currentPosition.clone();

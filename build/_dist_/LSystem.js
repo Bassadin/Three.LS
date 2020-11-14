@@ -17,7 +17,7 @@ export class LSystem {
       }
       nextGenerationString.push(replace);
     }
-    this.sentence = nextGenerationString.join();
+    this.sentence = nextGenerationString.join("");
     this.generation++;
   }
   getSentence() {
