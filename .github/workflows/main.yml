@@ -19,9 +19,6 @@ jobs:
 
       - name: Install packages
         run: npm install --also=dev
-          
-      - name: Install snowpack
-        run: npm i -g snowpack
         
       - name: Run snowpack build
-        run: snowpack build --config snowpack_gh_pages.config.js
+        run: npx snowpack build --config snowpack_gh_pages.config.js
