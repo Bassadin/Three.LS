@@ -18,9 +18,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Install packages
-        run:
-          npm install --also=dev
-          npm i -g snowpack
+        run: npm install --also=dev
+          
+      - name: Install snowpack
+        run: npm i -g snowpack
         
       - name: Run snowpack build
         run: snowpack build --config snowpack_gh_pages.config.js
