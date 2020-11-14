@@ -14,7 +14,7 @@ let controls: OrbitControls
 let clock: Clock = new THREE.Clock()
 
 //L System stuff
-let generations: number = 4
+let generations: number = 3
 let ruleset: Rule[] = []
 
 // Square
@@ -48,6 +48,19 @@ let turtle: Turtle = new Turtle(
     0.2,
     Utils.DegreesToRadians(25)
 )
+
+// Some Plant
+// ruleset.push(new Rule('F', 'F[+F]F[-F][F]'))
+// let lsys: LSystem = new LSystem('F', ruleset)
+// for (let i: number = 0; i < generations; i++) {
+//     lsys.generate()
+//     console.log(lsys.getSentence())
+// }
+// let turtle: Turtle = new Turtle(
+//     lsys.getSentence(),
+//     0.2,
+//     Utils.DegreesToRadians(20)
+// )
 
 //Debugging
 // ruleset.push(new Rule('F', 'F+[F]--[F]+'))
