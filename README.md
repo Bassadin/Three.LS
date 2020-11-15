@@ -9,31 +9,6 @@ git clone https://github.com/aakatev/three-js-webpack.git
 npm i
 ```
 
-Start webpack development server:
+## GitHub Pages Version
 
-```bash
-npm run start
-```
-
-Webpack configuration is located in [`webpack.config.js`](webpack.config.js).
-
-## Deployment on GitHub Pages
-
-**Works with any other static website hosting too.**
-
-Bundle your code, and push it in your repo:
-
-```bash
-npm run build
-git add
-git commit -m"Deploying on GitHub Pages"
-git push
-```
-
-## Extra
-
-The code can be formated with prettier:
-
-```bash
-npm run format
-```
+https://vads.github.io/DaVerMePro-MIB5-Three.js/build/
