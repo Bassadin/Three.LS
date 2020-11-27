@@ -12,7 +12,7 @@ export class Turtle {
     private rotationSaveStateArray: number[] = []
 
     //Position
-    private currentPosition: Vector3 = new Vector3(0, -4, 0)
+    private currentPosition: Vector3 = new Vector3(0, -5, 0)
     private positionSaveStateArray: Vector3[] = []
 
     constructor(
@@ -51,10 +51,10 @@ export class Turtle {
                     this.move()
                     break
                 case '+': //Increase direction rotation
-                    this.currentRotation += this.rotationStepSize
+                    this.currentRotation -= this.rotationStepSize
                     break
                 case '-': //Decrease direction rotation
-                    this.currentRotation -= this.rotationStepSize
+                    this.currentRotation += this.rotationStepSize
                     break
                 case '[': //Save state
                     this.positionSaveStateArray.push(
