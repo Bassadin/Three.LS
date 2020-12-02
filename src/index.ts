@@ -17,6 +17,41 @@ let clock: Clock = new THREE.Clock()
 let generations: number = 3
 let ruleset: Rule[] = []
 
+// Get Btns
+const btnAdd = document.querySelector('#btnAddRule')
+
+// Get neccessary Elements
+const ruleWrapper = document.querySelector('#ruleWrapper')
+
+// Eventlisteners for Btns
+btnAdd.addEventListener('click', addNewRuleField)
+
+// Functions for Eventlisteners
+function addNewRuleField() {
+    ruleWrapper.insertAdjacentHTML('beforeend', '<div class="interface__input-inner-wrapper"><label>Regel</label><input class="interface__input-field rules" type="text"></div>');
+    ruleWrapper.lastElementChild.classList.add("mb-100")
+    console.log(ruleWrapper.lastChild);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Square
 // ruleset.push(new Rule('F', 'F[F]-F+F[--F]+F-F'))
 // let lsys: LSystem = new LSystem('F-F-F-F', ruleset)

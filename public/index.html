@@ -9,6 +9,36 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div class="interface__wrapper">
+      <h2 class="interface__heading">Einstellungen</h2>
+      <div class="interface__input-wrapper">
+        <label>Startaxiom</label>
+        <input class="interface__input-field" type="text" id="axiom">
+      </div>
+      <h3 class="interface__heading">Regeln</h3>
+      <div class="interface__btn-wrapper">
+        <button class="interface__btn" id="btnAddRule">+</button>
+        <button class="interface__btn" id="btnRemoveRule">-</button>
+      </div>
+      <div class="interface__input-wrapper" id="ruleWrapper">
+        <div class="interface__input-inner-wrapper mb-100">
+          <label>Regel</label>
+          <input class="interface__input-field rules" type="text">
+        </div>
+      </div>
+      <div class="interface__input-wrapper">
+        <label>Anzahl der Iterationen</label>
+        <input class="interface__input-field" type="number" id="countIterations">
+      </div>
+      <div class="interface__input-wrapper">
+        <label>Drehwinkel (Grad)</label>
+        <input class="interface__input-field" type="number" min="0" max="360" id="degrees">
+      </div>
+      <div class="interface__input-wrapper">
+        <label>Schrittlänge</label>
+        <input class="interface__input-field" type="number" id="steplength">
+      </div>
+    </div>
     <script type="module" src="_dist_/index.js"></script>
   </body>
 </html>
