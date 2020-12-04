@@ -10,25 +10,36 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div class="interface__wrapper">
-      <h2 class="interface__heading">Einstellungen</h2>
+      <h3 class="interface__sub-heading">Ausgangssatz</h3>
       <div class="interface__input-wrapper">
-        <label>Startaxiom</label>
-        <input class="interface__input-field" type="text" id="axiom">
-      </div>
-      <h3 class="interface__heading">Regeln</h3>
-      <div class="interface__btn-wrapper">
-        <button class="interface__btn" id="btnAddRule">+</button>
-        <button class="interface__btn" id="btnRemoveRule">-</button>
-      </div>
-      <div class="interface__input-wrapper" id="ruleWrapper">
-        <div class="interface__input-inner-wrapper mb-100">
-          <label>Regel</label>
-          <input class="interface__input-field rules" type="text">
+        <div class="interface__input-inner-wrapper">
+          <label>Satz</label>
+          <input class="interface__input-field" type="text" id="sentence">
         </div>
       </div>
       <div class="interface__input-wrapper">
+        <h3 class="interface__sub-heading">Regeln</h3>
+        <div class="interface__btn-wrapper">
+          <button class="interface__btn" id="btnAddRule">+</button>
+          <button class="interface__btn" id="btnRemoveRule">-</button>
+        </div>
+      </div>
+      <div class="interface__input-wrapper" id="rulesWrapper">
+        <div class="interface__rule-wrapper" id="count1">
+          <div class="interface__input-inner-wrapper">
+            <label>Axiom 1</label>
+            <input class="interface__input-field axioms" type="text" id="axiom1" maxlength="1">
+          </div>
+          <div class="interface__input-inner-wrapper">
+            <label>Regel 1</label>
+            <input class="interface__input-field rules" type="text" id="rule1">
+          </div>
+        </div>
+      </div>
+      <h3 class="interface__sub-heading">Einstellungen</h3>
+      <div class="interface__input-wrapper">
         <label>Anzahl der Iterationen</label>
-        <input class="interface__input-field" type="number" id="countIterations">
+        <input class="interface__input-field" type="number" id="countIterations" min="0">
       </div>
       <div class="interface__input-wrapper">
         <label>Drehwinkel (Grad)</label>
@@ -36,7 +47,14 @@
       </div>
       <div class="interface__input-wrapper">
         <label>Schrittlänge</label>
-        <input class="interface__input-field" type="number" id="steplength">
+        <input class="interface__input-field" type="number" id="steplength" min="0">
+      </div>
+      <div class="interface__input-wrapper">
+        <div class="interface__upload-wrapper">
+          <button class="interface__load-btn" id="btnUpload">Upload</button>
+          <button class="interface__load-btn" id="btnDownload">Download</button>
+        </div>
+        <button id="btnGenerate">Generieren</button>
       </div>
     </div>
     <script type="module" src="_dist_/index.js"></script>
