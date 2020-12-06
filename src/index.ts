@@ -15,7 +15,7 @@ let controls: OrbitControls
 let clock: Clock = new THREE.Clock()
 
 //L System stuff
-let generations: number = 2
+let generations: number = 4
 let ruleset: Rule[] = []
 
 // Square
@@ -35,7 +35,7 @@ let ruleset: Rule[] = []
 //     lsys.generate()
 //     console.log(lsys.getSentence())
 // }
-// let turtle: Turtle = new Turtle(lsys.getSentence(), 0.5, (2 * Math.PI) / 3)
+// let turtle: Turtle3D = new Turtle3D(lsys.getSentence(), 0.5, (2 * Math.PI) / 3)
 
 // Tree
 // ruleset.push(new Rule('F', 'FF+[+F-F-F]-[-F+F+F]'))
@@ -50,9 +50,7 @@ let ruleset: Rule[] = []
 //     Utils.DegreesToRadians(25)
 // )
 
-console.log(new Vector3(0,1,0).applyMatrix4(new THREE.Matrix4().makeRotationY(-Utils.DegreesToRadians(90))));
-
-// Box (3D Hilbert Curve)
+// // Box (3D Hilbert Curve)
 ruleset.push(new Rule('A', 'B-F+CFC+F-D&F∧D-F+&&CFC+F+B//'))
 ruleset.push(new Rule('B', 'A&F∧CFB∧F∧D∧∧-F-D∧|F∧B|FC∧F∧A//'))
 ruleset.push(new Rule('C', '|D∧|F∧B-F+C∧F∧A&&FA&F∧C+F+B∧F∧D//'))
@@ -64,7 +62,7 @@ for (let i: number = 0; i < generations; i++) {
 }
 let turtle: Turtle3D = new Turtle3D(
     lsys.getSentence(),
-    0.5,
+    0.35,
     Utils.DegreesToRadians(90)
 )
 

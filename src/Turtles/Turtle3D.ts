@@ -1,4 +1,4 @@
-import { Matrix3, Matrix4, Vector3, Mesh } from 'three'
+import { Matrix3, Matrix4, Vector3, Mesh, Quaternion } from 'three'
 import { MeshLine, MeshLineMaterial } from 'three.meshline'
 import { BaseTurtle } from './BaseTurtle'
 
@@ -11,8 +11,6 @@ export class Turtle3D extends BaseTurtle {
         })
 
         const pointsArray = this.pointsArray()
-
-        console.log(pointsArray)
 
         for (let i: number = 0; i < pointsArray.length; i++) {
             const line = new MeshLine()
@@ -44,50 +42,59 @@ export class Turtle3D extends BaseTurtle {
                     this.loadState()
                     break
                 case '+':
-                    this.currentRotation.applyMatrix4(
-                        new Matrix4().makeRotationZ(this.rotationStepSize)
+                    this.currentRotation.multiply(
+                        new Quaternion().setFromAxisAngle(
+                            new Vector3(0, 0, 1),
+                            this.rotationStepSize
+                        )
                     )
                     break
                 case '-':
-                    this.currentRotation.applyMatrix4(
-                        new Matrix4().makeRotationZ(-this.rotationStepSize)
+                    this.currentRotation.multiply(
+                        new Quaternion().setFromAxisAngle(
+                            new Vector3(0, 0, -1),
+                            this.rotationStepSize
+                        )
                     )
                     break
                 case '&':
-                    console.log('a &')
-                    console.log(this.currentRotation)
-                    this.currentRotation.applyMatrix4(
-                        new Matrix4().makeRotationY(this.rotationStepSize)
+                    this.currentRotation.multiply(
+                        new Quaternion().setFromAxisAngle(
+                            new Vector3(0, 1, 0),
+                            this.rotationStepSize
+                        )
                     )
-                    console.log(this.currentRotation)
-                    console.log('b &')
                     break
                 case '∧': //Achtung, ∧ (mathematisches UND) und nicht ^ :D
-                    console.log('a ∧')
-                    console.log(this.currentRotation)
-                    this.currentRotation.applyMatrix4(
-                        new Matrix4().makeRotationY(-this.rotationStepSize)
+                    this.currentRotation.multiply(
+                        new Quaternion().setFromAxisAngle(
+                            new Vector3(0, -1, 0),
+                            this.rotationStepSize
+                        )
                     )
-                    console.log(this.currentRotation)
-                    console.log('b ∧')
                     break
                 case '\\':
-                    console.log('a \\')
-                    console.log(this.currentRotation)
-                    this.currentRotation.applyMatrix4(
-                        new Matrix4().makeRotationX(this.rotationStepSize)
+                    this.currentRotation.multiply(
+                        new Quaternion().setFromAxisAngle(
+                            new Vector3(1, 0, 0),
+                            this.rotationStepSize
+                        )
                     )
-                    console.log(this.currentRotation)
-                    console.log('b \\')
                     break
                 case '/':
-                    this.currentRotation.applyMatrix4(
-                        new Matrix4().makeRotationX(-this.rotationStepSize)
+                    this.currentRotation.multiply(
+                        new Quaternion().setFromAxisAngle(
+                            new Vector3(-1, 0, 0),
+                            this.rotationStepSize
+                        )
                     )
                     break
                 case '|':
-                    this.currentRotation.applyMatrix4(
-                        new Matrix4().makeRotationZ(Math.PI)
+                    this.currentRotation.multiply(
+                        new Quaternion().setFromAxisAngle(
+                            new Vector3(1, 0, 0),
+                            Math.PI
+                        )
                     )
                     break
                 default:
@@ -102,12 +109,9 @@ export class Turtle3D extends BaseTurtle {
     }
 
     move(): void {
-        let absoluteMovement: Vector3 = this.currentRotation
-            .clone()
+        let absoluteMovement: Vector3 = new Vector3(0, 1, 0)
+            .applyQuaternion(this.currentRotation.clone())
             .multiplyScalar(this.stepLength)
-
-        console.log('currentRotation', this.currentRotation)
-        console.log('absoluteMovement', absoluteMovement)
 
         this.currentPosition.add(absoluteMovement)
     }

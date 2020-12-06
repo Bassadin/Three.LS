@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { Vector3 } from 'three'
+import { Quaternion, Vector3 } from 'three'
 
 export abstract class BaseTurtle {
     protected instructionString: string
@@ -7,8 +7,8 @@ export abstract class BaseTurtle {
     protected rotationStepSize: number //In radians
 
     //Rotation
-    protected currentRotation: Vector3 = new Vector3(0, 1, 0)
-    private rotationSaveStateArray: Vector3[] = []
+    protected currentRotation: Quaternion = new Quaternion();
+    private rotationSaveStateArray: Quaternion[] = []
 
     //Position
     protected currentPosition: Vector3 = new Vector3(0, -5, 0)
