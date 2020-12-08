@@ -1,5 +1,10 @@
 body {
   margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
 }
 
 .interface__wrapper {
@@ -10,6 +15,7 @@ body {
   left: 10px;
   padding: 1.5rem 1.75rem;
   width: 420px;
+  border: 1px solid black;
 }
 
 .interface__sub-heading {
@@ -22,7 +28,22 @@ body {
 }
 
 .interface__btn {
-  width: 25px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  background-color: #2E9AFE;
+  border: none;
+}
+
+.interface__btn:hover {
+  cursor: pointer;
+  background-color: #2E64FE;
+  color: white;
+}
+
+.interface__btn:focus {
+  outline:0;
 }
 
 .interface__btn:first-child {
@@ -56,6 +77,25 @@ body {
 .interface__input-field {
   width: 100px;
   margin-left: 1rem;
+}
+
+.interface__load-btn {
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  background-color: #2E9AFE;
+  border: none;
+  border-radius: 20px;
+  min-width: 100px;
+}
+
+.interface__load-btn:hover {
+  cursor: pointer;
+  background-color: #2E64FE;
+  color: white;
+}
+
+.interface__load-btn:focus {
+  outline:0;
 }
 
 .interface__load-btn:first-child {
