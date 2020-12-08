@@ -1,44 +1,103 @@
-@import "https://fonts.googleapis.com/icon?family=Material+Icons";
-
-body { 
-  font-family: monospace;
-  margin: 0; 
-  font-size: 1.3rem;
-  font-weight: normal;
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-canvas { 
-  display: block; 
+.mb-0 {
+  margin-bottom: 0 !important;
 }
 
-code {
-  font-family: Consolas,"courier new";
-  color: crimson;
-  background-color: #f1f1f1;
-  padding: 2px;
+.interface__wrapper {
+  position: absolute;
+  display: block;
+  background-color: white;
+  top: 10px;
+  left: 10px;
+  padding: 1.5rem 1.75rem;
+  width: 420px;
+  border: 1px solid black;
 }
 
-p {
-  overflow: scroll;
+.interface__sub-heading {
+  margin: 0 0 1rem 0;
 }
 
-.float {
-	position:fixed;
-	width:60px;
-	height:60px;
-	bottom:40px;
-	right:40px;
-	background-color:#0C9;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
+.interface__btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
 }
 
-.float:hover {
+.interface__btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  background-color: #2E9AFE;
+  border: none;
+}
+
+.interface__btn:hover {
   cursor: pointer;
+  background-color: #2E64FE;
+  color: white;
 }
 
-.icon-float{
-	margin-top:18px;
+.interface__btn:focus {
+  outline:0;
+}
+
+.interface__btn:first-child {
+  margin-right: 0.5rem;
+}
+
+.interface__input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.interface__input-wrapper:last-child {
+  margin-bottom: 0;
+}
+
+.interface__rule-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.interface__input-inner-wrapper {
+  flex: 0 0 190px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.interface__input-field {
+  width: 100px;
+  margin-left: 1rem;
+}
+
+.interface__load-btn {
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  background-color: #2E9AFE;
+  border: none;
+  border-radius: 20px;
+  min-width: 100px;
+}
+
+.interface__load-btn:hover {
+  cursor: pointer;
+  background-color: #2E64FE;
+  color: white;
+}
+
+.interface__load-btn:focus {
+  outline:0;
+}
+
+.interface__load-btn:first-child {
+  margin-right: 0.5rem;
 }
