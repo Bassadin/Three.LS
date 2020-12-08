@@ -88,7 +88,7 @@ btnGenerate.addEventListener('click', () => {
         console.log(lsys.getSentence())
     }
 
-    let turtle: Turtle = new Turtle(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees))
+    let turtle: Turtle3D = new Turtle3D(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees))
 
     init(turtle)
     animate()
@@ -103,7 +103,7 @@ btnGenerate.addEventListener('click', () => {
 //     lsys.generate()
 //     console.log(lsys.getSentence())
 // }
-// let turtle: Turtle = new Turtle(lsys.getSentence(), 0.5, Math.PI / 2)
+// let turtle: Turtle2D = new Turtle2D(lsys.getSentence(), 0.5, Math.PI / 2)
 
 // Triangle
 // ruleset.push(new Rule('F', 'F--F--F--G'))
@@ -163,7 +163,7 @@ let turtle: Turtle3D = new Turtle3D(
 //     lsys.generate()
 //     console.log(lsys.getSentence())
 // }
-// let turtle: Turtle = new Turtle(
+// let turtle: Turtle2D = new Turtle2D(
 //     lsys.getSentence(),
 //     0.2,
 //     Utils.DegreesToRadians(20)
@@ -176,9 +176,9 @@ let turtle: Turtle3D = new Turtle3D(
 //     lsys.generate()
 //     console.log(lsys.getSentence())
 // }
-// let turtle: Turtle = new Turtle(lsys.getSentence(), 0.5, Utils.degreesToRadians(90))
+// let turtle: Turtle2D = new Turtle2D(lsys.getSentence(), 0.5, Utils.degreesToRadians(90))
 
-function init(turtle: Turtle) {
+function init(turtle: Turtle2D) {
     renderer = new THREE.WebGLRenderer()
     renderer.setSize(window.innerWidth, window.innerHeight)
     document.body.appendChild(renderer.domElement)
