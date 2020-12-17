@@ -19,7 +19,7 @@ let clock: Clock = new THREE.Clock()
 let generations: number = 3
 
 // Count all Rules
-let countAllRules = 1;
+let countAllRules = 1
 
 // Get Btns
 const btnAdd: HTMLInputElement = document.querySelector('#btnAddRule')
@@ -27,29 +27,40 @@ const btnRemove: HTMLInputElement = document.querySelector('#btnRemoveRule')
 const btnUpload: HTMLInputElement = document.querySelector('#btnUpload')
 const btnDownload: HTMLInputElement = document.querySelector('#btnDownload')
 const btnGenerate: HTMLInputElement = document.querySelector('#btnGenerate')
-btnRemove.disabled = true;
+btnRemove.disabled = true
 
 //Necessary Elements
 const rulesWrapper: HTMLDivElement = document.querySelector('#rulesWrapper')
 
 // Eventlisteners for Btns
 btnAdd.addEventListener('click', () => {
-    rulesWrapper.insertAdjacentHTML('beforeend', ' <div class="interface__rule-wrapper" style="margin-top: 1rem;" id="count' + (countAllRules + 1) + '"> <div class="interface__input-inner-wrapper"> <label>Axiom ' + (countAllRules + 1) + '</label> <input class="interface__input-field axioms" type="text" id="axiom' + (countAllRules + 1) + '" maxlength="1""> </div> <div class="interface__input-inner-wrapper"> <label>Regel ' + (countAllRules + 1) + '</label> <input class="interface__input-field rules" type="text" id="rule' + (countAllRules + 1) + '"> </div> </div>')
+    rulesWrapper.insertAdjacentHTML(
+        'beforeend',
+        ' <div class="interface__rule-wrapper" style="margin-top: 1rem;" id="count' +
+            (countAllRules + 1) +
+            '"> <div class="interface__input-inner-wrapper"> <label>Axiom ' +
+            (countAllRules + 1) +
+            '</label> <input class="interface__input-field axioms" type="text" id="axiom' +
+            (countAllRules + 1) +
+            '" maxlength="1""> </div> <div class="interface__input-inner-wrapper"> <label>Regel ' +
+            (countAllRules + 1) +
+            '</label> <input class="interface__input-field rules" type="text" id="rule' +
+            (countAllRules + 1) +
+            '"> </div> </div>'
+    )
     countAllRules++
-    if(btnRemove.disabled == true)
-        btnRemove.disabled = false;
+    if (btnRemove.disabled == true) btnRemove.disabled = false
 })
 
 btnRemove.addEventListener('click', () => {
     const allRulesLength = rulesWrapper.children.length
 
-    if(allRulesLength > 1) {
+    if (allRulesLength > 1) {
         document.querySelector('#count' + countAllRules).remove()
         countAllRules--
     }
 
-    if(countAllRules <= 1)
-        btnRemove.disabled = true;
+    if (countAllRules <= 1) btnRemove.disabled = true
 })
 
 btnUpload.addEventListener('click', () => {
@@ -64,14 +75,30 @@ btnGenerate.addEventListener('click', () => {
     const axioms: string[] = new Array()
     const rules: string[] = new Array()
 
-    document.querySelectorAll('.axioms').forEach(element => {
-        axioms.push((<HTMLInputElement> element).value)
+    document.querySelectorAll('.axioms').forEach((element) => {
+        axioms.push((<HTMLInputElement>element).value)
     })
 
-    document.querySelectorAll('.rules').forEach(element => {
-        rules.push((<HTMLInputElement> element).value)
+    document.querySelectorAll('.rules').forEach((element) => {
+        rules.push((<HTMLInputElement>element).value)
     })
 
+<<<<<<< HEAD
+    const sentence: string = (<HTMLInputElement>(
+        document.querySelector('#sentence')
+    )).value
+    const iterations: number = parseInt(
+        (<HTMLInputElement>document.querySelector('#countIterations')).value
+    )
+    const degrees: number = parseInt(
+        (<HTMLInputElement>document.querySelector('#degrees')).value
+    )
+    const steplength: number =
+        parseInt(
+            (<HTMLInputElement>document.querySelector('#steplength')).value
+        ) / 10
+
+=======
     const sentence: string = (<HTMLInputElement> document.querySelector('#sentence')).value
     const iterations: number = parseInt((<HTMLInputElement> document.querySelector('#countIterations')).value)
     const degrees: number = parseInt((<HTMLInputElement> document.querySelector('#degrees')).value)
@@ -79,18 +106,23 @@ btnGenerate.addEventListener('click', () => {
 
     let ruleset: Rule[] = []
     
+>>>>>>> main
     for (let i = 0; i < axioms.length; i++) {
         ruleset.push(new Rule(axioms[i], rules[i]))
     }
 
-    let lsys: LSystem = new LSystem(sentence, ruleset);
+    let lsys: LSystem = new LSystem(sentence, ruleset)
 
     for (let i: number = 0; i < iterations; i++) {
         lsys.generate()
         console.log(lsys.getSentence())
     }
 
-    let turtle: Turtle3D = new Turtle3D(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees))
+    let turtle: Turtle3D = new Turtle3D(
+        lsys.getSentence(),
+        steplength,
+        Utils.DegreesToRadians(degrees)
+    )
 
     if(scene !== undefined) {
         repaint(turtle);
@@ -99,8 +131,6 @@ btnGenerate.addEventListener('click', () => {
         animate()
     }
 })
-
-
 
 // Square
 // ruleset.push(new Rule('F', 'F[F]-F+F[--F]+F-F'))
@@ -179,6 +209,8 @@ function init(turtle: Turtle3D) {
     renderer.render(scene, camera)
 
     window.addEventListener('resize', onWindowResize, false)
+
+    console.log(scene)
 }
 
 function repaint(turtle: Turtle3D) {

@@ -7,7 +7,7 @@ export abstract class BaseTurtle {
     protected rotationStepSize: number //In radians
 
     //Rotation
-    protected currentRotation: Quaternion = new Quaternion();
+    protected currentRotation: Quaternion = new Quaternion()
     private rotationSaveStateArray: Quaternion[] = []
 
     //Position

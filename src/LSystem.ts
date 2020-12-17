@@ -28,7 +28,7 @@ export class LSystem {
             nextGenerationString.push(replace)
         }
         // Replace sentence
-        this.sentence = nextGenerationString.join("")
+        this.sentence = nextGenerationString.join('')
         // Increment generation
         this.generation++
     }
