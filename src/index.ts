@@ -1,8 +1,9 @@
 import * as THREE from 'three'
 import { Clock, Renderer, Scene, Vector3 } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { Turtle3D } from './Turtles/Turtle3D'
+import { BaseTurtle } from './Turtles/BaseTurtle'
 import { Turtle2D } from './Turtles/Turtle2D'
+import { Turtle3D } from './Turtles/Turtle3D'
 import { Rule } from './Rule'
 import { LSystem } from './LSystem'
 import { Utils } from './Utils'
@@ -15,8 +16,7 @@ let controls: OrbitControls
 let clock: Clock = new THREE.Clock()
 
 //L System stuff
-let generations: number = 4
-let ruleset: Rule[] = []
+let generations: number = 3
 
 // Count all Rules
 let countAllRules = 1;
@@ -76,6 +76,8 @@ btnGenerate.addEventListener('click', () => {
     const iterations: number = parseInt((<HTMLInputElement> document.querySelector('#countIterations')).value)
     const degrees: number = parseInt((<HTMLInputElement> document.querySelector('#degrees')).value)
     const steplength: number = parseInt((<HTMLInputElement> document.querySelector('#steplength')).value)/10
+
+    let ruleset: Rule[] = []
     
     for (let i = 0; i < axioms.length; i++) {
         ruleset.push(new Rule(axioms[i], rules[i]))
@@ -90,8 +92,12 @@ btnGenerate.addEventListener('click', () => {
 
     let turtle: Turtle3D = new Turtle3D(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees))
 
-    init(turtle)
-    animate()
+    if(scene !== undefined) {
+        repaint(turtle);
+    } else {
+        init(turtle)
+        animate()
+    }
 })
 
 
@@ -103,7 +109,7 @@ btnGenerate.addEventListener('click', () => {
 //     lsys.generate()
 //     console.log(lsys.getSentence())
 // }
-// let turtle: Turtle2D = new Turtle2D(lsys.getSentence(), 0.5, Math.PI / 2)
+// let turtle: Turtle = new Turtle(lsys.getSentence(), 0.5, Math.PI / 2)
 
 // Triangle
 // ruleset.push(new Rule('F', 'F--F--F--G'))
@@ -113,7 +119,7 @@ btnGenerate.addEventListener('click', () => {
 //     lsys.generate()
 //     console.log(lsys.getSentence())
 // }
-// let turtle: Turtle3D = new Turtle3D(lsys.getSentence(), 0.5, (2 * Math.PI) / 3)
+// let turtle: Turtle = new Turtle(lsys.getSentence(), 0.5, (2 * Math.PI) / 3)
 
 // Tree
 // ruleset.push(new Rule('F', 'FF+[+F-F-F]-[-F+F+F]'))
@@ -122,38 +128,10 @@ btnGenerate.addEventListener('click', () => {
 //     lsys.generate()
 //     console.log(lsys.getSentence())
 // }
-// let turtle: Turtle3D = new Turtle3D(
+// let turtle: Turtle = new Turtle(
 //     lsys.getSentence(),
-//     .4,
+//     0.2,
 //     Utils.DegreesToRadians(25)
-// )
-
-// // Box (3D Hilbert Curve)
-ruleset.push(new Rule('A', 'B-F+CFC+F-D&F∧D-F+&&CFC+F+B//'))
-ruleset.push(new Rule('B', 'A&F∧CFB∧F∧D∧∧-F-D∧|F∧B|FC∧F∧A//'))
-ruleset.push(new Rule('C', '|D∧|F∧B-F+C∧F∧A&&FA&F∧C+F+B∧F∧D//'))
-ruleset.push(new Rule('D', '|CFB-F+B|FA&F∧A&&FB-F+B|FC//'))
-let lsys: LSystem = new LSystem('A', ruleset)
-for (let i: number = 0; i < generations; i++) {
-    lsys.generate()
-    console.log(lsys.getSentence())
-}
-let turtle: Turtle3D = new Turtle3D(
-    lsys.getSentence(),
-    0.35,
-    Utils.DegreesToRadians(90)
-)
-
-//3D Test
-// let lsys: LSystem = new LSystem('FF/FF/FF', ruleset)
-// for (let i: number = 0; i < generations; i++) {
-//     lsys.generate()
-//     console.log(lsys.getSentence())
-// }
-// let turtle: Turtle3D = new Turtle3D(
-//     lsys.getSentence(),
-//     0.5,
-//     Utils.DegreesToRadians(90)
 // )
 
 // Some Plant
@@ -163,7 +141,7 @@ let turtle: Turtle3D = new Turtle3D(
 //     lsys.generate()
 //     console.log(lsys.getSentence())
 // }
-// let turtle: Turtle2D = new Turtle2D(
+// let turtle: Turtle = new Turtle(
 //     lsys.getSentence(),
 //     0.2,
 //     Utils.DegreesToRadians(20)
@@ -176,9 +154,9 @@ let turtle: Turtle3D = new Turtle3D(
 //     lsys.generate()
 //     console.log(lsys.getSentence())
 // }
-// let turtle: Turtle2D = new Turtle2D(lsys.getSentence(), 0.5, Utils.degreesToRadians(90))
+// let turtle: Turtle = new Turtle(lsys.getSentence(), 0.5, Utils.degreesToRadians(90))
 
-function init(turtle: Turtle2D) {
+function init(turtle: Turtle3D) {
     renderer = new THREE.WebGLRenderer()
     renderer.setSize(window.innerWidth, window.innerHeight)
     document.body.appendChild(renderer.domElement)
@@ -201,6 +179,14 @@ function init(turtle: Turtle2D) {
     renderer.render(scene, camera)
 
     window.addEventListener('resize', onWindowResize, false)
+}
+
+function repaint(turtle: Turtle3D) {
+    for(let i = scene.children.length - 1; i >= 0; i--) { 
+        const obj = scene.children[i];
+        scene.remove(obj); 
+   }
+    turtle.render(scene)
 }
 
 function animate() {
