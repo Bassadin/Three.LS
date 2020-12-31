@@ -1,44 +1,64 @@
-import { Matrix3, Matrix4, Vector3, Mesh, Quaternion } from 'three'
+import {
+    Matrix3,
+    Matrix4,
+    Vector3,
+    Mesh,
+    Quaternion,
+    Geometry,
+    BufferGeometry,
+    Float32BufferAttribute,
+    Line,
+    LineBasicMaterial,
+    LineSegments
+} from 'three'
 import { MeshLine, MeshLineMaterial } from 'three.meshline'
 import { BaseTurtle } from './BaseTurtle'
 
 export class Turtle3D extends BaseTurtle {
     render(scene: THREE.Scene): void {
-        //Set the line material
-        const material = new MeshLineMaterial({
-            color: 0xffffff,
-            lineWidth: 0.05,
-        })
+        console.time('Geometry creation')
 
-        const pointsArray = this.pointsArray()
-
-        for (let i: number = 0; i < pointsArray.length; i++) {
-            const line = new MeshLine()
-            line.setPoints(pointsArray[i])
-            const mesh = new Mesh(line, material)
-            scene.add(mesh)
-        }
-    }
-
-    pointsArray(): Vector3[][] {
-        let points: Vector3[][] = []
+        const material = new LineBasicMaterial({ vertexColors: true })
+        let lineVertices: number[] = []
+        const bufferGeometry: BufferGeometry = new BufferGeometry()
+        const colorsArray: number[] = []
 
         for (let i: number = 0; i < this.instructionString.length; i++) {
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
-                    let newPoints = []
-                    newPoints.push(this.currentPosition.clone())
+                    const currentPositionBeforeMove = this.currentPosition.clone()
+
+                    let newColors = [
+                        Math.random() * 0.5 + 0.5,
+                        Math.random() * 0.5 + 0.5,
+                        Math.random() * 0.5 + 0.5,
+                    ]
+
+                    lineVertices.push(
+                        currentPositionBeforeMove.x,
+                        currentPositionBeforeMove.y,
+                        currentPositionBeforeMove.z
+                    )
+                    colorsArray.push(...newColors)
+
                     this.move()
-                    newPoints.push(this.currentPosition.clone())
-                    points.push(newPoints)
+
+                    const currentPositionAfterMove = this.currentPosition.clone()
+                    lineVertices.push(
+                        currentPositionAfterMove.x,
+                        currentPositionAfterMove.y,
+                        currentPositionAfterMove.z
+                    )
+                    colorsArray.push(...newColors)
+
                     break
                 case 'G': //Move in current direction
                     this.move()
                     break
-                case '[': //Save state
+                case '[':
                     this.saveState()
                     break
-                case ']': //Load state
+                case ']':
                     this.loadState()
                     break
                 case '+':
@@ -105,7 +125,22 @@ export class Turtle3D extends BaseTurtle {
                     break
             }
         }
-        return points
+
+        // console.log('Vertices', lineVertices)
+
+        bufferGeometry.setAttribute(
+            'position',
+            new Float32BufferAttribute(lineVertices, 3)
+        )
+        bufferGeometry.setAttribute(
+            'color',
+            new Float32BufferAttribute(colorsArray, 3)
+        )
+
+        const line = new LineSegments(bufferGeometry, material)
+        scene.add(line)
+
+        console.timeEnd('Geometry creation')
     }
 
     move(): void {
