@@ -83,7 +83,6 @@ btnGenerate.addEventListener('click', () => {
         rules.push((<HTMLInputElement>element).value)
     })
 
-<<<<<<< HEAD
     const sentence: string = (<HTMLInputElement>(
         document.querySelector('#sentence')
     )).value
@@ -98,15 +97,8 @@ btnGenerate.addEventListener('click', () => {
             (<HTMLInputElement>document.querySelector('#steplength')).value
         ) / 10
 
-=======
-    const sentence: string = (<HTMLInputElement> document.querySelector('#sentence')).value
-    const iterations: number = parseInt((<HTMLInputElement> document.querySelector('#countIterations')).value)
-    const degrees: number = parseInt((<HTMLInputElement> document.querySelector('#degrees')).value)
-    const steplength: number = parseInt((<HTMLInputElement> document.querySelector('#steplength')).value)/10
-
     let ruleset: Rule[] = []
-    
->>>>>>> main
+
     for (let i = 0; i < axioms.length; i++) {
         ruleset.push(new Rule(axioms[i], rules[i]))
     }
@@ -124,8 +116,8 @@ btnGenerate.addEventListener('click', () => {
         Utils.DegreesToRadians(degrees)
     )
 
-    if(scene !== undefined) {
-        repaint(turtle);
+    if (scene !== undefined) {
+        repaint(turtle)
     } else {
         init(turtle)
         animate()
@@ -214,10 +206,10 @@ function init(turtle: Turtle3D) {
 }
 
 function repaint(turtle: Turtle3D) {
-    for(let i = scene.children.length - 1; i >= 0; i--) { 
-        const obj = scene.children[i];
-        scene.remove(obj); 
-   }
+    for (let i = scene.children.length - 1; i >= 0; i--) {
+        const obj = scene.children[i]
+        scene.remove(obj)
+    }
     turtle.render(scene)
 }
 
