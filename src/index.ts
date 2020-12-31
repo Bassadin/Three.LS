@@ -105,10 +105,12 @@ btnGenerate.addEventListener('click', () => {
 
     let lsys: LSystem = new LSystem(sentence, ruleset)
 
+    console.time("L System generation")
     for (let i: number = 0; i < iterations; i++) {
         lsys.generate()
-        console.log(lsys.getSentence())
+        // console.log(lsys.getSentence())
     }
+    console.timeEnd("L System generation")
 
     let turtle: Turtle3D = new Turtle3D(
         lsys.getSentence(),
