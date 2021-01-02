@@ -1,12 +1,15 @@
 # Three.js HFU example
 
+##Info
+3D L Systems with Three.js
+
 ## Development
 
 Clone the project and install dependencies:
 
 ```bash
-git clone https://github.com/aakatev/three-js-webpack.git
 npm i
+npm start
 ```
 
 ## GitHub Pages Version
