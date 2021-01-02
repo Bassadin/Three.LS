@@ -24,6 +24,7 @@ jobs:
       # uses: peaceiris/actions-gh-pages@bbdfb200618d235585ad98e965f4aafc39b4c501
       uses: peaceiris/actions-gh-pages@v3.7.3
       with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         # Set a target branch for deployment.
         publish_branch: gh-pages-deploy
         # Set an input directory for deployment.
