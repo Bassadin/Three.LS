@@ -31,3 +31,4 @@ jobs:
         publish_dir: build
         # Set a custom commit message with a triggered commit hash
         commit_message: Automated GH Pages deploy
+        enable_jekyll: false
