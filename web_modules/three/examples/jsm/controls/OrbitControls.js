@@ -1,4 +1,4 @@
-import { V as Vector3, cv as MOUSE, fu as TOUCH, dL as Quaternion, f6 as Spherical, aV as EventDispatcher, g5 as Vector2 } from '../../../../common/three.module-f7eea5eb.js';
+import { V as Vector3, cw as MOUSE, fu as TOUCH, Q as Quaternion, f6 as Spherical, aZ as EventDispatcher, g5 as Vector2 } from '../../../../common/three.module-74299c46.js';
 
 /**
  * @author qiao / https://github.com/qiao
