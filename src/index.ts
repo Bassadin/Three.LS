@@ -7,6 +7,15 @@ import { Turtle3D } from './Turtles/Turtle3D'
 import { Rule } from './Rule'
 import { LSystem } from './LSystem'
 import { Utils } from './Utils'
+import Stats from 'stats-js'
+
+// #region Performance Stats
+let stats: Stats = new Stats()
+stats.showPanel(0) // 0: fps, 1: ms, 2: mb, 3+: custom
+stats.dom.style.removeProperty('left')
+stats.dom.style.setProperty('right', '0')
+document.body.appendChild(stats.dom)
+// #endregion Performance Stats
 
 let camera: THREE.PerspectiveCamera
 let scene: Scene
@@ -71,7 +80,9 @@ btnDownload.addEventListener('click', () => {
     // add download stuff here
 })
 
-btnGenerate.addEventListener('click', () => {
+btnGenerate.addEventListener('click', generateLSystemImage)
+
+function generateLSystemImage(): void {
     const axioms: string[] = new Array()
     const rules: string[] = new Array()
 
@@ -105,12 +116,12 @@ btnGenerate.addEventListener('click', () => {
 
     let lsys: LSystem = new LSystem(sentence, ruleset)
 
-    console.time("L System generation")
+    console.time('L System generation')
     for (let i: number = 0; i < iterations; i++) {
         lsys.generate()
         // console.log(lsys.getSentence())
     }
-    console.timeEnd("L System generation")
+    console.timeEnd('L System generation')
 
     let turtle: Turtle3D = new Turtle3D(
         lsys.getSentence(),
@@ -124,7 +135,7 @@ btnGenerate.addEventListener('click', () => {
         init(turtle)
         animate()
     }
-})
+}
 
 // Square
 // ruleset.push(new Rule('F', 'F[F]-F+F[--F]+F-F'))
@@ -203,8 +214,6 @@ function init(turtle: Turtle3D) {
     renderer.render(scene, camera)
 
     window.addEventListener('resize', onWindowResize, false)
-
-    console.log(scene)
 }
 
 function repaint(turtle: Turtle3D) {
@@ -219,6 +228,9 @@ function animate() {
     requestAnimationFrame(animate)
     controls.update()
     renderer.render(scene, camera)
+
+    //Performance Stats
+    stats.update()
 }
 
 function onWindowResize() {
@@ -227,3 +239,5 @@ function onWindowResize() {
 
     renderer.setSize(window.innerWidth, window.innerHeight)
 }
+
+generateLSystemImage()
