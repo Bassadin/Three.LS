@@ -19,16 +19,14 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
       
-    - name: GitHub Pages
+    - name: GitHub Pages action
       # You may pin to the exact commit or the version.
-      # uses: crazy-max/ghaction-github-pages@1510b11c0c2f843eafb8ff41b3da8c467c8d4a9f
-      uses: crazy-max/ghaction-github-pages@v2.2.0
+      # uses: peaceiris/actions-gh-pages@bbdfb200618d235585ad98e965f4aafc39b4c501
+      uses: peaceiris/actions-gh-pages@v3.7.3
       with:
-        # Git branch where assets will be deployed
-        target_branch: gh-pages-deploy
-        # Allow an empty commit to be created
-        allow_empty_commit: false
-        # Build directory to deploy
-        build_dir: build
-        # Commit message
-        commit_message: "Automated GitHub Pages Deploy"
+        # Set a target branch for deployment.
+        publish_branch: gh-pages-deploy
+        # Set an input directory for deployment.
+        publish_dir: build
+        # Set a custom commit message with a triggered commit hash
+        commit_message: Automated GH Pages deploy
