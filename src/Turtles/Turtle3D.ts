@@ -9,7 +9,7 @@ import {
     Float32BufferAttribute,
     Line,
     LineBasicMaterial,
-    LineSegments
+    LineSegments,
 } from 'three'
 import { MeshLine, MeshLineMaterial } from 'three.meshline'
 import { BaseTurtle } from './BaseTurtle'
