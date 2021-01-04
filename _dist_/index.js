@@ -49,12 +49,12 @@ function generateLSystemImage() {
   const axioms = new Array();
   const rules = new Array();
   document.querySelectorAll(".axioms").forEach((element) => {
-    axioms.push(element.value);
+    axioms.push(element.value.toUpperCase());
   });
   document.querySelectorAll(".rules").forEach((element) => {
-    rules.push(element.value);
+    rules.push(element.value.toUpperCase());
   });
-  const sentence = document.querySelector("#sentence").value;
+  const sentence = document.querySelector("#sentence").value.toUpperCase();
   const iterations = parseInt(document.querySelector("#countIterations").value);
   const degrees = parseInt(document.querySelector("#degrees").value);
   const steplength = parseInt(document.querySelector("#steplength").value) / 10;
