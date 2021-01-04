@@ -87,16 +87,17 @@ function generateLSystemImage(): void {
     const rules: string[] = new Array()
 
     document.querySelectorAll('.axioms').forEach((element) => {
-        axioms.push((<HTMLInputElement>element).value)
+        axioms.push((<HTMLInputElement>element).value.toUpperCase())
     })
 
     document.querySelectorAll('.rules').forEach((element) => {
-        rules.push((<HTMLInputElement>element).value)
+        rules.push((<HTMLInputElement>element).value.toUpperCase())
     })
 
     const sentence: string = (<HTMLInputElement>(
         document.querySelector('#sentence')
-    )).value
+    )).value.toUpperCase();
+
     const iterations: number = parseInt(
         (<HTMLInputElement>document.querySelector('#countIterations')).value
     )
