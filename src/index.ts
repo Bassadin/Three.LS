@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { Clock, Renderer, Scene, Vector3 } from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js'
 import { BaseTurtle } from './Turtles/BaseTurtle'
 import { Turtle2D } from './Turtles/Turtle2D'
 import { Turtle3D } from './Turtles/Turtle3D'
@@ -21,7 +21,7 @@ let camera: THREE.PerspectiveCamera
 let scene: Scene
 let renderer: Renderer
 let line: THREE.Line
-let controls: OrbitControls
+let controls: TrackballControls
 let clock: Clock = new THREE.Clock()
 
 //L System stuff
@@ -96,7 +96,7 @@ function generateLSystemImage(): void {
 
     const sentence: string = (<HTMLInputElement>(
         document.querySelector('#sentence')
-    )).value.toUpperCase();
+    )).value.toUpperCase()
 
     const iterations: number = parseInt(
         (<HTMLInputElement>document.querySelector('#countIterations')).value
@@ -204,7 +204,7 @@ function init(turtle: Turtle3D) {
         10000
     )
 
-    controls = new OrbitControls(camera, renderer.domElement)
+    controls = new TrackballControls(camera, renderer.domElement)
     camera.position.set(0, 0, 15)
     controls.update()
 
