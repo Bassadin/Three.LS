@@ -12,6 +12,8 @@ export class LindenmayerFormular {
     this.countAllRules = 1;
     this.addListenerToAddButton();
     this.addListenerToRemoveButton();
+    this.addListenerToDownloadButton();
+    this.addListenerToUploadButton();
   }
   static getInstance() {
     if (LindenmayerFormular.instance == void 0)
@@ -35,6 +37,14 @@ export class LindenmayerFormular {
       }
       if (this.countAllRules <= 1)
         this.btnRemove.disabled = true;
+    });
+  }
+  addListenerToDownloadButton() {
+    this.btnDownload.addEventListener("click", () => {
+    });
+  }
+  addListenerToUploadButton() {
+    this.btnUpload.addEventListener("click", () => {
     });
   }
   generateLSystemImage() {
