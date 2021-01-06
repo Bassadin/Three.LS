@@ -23,8 +23,10 @@ export class LindenmayerFormular {
             this.rulesWrapper = document.querySelector('#rulesWrapper')
             this.countAllRules = 1
 
-            this.addListenerToAddButton();
-            this.addListenerToRemoveButton();
+            this.addListenerToAddButton()
+            this.addListenerToRemoveButton()
+            this.addListenerToDownloadButton()
+            this.addListenerToUploadButton()
     }
 
     public static getInstance(): LindenmayerFormular {
@@ -64,6 +66,18 @@ export class LindenmayerFormular {
             }
 
             if (this.countAllRules <= 1) this.btnRemove.disabled = true
+        })
+    }
+
+    private addListenerToDownloadButton(): void {
+        this.btnDownload.addEventListener('click', () => {
+            //Add download stuff here
+        });
+    }
+
+    private addListenerToUploadButton(): void {
+        this.btnUpload.addEventListener('click', () => {
+            //Add upload stuff here
         })
     }
 
