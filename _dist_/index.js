@@ -2,54 +2,15 @@ import * as THREE from "../web_modules/three.js";
 import {TrackballControls} from "../web_modules/three/examples/jsm/controls/TrackballControls.js";
 import {LindenmayerFormular} from "./LindenmayerFormular.js";
 import Stats from "../web_modules/stats-js.js";
-document.getElementById("file").addEventListener("change", (event) => {
-  var reader = new FileReader();
-  reader.onload = onReaderLoad;
-  reader.readAsText(event.target.files[0]);
-});
-function onReaderLoad(event) {
-  let obj;
-  console.log(event.target.result);
-  obj = JSON.parse(event.target.result);
-  document.getElementById("axiom1").value = obj.Axiom1;
-  document.getElementById("rule1").value = obj.Rule1;
-  document.getElementById("countIterations").value = obj.IterationsCount;
-  document.getElementById("degrees").value = obj.Drehwinkel;
-  document.getElementById("steplength").value = obj.Schrittl\u00E4nge;
-  document.getElementById("sentence").value = obj.Satz;
-}
-document.getElementById("btnDownload").addEventListener("click", () => {
-  let Satz = document.getElementById("sentence").value;
-  let Axiom1 = document.getElementById("axiom1").value;
-  let Rule1 = document.getElementById("rule1").value;
-  let IterationsCount = document.getElementById("countIterations").value;
-  let Drehwinkel = document.getElementById("degrees").value;
-  let Schrittl\u00E4nge = document.getElementById("steplength").value;
-  var newObject = {
-    Satz,
-    Axiom1,
-    Rule1,
-    IterationsCount,
-    Drehwinkel,
-    Schrittl\u00E4nge: IterationsCount
-  };
-  var json_string = JSON.stringify(newObject, void 0, 2);
-  var link = document.createElement("a");
-  link.download = "data.json";
-  var blob = new Blob([json_string], {type: "text/plain"});
-  link.href = window.URL.createObjectURL(blob);
-  link.click();
-});
 let stats = new Stats();
 stats.showPanel(0);
 stats.dom.style.removeProperty("left");
 stats.dom.style.setProperty("right", "0");
 document.body.appendChild(stats.dom);
+export let scene;
 let camera;
-let scene;
 let renderer;
 let controls;
-const btnGenerate = document.querySelector("#btnGenerate");
 const lindenmayerFormular = LindenmayerFormular.getInstance();
 let newTurtle = lindenmayerFormular.generateLSystemImage();
 if (scene !== void 0) {
@@ -58,6 +19,7 @@ if (scene !== void 0) {
   init(newTurtle);
   animate();
 }
+const btnGenerate = document.querySelector("#btnGenerate");
 btnGenerate.addEventListener("click", () => {
   let newTurtle2 = lindenmayerFormular.generateLSystemImage();
   if (scene !== void 0) {
@@ -76,7 +38,7 @@ function init(turtle) {
   camera.position.set(0, 0, 15);
   controls.update();
   scene = new THREE.Scene();
-  turtle.render(scene);
+  turtle.addGeometryToScene(scene);
   renderer.render(scene, camera);
   window.addEventListener("resize", onWindowResize, false);
 }
@@ -85,7 +47,7 @@ function repaint(turtle) {
     const obj = scene.children[i];
     scene.remove(obj);
   }
-  turtle.render(scene);
+  turtle.addGeometryToScene(scene);
 }
 function animate() {
   requestAnimationFrame(animate);

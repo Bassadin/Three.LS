@@ -2,7 +2,7 @@ import * as THREE from "../../web_modules/three.js";
 import {MeshLine, MeshLineMaterial} from "../../web_modules/three.meshline.js";
 import {BaseTurtle} from "./BaseTurtle.js";
 export class Turtle2D extends BaseTurtle {
-  render(scene) {
+  addGeometryToScene(scene) {
     const material = new MeshLineMaterial({
       color: 16777215,
       lineWidth: 0.05

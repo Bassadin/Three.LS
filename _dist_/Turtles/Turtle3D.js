@@ -8,7 +8,7 @@ import {
 } from "../../web_modules/three.js";
 import {BaseTurtle} from "./BaseTurtle.js";
 export class Turtle3D extends BaseTurtle {
-  render(scene) {
+  addGeometryToScene(scene) {
     console.time("Geometry creation");
     let lineVertices = [];
     const bufferGeometry = new BufferGeometry();
