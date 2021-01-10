@@ -2,6 +2,50 @@ import * as THREE from "../web_modules/three.js";
 import {TrackballControls} from "../web_modules/three/examples/jsm/controls/TrackballControls.js";
 import {LindenmayerFormular} from "./LindenmayerFormular.js";
 import Stats from "../web_modules/stats-js.js";
+export var obj;
+var loading = false;
+let btn = document.getElementById("btnDownload");
+btn.addEventListener("click", (e) => saveData());
+function onChange(event) {
+  var reader = new FileReader();
+  reader.onload = onReaderLoad;
+  reader.readAsText(event.target.files[0]);
+  ;
+}
+function onReaderLoad(event) {
+  console.log(event.target.result);
+  obj = JSON.parse(event.target.result);
+  document.getElementById("sentence").value = obj.Satz;
+  document.getElementById("axiom1").value = obj.Axiom1;
+  document.getElementById("rule1").value = obj.Rule1;
+  document.getElementById("countIterations").value = obj.IterationsCount;
+  document.getElementById("degrees").value = obj.Drehwinkel;
+  document.getElementById("steplength").value = obj.Schrittl\u00E4nge;
+  loading = false;
+}
+document.getElementById("file").addEventListener("change", onChange);
+function saveData() {
+  let Satz = document.getElementById("sentence").value;
+  let Axiom1 = document.getElementById("axiom1").value;
+  let Rule1 = document.getElementById("rule1").value;
+  let IterationsCount = document.getElementById("countIterations").value;
+  let Drehwinkel = document.getElementById("degrees").value;
+  let Schrittl\u00E4nge = document.getElementById("steplength").value;
+  var newObject = {
+    Satz,
+    Axiom1,
+    Rule1,
+    IterationsCount,
+    Drehwinkel,
+    Schrittl\u00E4nge: IterationsCount
+  };
+  var json_string = JSON.stringify(newObject, void 0, 2);
+  var link = document.createElement("a");
+  link.download = "data.json";
+  var blob = new Blob([json_string], {type: "text/plain"});
+  link.href = window.URL.createObjectURL(blob);
+  link.click();
+}
 let stats = new Stats();
 stats.showPanel(0);
 stats.dom.style.removeProperty("left");
@@ -44,8 +88,8 @@ function init(turtle) {
 }
 function repaint(turtle) {
   for (let i = scene.children.length - 1; i >= 0; i--) {
-    const obj = scene.children[i];
-    scene.remove(obj);
+    const obj2 = scene.children[i];
+    scene.remove(obj2);
   }
   turtle.render(scene);
 }
