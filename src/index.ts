@@ -9,6 +9,86 @@ import { LSystem } from './LSystem'
 import { Utils } from './Utils'
 import { LindenmayerFormular } from './LindenmayerFormular'
 import Stats from 'stats-js'
+export var obj: any;
+//export var importActivated = false;
+
+var  loading:boolean = false;
+//Eventlistener für Knöpfe
+let btn = document.getElementById("btnDownload");
+    btn.addEventListener("click", (e:Event) => saveData());
+
+    let btn2 = document.getElementById("btnUpload");
+    btn2.addEventListener("click", (e:Event) => loadData());
+
+
+//Funktion für import
+function onChange(event: any) {
+    var reader = new FileReader();
+    reader.onload = onReaderLoad;
+    reader.readAsText(event.target.files[0]);
+ //   importActivated = true;
+  //  console.log(importActivated);
+}
+
+
+
+function onReaderLoad(event: any){
+    console.log(event.target.result);
+  obj = JSON.parse(event.target.result);
+ // if(loading == true){
+  //Set Values
+  (document.getElementById("sentence") as HTMLInputElement).value = obj.Satz;
+  (document.getElementById("axiom1") as HTMLInputElement).value = obj.Axiom1;
+  (document.getElementById("rule1") as HTMLInputElement).value = obj.Rule1; 
+  //To be added
+  (document.getElementById("countIterations") as HTMLInputElement).value = obj.IterationsCount;
+  //
+  (document.getElementById("degrees") as HTMLInputElement).value = obj.Drehwinkel;
+  (document.getElementById("steplength") as HTMLInputElement).value = obj.Schrittlänge;   
+  loading = false;
+ }
+//}
+document.getElementById('file').addEventListener('change', onChange);
+//Ende Importfunktion
+
+
+//Loader hier
+function loadData(){
+loading = true;
+onChange;
+}
+//Saver hier
+function saveData(){
+  let Satz =  (document.getElementById("sentence") as HTMLInputElement).value ;
+  let Axiom1 =   (document.getElementById("axiom1") as HTMLInputElement).value;
+  let Rule1 =  (document.getElementById("rule1") as HTMLInputElement).value ; 
+    //To be added
+    let IterationsCount =    (document.getElementById("countIterations") as HTMLInputElement).value;
+    //
+    let Drehwinkel =  (document.getElementById("degrees") as HTMLInputElement).value  ;
+    let Schrittlänge = (document.getElementById("steplength") as HTMLInputElement).value ;
+    
+    var newObject  = {
+        'Satz'     : Satz,
+        'Axiom1' : Axiom1,
+        'Rule1' : Rule1,
+        'IterationsCount'     : IterationsCount,
+        'Drehwinkel'     : Drehwinkel,
+        'Schrittlänge'     : IterationsCount,
+
+     };
+//      }
+    var json_string = JSON.stringify(newObject , undefined, 2);
+    var link = document.createElement('a');
+    link.download = 'data.json';
+    var blob = new Blob([json_string], { type: 'text/plain' });
+    link.href = window.URL.createObjectURL(blob);
+    link.click();
+  }
+
+
+
+
 
 // #region Performance Stats
 let stats: Stats = new Stats()
@@ -74,6 +154,8 @@ function init(turtle: Turtle3D) {
 
     window.addEventListener('resize', onWindowResize, false)
 }
+
+
 
 function repaint(turtle: Turtle3D) {
     for (let i = scene.children.length - 1; i >= 0; i--) {
