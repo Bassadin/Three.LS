@@ -1,7 +1,0 @@
-{
-  "imports": {
-    "three": "./three.js",
-    "three.meshline": "./three.meshline.js",
-    "three/examples/jsm/controls/OrbitControls": "./three/examples/jsm/controls/OrbitControls.js"
-  }
-}
