@@ -49,6 +49,7 @@ function init(turtle: Turtle3D) {
     camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
 
     controls = new TrackballControls(camera, renderer.domElement);
+    controls.rotateSpeed = 2;
     camera.position.set(0, 0, 15);
     controls.update();
 
