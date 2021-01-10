@@ -2,29 +2,20 @@ import * as THREE from "../web_modules/three.js";
 import {TrackballControls} from "../web_modules/three/examples/jsm/controls/TrackballControls.js";
 import {LindenmayerFormular} from "./LindenmayerFormular.js";
 import Stats from "../web_modules/stats-js.js";
-export var obj;
 var loading = false;
 let btn = document.getElementById("btnDownload");
-btn.addEventListener("click", (e) => saveData());
-function onChange(event) {
+document.getElementById("file").addEventListener("change", (event) => {
   var reader = new FileReader();
   reader.onload = onReaderLoad;
   reader.readAsText(event.target.files[0]);
-  ;
-}
+});
 function onReaderLoad(event) {
+  let obj;
   console.log(event.target.result);
-  obj = JSON.parse(event.target.result);
-  document.getElementById("sentence").value = obj.Satz;
-  document.getElementById("axiom1").value = obj.Axiom1;
-  document.getElementById("rule1").value = obj.Rule1;
-  document.getElementById("countIterations").value = obj.IterationsCount;
-  document.getElementById("degrees").value = obj.Drehwinkel;
-  document.getElementById("steplength").value = obj.Schrittl\u00E4nge;
+  obj = JSON.parse(event.target.result)(document.getElementById("sentence")).value = obj.Satz(document.getElementById("axiom1")).value = obj.Axiom1(document.getElementById("rule1")).value = obj.Rule1(document.getElementById("countIterations")).value = obj.IterationsCount(document.getElementById("degrees")).value = obj.Drehwinkel(document.getElementById("steplength")).value = obj.Schrittl\u00E4nge;
   loading = false;
 }
-document.getElementById("file").addEventListener("change", onChange);
-function saveData() {
+btn.addEventListener("click", () => {
   let Satz = document.getElementById("sentence").value;
   let Axiom1 = document.getElementById("axiom1").value;
   let Rule1 = document.getElementById("rule1").value;
@@ -45,7 +36,7 @@ function saveData() {
   var blob = new Blob([json_string], {type: "text/plain"});
   link.href = window.URL.createObjectURL(blob);
   link.click();
-}
+});
 let stats = new Stats();
 stats.showPanel(0);
 stats.dom.style.removeProperty("left");
@@ -88,8 +79,8 @@ function init(turtle) {
 }
 function repaint(turtle) {
   for (let i = scene.children.length - 1; i >= 0; i--) {
-    const obj2 = scene.children[i];
-    scene.remove(obj2);
+    const obj = scene.children[i];
+    scene.remove(obj);
   }
   turtle.render(scene);
 }
