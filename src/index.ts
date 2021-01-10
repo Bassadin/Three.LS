@@ -10,24 +10,19 @@ import { Utils } from './Utils'
 import { LindenmayerFormular } from './LindenmayerFormular'
 import Stats from 'stats-js'
 export var obj: any;
-//export var importActivated = false;
+
 
 var  loading:boolean = false;
 //Eventlistener für Knöpfe
 let btn = document.getElementById("btnDownload");
     btn.addEventListener("click", (e:Event) => saveData());
 
-    let btn2 = document.getElementById("btnUpload");
-    btn2.addEventListener("click", (e:Event) => loadData());
-
 
 //Funktion für import
 function onChange(event: any) {
     var reader = new FileReader();
     reader.onload = onReaderLoad;
-    reader.readAsText(event.target.files[0]);
- //   importActivated = true;
-  //  console.log(importActivated);
+    reader.readAsText(event.target.files[0]);;
 }
 
 
@@ -35,7 +30,6 @@ function onChange(event: any) {
 function onReaderLoad(event: any){
     console.log(event.target.result);
   obj = JSON.parse(event.target.result);
- // if(loading == true){
   //Set Values
   (document.getElementById("sentence") as HTMLInputElement).value = obj.Satz;
   (document.getElementById("axiom1") as HTMLInputElement).value = obj.Axiom1;
@@ -47,16 +41,17 @@ function onReaderLoad(event: any){
   (document.getElementById("steplength") as HTMLInputElement).value = obj.Schrittlänge;   
   loading = false;
  }
-//}
 document.getElementById('file').addEventListener('change', onChange);
 //Ende Importfunktion
 
 
-//Loader hier
-function loadData(){
-loading = true;
-onChange;
-}
+
+//function loadData(){
+//loading = true;
+//onChange;
+//}
+
+
 //Saver hier
 function saveData(){
   let Satz =  (document.getElementById("sentence") as HTMLInputElement).value ;
