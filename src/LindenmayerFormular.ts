@@ -55,6 +55,25 @@ export class LindenmayerFormular {
         });
     }
 
+    public addNewRuleField(): void {
+        this.rulesWrapper.insertAdjacentHTML(
+            'beforeend',
+            ' <div class="interface__rule-wrapper" style="margin-top: 1rem;" id="count' +
+                (this.countAllRules + 1) +
+                '"> <div class="interface__input-inner-wrapper"> <label>Axiom ' +
+                (this.countAllRules + 1) +
+                '</label> <input class="interface__input-field axioms" type="text" id="axiom' +
+                (this.countAllRules + 1) +
+                '" maxlength="1""> </div> <div class="interface__input-inner-wrapper"> <label>Regel ' +
+                (this.countAllRules + 1) +
+                '</label> <input class="interface__input-field rules" type="text" id="rule' +
+                (this.countAllRules + 1) +
+                '"> </div> </div>'
+        )
+        this.countAllRules++
+        if (this.btnRemove.disabled == true) this.btnRemove.disabled = false
+    }
+
     private addListenerToRemoveButton(): void {
         this.btnRemove.addEventListener('click', () => {
             const allRulesLength = this.rulesWrapper.children.length;
