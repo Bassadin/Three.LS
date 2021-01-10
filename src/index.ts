@@ -1,12 +1,7 @@
 import * as THREE from 'three'
-import { Clock, Renderer, Scene, Vector3 } from 'three'
+import { Renderer, Scene } from 'three'
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js'
-import { BaseTurtle } from './Turtles/BaseTurtle'
-import { Turtle2D } from './Turtles/Turtle2D'
 import { Turtle3D } from './Turtles/Turtle3D'
-import { Rule } from './Rule'
-import { LSystem } from './LSystem'
-import { Utils } from './Utils'
 import { LindenmayerFormular } from './LindenmayerFormular'
 import Stats from 'stats-js'
 
@@ -21,9 +16,7 @@ document.body.appendChild(stats.dom)
 let camera: THREE.PerspectiveCamera
 let scene: Scene
 let renderer: Renderer
-let line: THREE.Line
 let controls: TrackballControls
-let clock: Clock = new THREE.Clock()
 
 const btnGenerate: HTMLInputElement = document.querySelector('#btnGenerate')
 
@@ -38,9 +31,8 @@ if (scene !== undefined) {
     animate()
 }
 
-
 btnGenerate.addEventListener('click', () => {
-    let newTurtle: Turtle3D = lindenmayerFormular.generateLSystemImage();
+    let newTurtle: Turtle3D = lindenmayerFormular.generateLSystemImage()
 
     if (scene !== undefined) {
         repaint(newTurtle)
