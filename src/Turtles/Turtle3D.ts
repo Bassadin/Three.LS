@@ -18,7 +18,6 @@ export class Turtle3D extends BaseTurtle {
     render(scene: THREE.Scene): void {
         console.time('Geometry creation')
 
-        const material = new LineBasicMaterial({ vertexColors: true })
         let lineVertices: number[] = []
         const bufferGeometry: BufferGeometry = new BufferGeometry()
         const colorsArray: number[] = []
@@ -29,9 +28,9 @@ export class Turtle3D extends BaseTurtle {
                     const currentPositionBeforeMove = this.currentPosition.clone()
 
                     let newColors = [
-                        Math.random() * 0.5 + 0.5,
-                        Math.random() * 0.5 + 0.5,
-                        Math.random() * 0.5 + 0.5,
+                        Math.random() * 0.7 + 0.3,
+                        Math.random() * 0.7 + 0.3,
+                        Math.random() * 0.7 + 0.3,
                     ]
 
                     lineVertices.push(
@@ -137,8 +136,20 @@ export class Turtle3D extends BaseTurtle {
             new Float32BufferAttribute(colorsArray, 3)
         )
 
+        const material = new LineBasicMaterial({
+            vertexColors: true,
+        })
         const line = new LineSegments(bufferGeometry, material)
         scene.add(line)
+
+        // const line = new MeshLine()
+        // line.setGeometry(bufferGeometry, (p: any) => 2 + Math.sin(50 * p))
+        // const material = new MeshLineMaterial({
+        //     lineWidth: 0.02,
+        //     dashArray: 1,
+        // })
+        // const mesh = new Mesh(line, material)
+        // scene.add(mesh)
 
         console.timeEnd('Geometry creation')
     }
