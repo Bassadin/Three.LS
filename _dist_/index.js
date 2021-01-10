@@ -2,8 +2,6 @@ import * as THREE from "../web_modules/three.js";
 import {TrackballControls} from "../web_modules/three/examples/jsm/controls/TrackballControls.js";
 import {LindenmayerFormular} from "./LindenmayerFormular.js";
 import Stats from "../web_modules/stats-js.js";
-var loading = false;
-let btn = document.getElementById("btnDownload");
 document.getElementById("file").addEventListener("change", (event) => {
   var reader = new FileReader();
   reader.onload = onReaderLoad;
@@ -12,10 +10,15 @@ document.getElementById("file").addEventListener("change", (event) => {
 function onReaderLoad(event) {
   let obj;
   console.log(event.target.result);
-  obj = JSON.parse(event.target.result)(document.getElementById("sentence")).value = obj.Satz(document.getElementById("axiom1")).value = obj.Axiom1(document.getElementById("rule1")).value = obj.Rule1(document.getElementById("countIterations")).value = obj.IterationsCount(document.getElementById("degrees")).value = obj.Drehwinkel(document.getElementById("steplength")).value = obj.Schrittl\u00E4nge;
-  loading = false;
+  obj = JSON.parse(event.target.result);
+  document.getElementById("axiom1").value = obj.Axiom1;
+  document.getElementById("rule1").value = obj.Rule1;
+  document.getElementById("countIterations").value = obj.IterationsCount;
+  document.getElementById("degrees").value = obj.Drehwinkel;
+  document.getElementById("steplength").value = obj.Schrittl\u00E4nge;
+  document.getElementById("sentence").value = obj.Satz;
 }
-btn.addEventListener("click", () => {
+document.getElementById("btnDownload").addEventListener("click", () => {
   let Satz = document.getElementById("sentence").value;
   let Axiom1 = document.getElementById("axiom1").value;
   let Rule1 = document.getElementById("rule1").value;
