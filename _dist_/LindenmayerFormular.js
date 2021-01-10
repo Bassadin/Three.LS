@@ -36,14 +36,17 @@ export class LindenmayerFormular {
   }
   addListenerToRemoveButton() {
     this.btnRemove.addEventListener("click", () => {
-      const allRulesLength = this.rulesWrapper.children.length;
-      if (allRulesLength > 1) {
-        document.querySelector("#count" + this.countAllRules).remove();
-        this.countAllRules--;
-      }
-      if (this.countAllRules <= 1)
-        this.btnRemove.disabled = true;
+      this.removeRuleField();
     });
+  }
+  removeRuleField() {
+    const allRulesLength = this.rulesWrapper.children.length;
+    if (allRulesLength > 1) {
+      document.querySelector("#count" + this.countAllRules).remove();
+      this.countAllRules--;
+    }
+    if (this.countAllRules <= 1)
+      this.btnRemove.disabled = true;
   }
   addListenerToDownloadButton() {
     this.btnDownload.addEventListener("click", () => {
