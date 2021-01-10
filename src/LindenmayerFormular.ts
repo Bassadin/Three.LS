@@ -2,6 +2,8 @@ import { Turtle3D } from './Turtles/Turtle3D';
 import { Rule } from './Rule';
 import { LSystem } from './LSystem';
 import { Utils } from './Utils';
+import { OBJExporter } from 'three/examples/jsm/exporters/OBJExporter.js';
+import { scene } from './index';
 
 export class LindenmayerFormular {
     private static instance: LindenmayerFormular;
@@ -10,6 +12,8 @@ export class LindenmayerFormular {
     private btnRemove: HTMLInputElement;
     private btnUpload: HTMLInputElement;
     private btnDownload: HTMLInputElement;
+    private objDownloadButton: HTMLInputElement;
+    private fileUpload: HTMLInputElement;
 
     private rulesWrapper: HTMLDivElement;
 
@@ -21,12 +25,16 @@ export class LindenmayerFormular {
         this.btnUpload = document.querySelector('#btnUpload');
         this.btnDownload = document.querySelector('#btnDownload');
         this.rulesWrapper = document.querySelector('#rulesWrapper');
+        this.objDownloadButton = document.querySelector('#btnDownloadOBJ');
+        this.fileUpload = document.querySelector('#jsonUpload');
+
         this.countAllRules = 1;
 
         this.addListenerToAddButton();
         this.addListenerToRemoveButton();
         this.addListenerToDownloadButton();
         this.addListenerToUploadButton();
+        this.addListenerToOBJDownloadButton();
     }
 
     public static getInstance(): LindenmayerFormular {
@@ -69,9 +77,9 @@ export class LindenmayerFormular {
                 '</label> <input class="interface__input-field rules" type="text" id="rule' +
                 (this.countAllRules + 1) +
                 '"> </div> </div>'
-        )
-        this.countAllRules++
-        if (this.btnRemove.disabled == true) this.btnRemove.disabled = false
+        );
+        this.countAllRules++;
+        if (this.btnRemove.disabled == true) this.btnRemove.disabled = false;
     }
 
     private addListenerToRemoveButton(): void {
@@ -93,13 +101,46 @@ export class LindenmayerFormular {
 
     private addListenerToDownloadButton(): void {
         this.btnDownload.addEventListener('click', () => {
-            //Add download stuff here
+            let Satz = (document.getElementById('sentence') as HTMLInputElement).value;
+            let Axiom1 = (document.getElementById('axiom1') as HTMLInputElement).value;
+            let Rule1 = (document.getElementById('rule1') as HTMLInputElement).value;
+            //To be added
+            let IterationsCount = (document.getElementById('countIterations') as HTMLInputElement).value;
+            //
+            let Drehwinkel = (document.getElementById('degrees') as HTMLInputElement).value;
+            let Schrittlänge = (document.getElementById('steplength') as HTMLInputElement).value;
+
+            let newObject = {
+                Satz: Satz,
+                Axiom1: Axiom1,
+                Rule1: Rule1,
+                IterationsCount: IterationsCount,
+                Drehwinkel: Drehwinkel,
+                Schrittlänge: IterationsCount,
+            };
+            //      }
+            let json_string = JSON.stringify(newObject, undefined, 2);
+            let link = document.createElement('a');
+            link.download = 'data.json';
+            let blob = new Blob([json_string], { type: 'text/plain' });
+            link.href = window.URL.createObjectURL(blob);
+            link.click();
         });
     }
 
     private addListenerToUploadButton(): void {
         this.btnUpload.addEventListener('click', () => {
-            //Add upload stuff here
+            let reader = new FileReader();
+            reader.onload = (event: any) => {
+                let obj: any = JSON.parse(reader.result.toString());
+                (<HTMLInputElement>document.getElementById('axiom1')).value = obj.Axiom1;
+                (<HTMLInputElement>document.getElementById('rule1')).value = obj.Rule1;
+                (<HTMLInputElement>document.getElementById('countIterations')).value = obj.IterationsCount;
+                (<HTMLInputElement>document.getElementById('degrees')).value = obj.Drehwinkel;
+                (<HTMLInputElement>document.getElementById('steplength')).value = obj.Schrittlänge;
+                (<HTMLInputElement>document.getElementById('sentence')).value = obj.Satz;
+            };
+            reader.readAsText(this.fileUpload.files[0]);
         });
     }
 
@@ -137,5 +178,19 @@ export class LindenmayerFormular {
         let turtle: Turtle3D = new Turtle3D(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees));
 
         return turtle;
+    }
+
+    private addListenerToOBJDownloadButton(): void {
+        //Download rules presets
+        this.objDownloadButton.addEventListener('click', () => {
+            const exporter = new OBJExporter();
+            const result = exporter.parse(scene);
+
+            let link = document.createElement('a');
+            link.download = 'l_system.obj';
+            let blob = new Blob([result], { type: 'text/plain' });
+            link.href = window.URL.createObjectURL(blob);
+            link.click();
+        });
     }
 }

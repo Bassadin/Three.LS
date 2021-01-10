@@ -5,53 +5,6 @@ import { Turtle3D } from './Turtles/Turtle3D';
 import { LindenmayerFormular } from './LindenmayerFormular';
 import Stats from 'stats-js';
 
-//Funktion für import
-document.getElementById('file').addEventListener('change', (event: any) => {
-    var reader = new FileReader();
-    reader.onload = onReaderLoad;
-    reader.readAsText(event.target.files[0]);
-});
-
-function onReaderLoad(event: any) {
-    let obj: any;
-    console.log(event.target.result);
-    obj = JSON.parse(event.target.result);
-    (<HTMLInputElement>document.getElementById('axiom1')).value = obj.Axiom1;
-    (<HTMLInputElement>document.getElementById('rule1')).value = obj.Rule1;
-    (<HTMLInputElement>document.getElementById('countIterations')).value = obj.IterationsCount;
-    (<HTMLInputElement>document.getElementById('degrees')).value = obj.Drehwinkel;
-    (<HTMLInputElement>document.getElementById('steplength')).value = obj.Schrittlänge;
-    (<HTMLInputElement>document.getElementById('sentence')).value = obj.Satz;
-}
-
-//Saver hier
-document.getElementById('btnDownload').addEventListener('click', () => {
-    let Satz = (document.getElementById('sentence') as HTMLInputElement).value;
-    let Axiom1 = (document.getElementById('axiom1') as HTMLInputElement).value;
-    let Rule1 = (document.getElementById('rule1') as HTMLInputElement).value;
-    //To be added
-    let IterationsCount = (document.getElementById('countIterations') as HTMLInputElement).value;
-    //
-    let Drehwinkel = (document.getElementById('degrees') as HTMLInputElement).value;
-    let Schrittlänge = (document.getElementById('steplength') as HTMLInputElement).value;
-
-    var newObject = {
-        Satz: Satz,
-        Axiom1: Axiom1,
-        Rule1: Rule1,
-        IterationsCount: IterationsCount,
-        Drehwinkel: Drehwinkel,
-        Schrittlänge: IterationsCount,
-    };
-    //      }
-    var json_string = JSON.stringify(newObject, undefined, 2);
-    var link = document.createElement('a');
-    link.download = 'data.json';
-    var blob = new Blob([json_string], { type: 'text/plain' });
-    link.href = window.URL.createObjectURL(blob);
-    link.click();
-});
-
 // #region Performance Stats
 let stats: Stats = new Stats();
 stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
@@ -60,12 +13,10 @@ stats.dom.style.setProperty('right', '0');
 document.body.appendChild(stats.dom);
 // #endregion Performance Stats
 
+export let scene: Scene;
 let camera: THREE.PerspectiveCamera;
-let scene: Scene;
 let renderer: Renderer;
 let controls: TrackballControls;
-
-const btnGenerate: HTMLInputElement = document.querySelector('#btnGenerate');
 
 const lindenmayerFormular: LindenmayerFormular = LindenmayerFormular.getInstance();
 
@@ -78,6 +29,7 @@ if (scene !== undefined) {
     animate();
 }
 
+const btnGenerate: HTMLInputElement = document.querySelector('#btnGenerate');
 btnGenerate.addEventListener('click', () => {
     let newTurtle: Turtle3D = lindenmayerFormular.generateLSystemImage();
 
@@ -102,7 +54,7 @@ function init(turtle: Turtle3D) {
 
     scene = new THREE.Scene();
 
-    turtle.render(scene);
+    turtle.addGeometryToScene(scene);
 
     renderer.render(scene, camera);
 
@@ -114,7 +66,7 @@ function repaint(turtle: Turtle3D) {
         const obj = scene.children[i];
         scene.remove(obj);
     }
-    turtle.render(scene);
+    turtle.addGeometryToScene(scene);
 }
 
 function animate() {
