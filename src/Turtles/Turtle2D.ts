@@ -4,7 +4,7 @@ import { MeshLine, MeshLineMaterial } from 'three.meshline';
 import { BaseTurtle } from './BaseTurtle';
 
 export class Turtle2D extends BaseTurtle {
-    render(scene: THREE.Scene): void {
+    addGeometryToScene(scene: THREE.Scene): void {
         //Set the line material
         const material = new MeshLineMaterial({
             color: 0xffffff,

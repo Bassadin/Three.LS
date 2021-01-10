@@ -15,7 +15,7 @@ import { MeshLine, MeshLineMaterial } from 'three.meshline';
 import { BaseTurtle } from './BaseTurtle';
 
 export class Turtle3D extends BaseTurtle {
-    render(scene: THREE.Scene): void {
+    addGeometryToScene(scene: THREE.Scene): void {
         console.time('Geometry creation');
 
         let lineVertices: number[] = [];

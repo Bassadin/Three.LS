@@ -20,7 +20,7 @@ export abstract class BaseTurtle {
         this.rotationStepSize = rotationStepSize;
     }
 
-    abstract render(scene: THREE.Scene): void;
+    abstract addGeometryToScene(scene: THREE.Scene): void;
 
     saveState(): void {
         this.positionSaveStateArray.push(this.currentPosition.clone());
