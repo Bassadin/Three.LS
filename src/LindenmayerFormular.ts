@@ -62,15 +62,19 @@ export class LindenmayerFormular {
 
     private addListenerToRemoveButton(): void {
         this.btnRemove.addEventListener('click', () => {
-            const allRulesLength = this.rulesWrapper.children.length
-
-            if (allRulesLength > 1) {
-                document.querySelector('#count' + this.countAllRules).remove()
-                this.countAllRules--
-            }
-
-            if (this.countAllRules <= 1) this.btnRemove.disabled = true
+            this.removeRuleField();
         })
+    }
+
+    public removeRuleField(): void {
+        const allRulesLength = this.rulesWrapper.children.length
+
+        if (allRulesLength > 1) {
+            document.querySelector('#count' + this.countAllRules).remove()
+            this.countAllRules--
+        }
+
+        if (this.countAllRules <= 1) this.btnRemove.disabled = true
     }
 
     private addListenerToDownloadButton(): void {
