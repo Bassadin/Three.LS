@@ -4,7 +4,7 @@ import { LSystem } from './LSystem'
 import { Utils } from './Utils'
 
 export class LindenmayerFormular {
-    private static instance: LindenmayerFormular;
+    private static instance: LindenmayerFormular
 
     private btnAdd: HTMLInputElement
     private btnRemove: HTMLInputElement
@@ -16,22 +16,22 @@ export class LindenmayerFormular {
     private countAllRules: number
 
     private constructor() {
-            this.btnAdd = document.querySelector('#btnAddRule')
-            this.btnRemove = document.querySelector('#btnRemoveRule')
-            this.btnUpload = document.querySelector('#btnUpload')
-            this.btnDownload = document.querySelector('#btnDownload')
-            this.rulesWrapper = document.querySelector('#rulesWrapper')
-            this.countAllRules = 1
+        this.btnAdd = document.querySelector('#btnAddRule')
+        this.btnRemove = document.querySelector('#btnRemoveRule')
+        this.btnUpload = document.querySelector('#btnUpload')
+        this.btnDownload = document.querySelector('#btnDownload')
+        this.rulesWrapper = document.querySelector('#rulesWrapper')
+        this.countAllRules = 1
 
-            this.addListenerToAddButton()
-            this.addListenerToRemoveButton()
-            this.addListenerToDownloadButton()
-            this.addListenerToUploadButton()
+        this.addListenerToAddButton()
+        this.addListenerToRemoveButton()
+        this.addListenerToDownloadButton()
+        this.addListenerToUploadButton()
     }
 
     public static getInstance(): LindenmayerFormular {
-        if(LindenmayerFormular.instance == undefined)
-            LindenmayerFormular.instance = new LindenmayerFormular();
+        if (LindenmayerFormular.instance == undefined)
+            LindenmayerFormular.instance = new LindenmayerFormular()
         return LindenmayerFormular.instance
     }
 
@@ -72,7 +72,7 @@ export class LindenmayerFormular {
     private addListenerToDownloadButton(): void {
         this.btnDownload.addEventListener('click', () => {
             //Add download stuff here
-        });
+        })
     }
 
     private addListenerToUploadButton(): void {
@@ -84,19 +84,19 @@ export class LindenmayerFormular {
     public generateLSystemImage(): Turtle3D {
         const axioms: string[] = new Array()
         const rules: string[] = new Array()
-    
+
         document.querySelectorAll('.axioms').forEach((element) => {
             axioms.push((<HTMLInputElement>element).value.toUpperCase())
         })
-    
+
         document.querySelectorAll('.rules').forEach((element) => {
             rules.push((<HTMLInputElement>element).value.toUpperCase())
         })
-    
+
         const sentence: string = (<HTMLInputElement>(
             document.querySelector('#sentence')
         )).value.toUpperCase()
-    
+
         const iterations: number = parseInt(
             (<HTMLInputElement>document.querySelector('#countIterations')).value
         )
@@ -107,21 +107,20 @@ export class LindenmayerFormular {
             parseInt(
                 (<HTMLInputElement>document.querySelector('#steplength')).value
             ) / 10
-    
+
         let ruleset: Rule[] = []
-    
+
         for (let i = 0; i < axioms.length; i++) {
             ruleset.push(new Rule(axioms[i], rules[i]))
         }
-    
+
         let lsys: LSystem = new LSystem(sentence, ruleset)
-    
+
         console.time('L System generation')
-        for (let i: number = 0; i < iterations; i++)
-            lsys.generate()
+        for (let i: number = 0; i < iterations; i++) lsys.generate()
 
         console.timeEnd('L System generation')
-    
+
         let turtle: Turtle3D = new Turtle3D(
             lsys.getSentence(),
             steplength,
