@@ -10,7 +10,6 @@ import {BaseTurtle} from "./BaseTurtle.js";
 export class Turtle3D extends BaseTurtle {
   render(scene) {
     console.time("Geometry creation");
-    const material = new LineBasicMaterial({vertexColors: true});
     let lineVertices = [];
     const bufferGeometry = new BufferGeometry();
     const colorsArray = [];
@@ -19,9 +18,9 @@ export class Turtle3D extends BaseTurtle {
         case "F":
           const currentPositionBeforeMove = this.currentPosition.clone();
           let newColors = [
-            Math.random() * 0.5 + 0.5,
-            Math.random() * 0.5 + 0.5,
-            Math.random() * 0.5 + 0.5
+            Math.random() * 0.7 + 0.3,
+            Math.random() * 0.7 + 0.3,
+            Math.random() * 0.7 + 0.3
           ];
           lineVertices.push(currentPositionBeforeMove.x, currentPositionBeforeMove.y, currentPositionBeforeMove.z);
           colorsArray.push(...newColors);
@@ -67,6 +66,9 @@ export class Turtle3D extends BaseTurtle {
     }
     bufferGeometry.setAttribute("position", new Float32BufferAttribute(lineVertices, 3));
     bufferGeometry.setAttribute("color", new Float32BufferAttribute(colorsArray, 3));
+    const material = new LineBasicMaterial({
+      vertexColors: true
+    });
     const line = new LineSegments(bufferGeometry, material);
     scene.add(line);
     console.timeEnd("Geometry creation");
