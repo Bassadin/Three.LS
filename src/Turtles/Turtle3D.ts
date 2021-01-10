@@ -10,137 +10,87 @@ import {
     Line,
     LineBasicMaterial,
     LineSegments,
-} from 'three'
-import { MeshLine, MeshLineMaterial } from 'three.meshline'
-import { BaseTurtle } from './BaseTurtle'
+} from 'three';
+import { MeshLine, MeshLineMaterial } from 'three.meshline';
+import { BaseTurtle } from './BaseTurtle';
 
 export class Turtle3D extends BaseTurtle {
     render(scene: THREE.Scene): void {
-        console.time('Geometry creation')
+        console.time('Geometry creation');
 
-        let lineVertices: number[] = []
-        const bufferGeometry: BufferGeometry = new BufferGeometry()
-        const colorsArray: number[] = []
+        let lineVertices: number[] = [];
+        const bufferGeometry: BufferGeometry = new BufferGeometry();
+        const colorsArray: number[] = [];
 
         for (let i: number = 0; i < this.instructionString.length; i++) {
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
-                    const currentPositionBeforeMove = this.currentPosition.clone()
+                    const currentPositionBeforeMove = this.currentPosition.clone();
 
-                    let newColors = [
-                        Math.random() * 0.7 + 0.3,
-                        Math.random() * 0.7 + 0.3,
-                        Math.random() * 0.7 + 0.3,
-                    ]
+                    let newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
 
-                    lineVertices.push(
-                        currentPositionBeforeMove.x,
-                        currentPositionBeforeMove.y,
-                        currentPositionBeforeMove.z
-                    )
-                    colorsArray.push(...newColors)
+                    lineVertices.push(currentPositionBeforeMove.x, currentPositionBeforeMove.y, currentPositionBeforeMove.z);
+                    colorsArray.push(...newColors);
 
-                    this.move()
+                    this.move();
 
-                    const currentPositionAfterMove = this.currentPosition.clone()
-                    lineVertices.push(
-                        currentPositionAfterMove.x,
-                        currentPositionAfterMove.y,
-                        currentPositionAfterMove.z
-                    )
-                    colorsArray.push(...newColors)
+                    const currentPositionAfterMove = this.currentPosition.clone();
+                    lineVertices.push(currentPositionAfterMove.x, currentPositionAfterMove.y, currentPositionAfterMove.z);
+                    colorsArray.push(...newColors);
 
-                    break
+                    break;
                 case 'G': //Move in current direction
-                    this.move()
-                    break
+                    this.move();
+                    break;
                 case '[':
-                    this.saveState()
-                    break
+                    this.saveState();
+                    break;
                 case ']':
-                    this.loadState()
-                    break
+                    this.loadState();
+                    break;
                 case '+':
-                    this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(
-                            new Vector3(0, 0, 1),
-                            this.rotationStepSize
-                        )
-                    )
-                    break
+                    this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), this.rotationStepSize));
+                    break;
                 case '-':
                     this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(
-                            new Vector3(0, 0, -1),
-                            this.rotationStepSize
-                        )
-                    )
-                    break
+                        new Quaternion().setFromAxisAngle(new Vector3(0, 0, -1), this.rotationStepSize)
+                    );
+                    break;
                 case '&':
-                    this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(
-                            new Vector3(0, 1, 0),
-                            this.rotationStepSize
-                        )
-                    )
-                    break
+                    this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), this.rotationStepSize));
+                    break;
                 case '∧': //Achtung, ∧ (mathematisches UND) und nicht ^ :D
                     this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(
-                            new Vector3(0, -1, 0),
-                            this.rotationStepSize
-                        )
-                    )
-                    break
+                        new Quaternion().setFromAxisAngle(new Vector3(0, -1, 0), this.rotationStepSize)
+                    );
+                    break;
                 case '\\':
-                    this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(
-                            new Vector3(1, 0, 0),
-                            this.rotationStepSize
-                        )
-                    )
-                    break
+                    this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), this.rotationStepSize));
+                    break;
                 case '/':
                     this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(
-                            new Vector3(-1, 0, 0),
-                            this.rotationStepSize
-                        )
-                    )
-                    break
+                        new Quaternion().setFromAxisAngle(new Vector3(-1, 0, 0), this.rotationStepSize)
+                    );
+                    break;
                 case '|':
-                    this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(
-                            new Vector3(1, 0, 0),
-                            Math.PI
-                        )
-                    )
-                    break
+                    this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), Math.PI));
+                    break;
                 default:
-                    console.log(
-                        'Unknown axiom character: ' +
-                            this.instructionString.charAt(i)
-                    )
-                    break
+                    console.log('Unknown axiom character: ' + this.instructionString.charAt(i));
+                    break;
             }
         }
 
         // console.log('Vertices', lineVertices)
 
-        bufferGeometry.setAttribute(
-            'position',
-            new Float32BufferAttribute(lineVertices, 3)
-        )
-        bufferGeometry.setAttribute(
-            'color',
-            new Float32BufferAttribute(colorsArray, 3)
-        )
+        bufferGeometry.setAttribute('position', new Float32BufferAttribute(lineVertices, 3));
+        bufferGeometry.setAttribute('color', new Float32BufferAttribute(colorsArray, 3));
 
         const material = new LineBasicMaterial({
             vertexColors: true,
-        })
-        const line = new LineSegments(bufferGeometry, material)
-        scene.add(line)
+        });
+        const line = new LineSegments(bufferGeometry, material);
+        scene.add(line);
 
         // const line = new MeshLine()
         // line.setGeometry(bufferGeometry, (p: any) => 2 + Math.sin(50 * p))
@@ -151,14 +101,14 @@ export class Turtle3D extends BaseTurtle {
         // const mesh = new Mesh(line, material)
         // scene.add(mesh)
 
-        console.timeEnd('Geometry creation')
+        console.timeEnd('Geometry creation');
     }
 
     move(): void {
         let absoluteMovement: Vector3 = new Vector3(0, 1, 0)
             .applyQuaternion(this.currentRotation.clone())
-            .multiplyScalar(this.stepLength)
+            .multiplyScalar(this.stepLength);
 
-        this.currentPosition.add(absoluteMovement)
+        this.currentPosition.add(absoluteMovement);
     }
 }
