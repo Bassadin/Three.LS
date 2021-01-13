@@ -28,18 +28,11 @@ body {
 }
 
 .interface__btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  font-size: 1.25rem;
-  background-color: #2E9AFE;
-  border: none;
+  min-width: 25px;
 }
 
 .interface__btn:hover {
   cursor: pointer;
-  background-color: #2E64FE;
-  color: white;
 }
 
 .interface__btn:focus {
@@ -80,18 +73,11 @@ body {
 }
 
 .interface__load-btn {
-  font-weight: bold;
-  padding: 0.5rem 1rem;
-  background-color: #2E9AFE;
-  border: none;
-  border-radius: 20px;
   min-width: 100px;
 }
 
 .interface__load-btn:hover {
   cursor: pointer;
-  background-color: #2E64FE;
-  color: white;
 }
 
 .interface__load-btn:focus {
@@ -100,4 +86,24 @@ body {
 
 .interface__load-btn:first-child {
   margin-right: 0.5rem;
+}
+
+.interface__generate-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.interface__generate-btn {
+  align-self: flex-end;
+  margin: 0 !important;
+}
+
+.interface__upload-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.interface__upload-wrapper--left {
+  justify-content: flex-start;
 }
