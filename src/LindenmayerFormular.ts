@@ -146,7 +146,11 @@ export class LindenmayerFormular {
             for (let i = 1; i <= staticRuleCounter; i++) {
                 this.removeRuleField();
             }
-            reader.readAsText(this.fileUpload.files[0]);
+
+            if(!this.fileUpload.files[0])
+                alert('Please select a file')
+            else
+                reader.readAsText(this.fileUpload.files[0]);
         });
     }
 
