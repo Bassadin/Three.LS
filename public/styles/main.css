@@ -86,7 +86,7 @@ body {
 
 .interface__generate-wrapper {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .interface__generate-btn {
