@@ -86,52 +86,51 @@ export class LindenmayerFormular {
     private addListenerToRemoveButton(): void {
         this.btnRemove.addEventListener('click', () => {
             this.removeRuleField();
-        })
+        });
     }
 
     public removeRuleField(): void {
-        const allRulesLength = this.rulesWrapper.children.length
+        const allRulesLength = this.rulesWrapper.children.length;
 
         if (allRulesLength > 1) {
-            document.querySelector('#count' + this.countAllRules).remove()
-            this.countAllRules--
+            document.querySelector('#count' + this.countAllRules).remove();
+            this.countAllRules--;
         }
 
-        if (this.countAllRules <= 1) this.btnRemove.disabled = true
+        if (this.countAllRules <= 1) this.btnRemove.disabled = true;
     }
 
     private addListenerToDownloadButton(): void {
         this.btnDownload.addEventListener('click', () => {
-            let Satz = (document.getElementById('sentence') as HTMLInputElement).value;
-            let RuleString = [];
-            let AxiomString = [];
+            let baseAxiom = (document.getElementById('sentence') as HTMLInputElement).value;
+            let ruleString = [];
+            let axiomString = [];
             //test
-            for(let j: number = 1; j <= this.countAllRules; j++) {
+            for (let j: number = 1; j <= this.countAllRules; j++) {
                 let value: string = j.toString();
-                RuleString[j-1] =  (document.getElementById('rule' + value) as HTMLInputElement).value;
-                AxiomString[j-1] =  (document.getElementById('axiom' + value) as HTMLInputElement).value;
-             }
-            
+                ruleString[j - 1] = (document.getElementById('rule' + value) as HTMLInputElement).value;
+                axiomString[j - 1] = (document.getElementById('axiom' + value) as HTMLInputElement).value;
+            }
 
-            let IterationsCount = (document.getElementById('countIterations') as HTMLInputElement).value;
+            let iterationsCount = (document.getElementById('countIterations') as HTMLInputElement).value;
             //
-            let Drehwinkel = (document.getElementById('degrees') as HTMLInputElement).value;
-            let Schrittlänge = (document.getElementById('steplength') as HTMLInputElement).value;
+            let turningAngle = (document.getElementById('degrees') as HTMLInputElement).value;
+            let stepLength = (document.getElementById('steplength') as HTMLInputElement).value;
 
             let newObject = {
-                Satz: Satz,
-                Axiom1: AxiomString,
-                Rule1: RuleString,
-                IterationsCount: IterationsCount,
-                Drehwinkel: Drehwinkel,
-                Schrittlänge: Schrittlänge,
+                Satz: baseAxiom,
+                Axiom1: axiomString,
+                Rule1: ruleString,
+                IterationsCount: iterationsCount,
+                Drehwinkel: turningAngle,
+                Schrittlänge: stepLength,
             };
             let json_string = JSON.stringify(newObject, undefined, 2);
             let link = document.createElement('a');
             link.download = 'data.json';
             let blob = new Blob([json_string], { type: 'text/plain' });
             link.href = window.URL.createObjectURL(blob);
-           link.click();
+            link.click();
         });
     }
 
@@ -141,19 +140,18 @@ export class LindenmayerFormular {
             reader.onload = (event: any) => {
                 let obj: any = JSON.parse(reader.result.toString());
                 let moreRulesExist = true;
-                console.log(obj.Rule1[1])
+                console.log(obj.Rule1[1]);
                 //Liest X Rule und Axiom Werte ab
-                for(let j = 1; moreRulesExist == true; j++) {
+                for (let j = 1; moreRulesExist == true; j++) {
                     let value: string = j.toString();
-                    if(obj.Rule1[j-1] == null){
+                    if (obj.Rule1[j - 1] == null) {
                         moreRulesExist = false;
                         this.removeRuleField();
+                    } else {
+                        (<HTMLInputElement>document.getElementById('rule' + value)).value = obj.Rule1[j - 1];
+                        (<HTMLInputElement>document.getElementById('axiom' + value)).value = obj.Axiom1[j - 1];
+                        this.addNewRuleField();
                     }
-                    else{
-                    (<HTMLInputElement>document.getElementById('rule' + value)).value = obj.Rule1[j-1];
-                    (<HTMLInputElement>document.getElementById('axiom' + value)).value = obj.Axiom1[j-1];
-                    this.addNewRuleField();
-                 }
                 }
                 (<HTMLInputElement>document.getElementById('countIterations')).value = obj.IterationsCount;
                 (<HTMLInputElement>document.getElementById('degrees')).value = obj.Drehwinkel;
@@ -161,9 +159,9 @@ export class LindenmayerFormular {
                 (<HTMLInputElement>document.getElementById('sentence')).value = obj.Satz;
             };
             //Reduzierung von rule Feldern
-            let staticRuleCounter = this.countAllRules;   
-            for(let i = 1; i <= staticRuleCounter; i++){
-             this.removeRuleField();
+            let staticRuleCounter = this.countAllRules;
+            for (let i = 1; i <= staticRuleCounter; i++) {
+                this.removeRuleField();
             }
             reader.readAsText(this.fileUpload.files[0]);
         });
