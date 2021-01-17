@@ -12,4 +12,4 @@ npm start
 ```
 
 ## GitHub Pages Version
-https://vads.github.io/DaVerMePro-MIB5-Three.js/build/
+https://vads.github.io/DaVerMePro-MIB5-Three.js/
