@@ -18,7 +18,6 @@ export class LindenmayerFormular {
     private rulesWrapper: HTMLDivElement;
 
     private countAllRules: number;
-    private amountRules: number = 1;
 
     private constructor() {
         this.btnAdd = document.querySelector('#btnAddRule');
@@ -45,39 +44,24 @@ export class LindenmayerFormular {
 
     private addListenerToAddButton(): void {
         this.btnAdd.addEventListener('click', () => {
-            this.rulesWrapper.insertAdjacentHTML(
-                'beforeend',
-                ' <div class="interface__rule-wrapper" style="margin-top: 1rem;" id="count' +
-                    (this.countAllRules + 1) +
-                    '"> <div class="interface__input-inner-wrapper"> <label>Axiom ' +
-                    (this.countAllRules + 1) +
-                    '</label> <input class="interface__input-field axioms" type="text" id="axiom' +
-                    (this.countAllRules + 1) +
-                    '" maxlength="1""> </div> <div class="interface__input-inner-wrapper"> <label>Regel ' +
-                    (this.countAllRules + 1) +
-                    '</label> <input class="interface__input-field rules" type="text" id="rule' +
-                    (this.countAllRules + 1) +
-                    '"> </div> </div>'
-            );
-            this.countAllRules++;
-            if (this.btnRemove.disabled == true) this.btnRemove.disabled = false;
+            this.addNewRuleField();
         });
     }
 
-    public addNewRuleField(): void {
+    private addNewRuleField(): void {
         this.rulesWrapper.insertAdjacentHTML(
             'beforeend',
             ' <div class="interface__rule-wrapper" style="margin-top: 1rem;" id="count' +
                 (this.countAllRules + 1) +
-                '"> <div class="interface__input-inner-wrapper"> <label>Axiom ' +
+                '"> <div class="interface__input-inner-wrapper"> <label>A' +
                 (this.countAllRules + 1) +
                 '</label> <input class="interface__input-field axioms" type="text" id="axiom' +
                 (this.countAllRules + 1) +
-                '" maxlength="1""> </div> <div class="interface__input-inner-wrapper"> <label>Regel ' +
+                '" maxlength="1" placeholder="F" required> </div> <div class="interface__input-inner-wrapper"> <label>R' +
                 (this.countAllRules + 1) +
                 '</label> <input class="interface__input-field rules" type="text" id="rule' +
                 (this.countAllRules + 1) +
-                '"> </div> </div>'
+                '" placeholder="FF+[+F-F-F]-[-F+F+F]" required> </div> </div>'
         );
         this.countAllRules++;
         if (this.btnRemove.disabled == true) this.btnRemove.disabled = false;
@@ -89,7 +73,7 @@ export class LindenmayerFormular {
         });
     }
 
-    public removeRuleField(): void {
+    private removeRuleField(): void {
         const allRulesLength = this.rulesWrapper.children.length;
 
         if (allRulesLength > 1) {

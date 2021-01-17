@@ -30,7 +30,8 @@ if (scene !== undefined) {
 }
 
 const btnGenerate: HTMLInputElement = document.querySelector('#btnGenerate');
-btnGenerate.addEventListener('click', () => {
+btnGenerate.addEventListener('click', (e) => {
+    e.preventDefault()
     let newTurtle: Turtle3D = lindenmayerFormular.generateLSystemImage();
 
     if (scene !== undefined) {
