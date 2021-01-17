@@ -6,6 +6,7 @@ import {OBJExporter} from "../web_modules/three/examples/jsm/exporters/OBJExport
 import {scene} from "./index.js";
 export class LindenmayerFormular {
   constructor() {
+    this.amountRules = 1;
     this.btnAdd = document.querySelector("#btnAddRule");
     this.btnRemove = document.querySelector("#btnRemoveRule");
     this.btnUpload = document.querySelector("#btnUpload");
@@ -55,19 +56,24 @@ export class LindenmayerFormular {
   }
   addListenerToDownloadButton() {
     this.btnDownload.addEventListener("click", () => {
-      let Satz = document.getElementById("sentence").value;
-      let Axiom1 = document.getElementById("axiom1").value;
-      let Rule1 = document.getElementById("rule1").value;
-      let IterationsCount = document.getElementById("countIterations").value;
-      let Drehwinkel = document.getElementById("degrees").value;
-      let Schrittl\u00E4nge = document.getElementById("steplength").value;
+      let baseAxiom = document.getElementById("sentence").value;
+      let ruleString = [];
+      let axiomString = [];
+      for (let j = 1; j <= this.countAllRules; j++) {
+        let value = j.toString();
+        ruleString[j - 1] = document.getElementById("rule" + value).value;
+        axiomString[j - 1] = document.getElementById("axiom" + value).value;
+      }
+      let iterationsCount = document.getElementById("countIterations").value;
+      let turningAngle = document.getElementById("degrees").value;
+      let stepLength = document.getElementById("steplength").value;
       let newObject = {
-        Satz,
-        Axiom1,
-        Rule1,
-        IterationsCount,
-        Drehwinkel,
-        Schrittl\u00E4nge: IterationsCount
+        Satz: baseAxiom,
+        Axiom1: axiomString,
+        Rule1: ruleString,
+        IterationsCount: iterationsCount,
+        Drehwinkel: turningAngle,
+        Schrittl\u00E4nge: stepLength
       };
       let json_string = JSON.stringify(newObject, void 0, 2);
       let link = document.createElement("a");
@@ -82,13 +88,28 @@ export class LindenmayerFormular {
       let reader = new FileReader();
       reader.onload = (event) => {
         let obj = JSON.parse(reader.result.toString());
-        document.getElementById("axiom1").value = obj.Axiom1;
-        document.getElementById("rule1").value = obj.Rule1;
+        let moreRulesExist = true;
+        console.log(obj.Rule1[1]);
+        for (let j = 1; moreRulesExist == true; j++) {
+          let value = j.toString();
+          if (obj.Rule1[j - 1] == null) {
+            moreRulesExist = false;
+            this.removeRuleField();
+          } else {
+            document.getElementById("rule" + value).value = obj.Rule1[j - 1];
+            document.getElementById("axiom" + value).value = obj.Axiom1[j - 1];
+            this.addNewRuleField();
+          }
+        }
         document.getElementById("countIterations").value = obj.IterationsCount;
         document.getElementById("degrees").value = obj.Drehwinkel;
         document.getElementById("steplength").value = obj.Schrittl\u00E4nge;
         document.getElementById("sentence").value = obj.Satz;
       };
+      let staticRuleCounter = this.countAllRules;
+      for (let i = 1; i <= staticRuleCounter; i++) {
+        this.removeRuleField();
+      }
       reader.readAsText(this.fileUpload.files[0]);
     });
   }
