@@ -18,6 +18,7 @@ export class LindenmayerFormular {
     private rulesWrapper: HTMLDivElement;
 
     private countAllRules: number;
+    private amountRules: number = 1;
 
     private constructor() {
         this.btnAdd = document.querySelector('#btnAddRule');
@@ -102,9 +103,16 @@ export class LindenmayerFormular {
     private addListenerToDownloadButton(): void {
         this.btnDownload.addEventListener('click', () => {
             let Satz = (document.getElementById('sentence') as HTMLInputElement).value;
-            let Axiom1 = (document.getElementById('axiom1') as HTMLInputElement).value;
-            let Rule1 = (document.getElementById('rule1') as HTMLInputElement).value;
-            //To be added
+            let RuleString = [];
+            let AxiomString = [];
+            //test
+            for(let j: number = 1; j <= this.countAllRules; j++) {
+                let value: string = j.toString();
+                RuleString[j-1] =  (document.getElementById('rule' + value) as HTMLInputElement).value;
+                AxiomString[j-1] =  (document.getElementById('axiom' + value) as HTMLInputElement).value;
+             }
+            
+
             let IterationsCount = (document.getElementById('countIterations') as HTMLInputElement).value;
             //
             let Drehwinkel = (document.getElementById('degrees') as HTMLInputElement).value;
@@ -112,19 +120,18 @@ export class LindenmayerFormular {
 
             let newObject = {
                 Satz: Satz,
-                Axiom1: Axiom1,
-                Rule1: Rule1,
+                Axiom1: AxiomString,
+                Rule1: RuleString,
                 IterationsCount: IterationsCount,
                 Drehwinkel: Drehwinkel,
-                Schrittlänge: IterationsCount,
+                Schrittlänge: Schrittlänge,
             };
-            //      }
             let json_string = JSON.stringify(newObject, undefined, 2);
             let link = document.createElement('a');
             link.download = 'data.json';
             let blob = new Blob([json_string], { type: 'text/plain' });
             link.href = window.URL.createObjectURL(blob);
-            link.click();
+           link.click();
         });
     }
 
@@ -133,13 +140,31 @@ export class LindenmayerFormular {
             let reader = new FileReader();
             reader.onload = (event: any) => {
                 let obj: any = JSON.parse(reader.result.toString());
-                (<HTMLInputElement>document.getElementById('axiom1')).value = obj.Axiom1;
-                (<HTMLInputElement>document.getElementById('rule1')).value = obj.Rule1;
+                let moreRulesExist = true;
+                console.log(obj.Rule1[1])
+                //Liest X Rule und Axiom Werte ab
+                for(let j = 1; moreRulesExist == true; j++) {
+                    let value: string = j.toString();
+                    if(obj.Rule1[j-1] == null){
+                        moreRulesExist = false;
+                        this.removeRuleField();
+                    }
+                    else{
+                    (<HTMLInputElement>document.getElementById('rule' + value)).value = obj.Rule1[j-1];
+                    (<HTMLInputElement>document.getElementById('axiom' + value)).value = obj.Axiom1[j-1];
+                    this.addNewRuleField();
+                 }
+                }
                 (<HTMLInputElement>document.getElementById('countIterations')).value = obj.IterationsCount;
                 (<HTMLInputElement>document.getElementById('degrees')).value = obj.Drehwinkel;
                 (<HTMLInputElement>document.getElementById('steplength')).value = obj.Schrittlänge;
                 (<HTMLInputElement>document.getElementById('sentence')).value = obj.Satz;
             };
+            //Reduzierung von rule Feldern
+            let staticRuleCounter = this.countAllRules;   
+            for(let i = 1; i <= staticRuleCounter; i++){
+             this.removeRuleField();
+            }
             reader.readAsText(this.fileUpload.files[0]);
         });
     }
