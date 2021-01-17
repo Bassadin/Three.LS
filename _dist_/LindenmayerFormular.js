@@ -106,7 +106,7 @@ export class LindenmayerFormular {
         this.removeRuleField();
       }
       if (!this.fileUpload.files[0])
-        alert("Please select a file");
+        alert("Bitte Datei ausw\xE4hlen");
       else
         reader.readAsText(this.fileUpload.files[0]);
     });
