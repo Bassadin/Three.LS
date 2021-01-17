@@ -6,7 +6,6 @@ import {OBJExporter} from "../web_modules/three/examples/jsm/exporters/OBJExport
 import {scene} from "./index.js";
 export class LindenmayerFormular {
   constructor() {
-    this.amountRules = 1;
     this.btnAdd = document.querySelector("#btnAddRule");
     this.btnRemove = document.querySelector("#btnRemoveRule");
     this.btnUpload = document.querySelector("#btnUpload");
@@ -28,14 +27,11 @@ export class LindenmayerFormular {
   }
   addListenerToAddButton() {
     this.btnAdd.addEventListener("click", () => {
-      this.rulesWrapper.insertAdjacentHTML("beforeend", ' <div class="interface__rule-wrapper" style="margin-top: 1rem;" id="count' + (this.countAllRules + 1) + '"> <div class="interface__input-inner-wrapper"> <label>Axiom ' + (this.countAllRules + 1) + '</label> <input class="interface__input-field axioms" type="text" id="axiom' + (this.countAllRules + 1) + '" maxlength="1""> </div> <div class="interface__input-inner-wrapper"> <label>Regel ' + (this.countAllRules + 1) + '</label> <input class="interface__input-field rules" type="text" id="rule' + (this.countAllRules + 1) + '"> </div> </div>');
-      this.countAllRules++;
-      if (this.btnRemove.disabled == true)
-        this.btnRemove.disabled = false;
+      this.addNewRuleField();
     });
   }
   addNewRuleField() {
-    this.rulesWrapper.insertAdjacentHTML("beforeend", ' <div class="interface__rule-wrapper" style="margin-top: 1rem;" id="count' + (this.countAllRules + 1) + '"> <div class="interface__input-inner-wrapper"> <label>Axiom ' + (this.countAllRules + 1) + '</label> <input class="interface__input-field axioms" type="text" id="axiom' + (this.countAllRules + 1) + '" maxlength="1""> </div> <div class="interface__input-inner-wrapper"> <label>Regel ' + (this.countAllRules + 1) + '</label> <input class="interface__input-field rules" type="text" id="rule' + (this.countAllRules + 1) + '"> </div> </div>');
+    this.rulesWrapper.insertAdjacentHTML("beforeend", ' <div class="interface__rule-wrapper" style="margin-top: 1rem;" id="count' + (this.countAllRules + 1) + '"> <div class="interface__input-inner-wrapper"> <label>A' + (this.countAllRules + 1) + '</label> <input class="interface__input-field axioms" type="text" id="axiom' + (this.countAllRules + 1) + '" maxlength="1" placeholder="F" required> </div> <div class="interface__input-inner-wrapper"> <label>R' + (this.countAllRules + 1) + '</label> <input class="interface__input-field rules" type="text" id="rule' + (this.countAllRules + 1) + '" placeholder="FF+[+F-F-F]-[-F+F+F]" required> </div> </div>');
     this.countAllRules++;
     if (this.btnRemove.disabled == true)
       this.btnRemove.disabled = false;

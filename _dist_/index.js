@@ -20,7 +20,8 @@ if (scene !== void 0) {
   animate();
 }
 const btnGenerate = document.querySelector("#btnGenerate");
-btnGenerate.addEventListener("click", () => {
+btnGenerate.addEventListener("click", (e) => {
+  e.preventDefault();
   let newTurtle2 = lindenmayerFormular.generateLSystemImage();
   if (scene !== void 0) {
     repaint(newTurtle2);

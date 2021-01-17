@@ -10,13 +10,13 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div class="interface__wrapper">
+    <form class="interface__wrapper">
       <h3 class="interface__sub-heading">Ausgangssatz</h3>
       <div class="interface__input-wrapper">
         <div class="interface__input-inner-wrapper">
           <label>Satz</label>
           <input value="F" class="interface__input-field" type="text"
-            id="sentence">
+            id="sentence" placeholder="F" required>
         </div>
       </div>
       <div class="interface__input-wrapper">
@@ -29,14 +29,14 @@
       <div class="interface__input-wrapper" id="rulesWrapper">
         <div class="interface__rule-wrapper" id="count1">
           <div class="interface__input-inner-wrapper">
-            <label>Axiom 1</label>
+            <label>A1</label>
             <input value="F" class="interface__input-field axioms" type="text"
-              id="axiom1" maxlength="1">
+              id="axiom1" maxlength="1" placeholder="F" required>
           </div>
           <div class="interface__input-inner-wrapper">
-            <label>Regel 1</label>
+            <label>R1</label>
             <input value="FF+[+F-F-F]-[-F+F+F]" class="interface__input-field
-              rules" type="text" id="rule1">
+              rules" type="text" id="rule1" placeholder="FF+[+F-F-F]-[-F+F+F]" required>
           </div>
         </div>
       </div>
@@ -44,17 +44,17 @@
       <div class="interface__input-wrapper">
         <label>Anzahl der Iterationen</label>
         <input value="3" class="interface__input-field" type="number"
-          id="countIterations" min="0">
+          id="countIterations" min="0" placeholder="3" required>
       </div>
       <div class="interface__input-wrapper">
         <label>Drehwinkel (Grad)</label>
         <input value="25" class="interface__input-field" type="number" min="0"
-          max="360" id="degrees">
+          max="360" id="degrees" placeholder="25" required>
       </div>
       <div class="interface__input-wrapper">
         <label>Schrittlänge</label>
         <input value="2" class="interface__input-field" type="number"
-          id="steplength" min="0">
+          id="steplength" min="0" placeholder="2" required>
       </div>
       <div class="interface__input-wrapper">
         <div class="interface__upload-wrapper">
@@ -64,14 +64,14 @@
       </div>
       <div class="interface__input-wrapper">
         <div class="interface__upload-wrapper interface__upload-wrapper--left">
-          <button class="interface__load-btn" id="btnDownload">Download</button>
-          <button class="interface__load-btn" id="btnDownloadOBJ">Download OBJfile</button>
+          <button class="interface__load-btn interface__download-btn" id="btnDownload">Download</button>
+          <button class="interface__load-btn interface__download-btn" id="btnDownloadOBJ">Download OBJ</button>
         </div>
       </div>
       <div class="interface__generate-wrapper">
-        <button class="interface__load-btn interface__generate-btn" id="btnGenerate">Generieren</button>
+        <button type="submit" class="interface__load-btn interface__generate-btn" id="btnGenerate">Generieren</button>
       </div>
-    </div>
+    </form>
     <script type="module" src="_dist_/index.js"></script>
   </body>
 </html>

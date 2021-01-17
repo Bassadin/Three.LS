@@ -73,7 +73,11 @@ body {
 }
 
 .interface__load-btn {
-  min-width: 100px;
+  width: 108px;
+}
+
+.interface__download-btn {
+  width: 115px;
 }
 
 .interface__load-btn:hover {
