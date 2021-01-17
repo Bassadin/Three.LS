@@ -76,20 +76,12 @@ body {
   width: 108px;
 }
 
-.interface__download-btn {
-  width: 115px;
-}
-
 .interface__load-btn:hover {
   cursor: pointer;
 }
 
 .interface__load-btn:focus {
   outline:0;
-}
-
-.interface__load-btn:first-child {
-  margin-right: 0.5rem;
 }
 
 .interface__generate-wrapper {
@@ -108,6 +100,6 @@ body {
   justify-content: space-between;
 }
 
-.interface__upload-wrapper--left {
-  justify-content: flex-start;
+.interface__upload-wrapper--right {
+  justify-content: flex-end;
 }
