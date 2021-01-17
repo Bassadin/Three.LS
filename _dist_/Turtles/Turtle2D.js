@@ -8,7 +8,6 @@ export class Turtle2D extends BaseTurtle {
       lineWidth: 0.05
     });
     const pointsArray = this.pointsArray();
-    console.log(pointsArray);
     for (let i = 0; i < pointsArray.length; i++) {
       const geometry = new THREE.Geometry();
       geometry.vertices.push(pointsArray[i][0]);

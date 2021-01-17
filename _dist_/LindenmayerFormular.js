@@ -68,12 +68,12 @@ export class LindenmayerFormular {
       let turningAngle = document.getElementById("degrees").value;
       let stepLength = document.getElementById("steplength").value;
       let newObject = {
-        Satz: baseAxiom,
-        Axiom1: axiomString,
-        Rule1: ruleString,
-        IterationsCount: iterationsCount,
-        Drehwinkel: turningAngle,
-        Schrittl\u00E4nge: stepLength
+        baseAxiom,
+        replaceFrom: axiomString,
+        replaceTo: ruleString,
+        iterationsCount,
+        turningAngle,
+        stepLength
       };
       let json_string = JSON.stringify(newObject, void 0, 2);
       let link = document.createElement("a");
@@ -89,22 +89,21 @@ export class LindenmayerFormular {
       reader.onload = (event) => {
         let obj = JSON.parse(reader.result.toString());
         let moreRulesExist = true;
-        console.log(obj.Rule1[1]);
         for (let j = 1; moreRulesExist == true; j++) {
           let value = j.toString();
-          if (obj.Rule1[j - 1] == null) {
+          if (obj.replaceTo[j - 1] == null) {
             moreRulesExist = false;
             this.removeRuleField();
           } else {
-            document.getElementById("rule" + value).value = obj.Rule1[j - 1];
-            document.getElementById("axiom" + value).value = obj.Axiom1[j - 1];
+            document.getElementById("rule" + value).value = obj.replaceTo[j - 1];
+            document.getElementById("axiom" + value).value = obj.replaceFrom[j - 1];
             this.addNewRuleField();
           }
         }
-        document.getElementById("countIterations").value = obj.IterationsCount;
-        document.getElementById("degrees").value = obj.Drehwinkel;
-        document.getElementById("steplength").value = obj.Schrittl\u00E4nge;
-        document.getElementById("sentence").value = obj.Satz;
+        document.getElementById("countIterations").value = obj.iterationsCount;
+        document.getElementById("degrees").value = obj.turningAngle;
+        document.getElementById("steplength").value = obj.stepLength;
+        document.getElementById("sentence").value = obj.baseAxiom;
       };
       let staticRuleCounter = this.countAllRules;
       for (let i = 1; i <= staticRuleCounter; i++) {
