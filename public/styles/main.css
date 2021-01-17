@@ -3,6 +3,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+hr {
+  border: 1px solid black;
+}
+
 .mb-0 {
   margin-bottom: 0 !important;
 }
@@ -49,6 +53,11 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
   margin-bottom: 1rem;
+}
+
+.interface__input-wrapper--right {
+  justify-content: flex-end;
+  margin-bottom: 0;
 }
 
 .interface__input-wrapper:last-child {
