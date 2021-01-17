@@ -102,12 +102,12 @@ export class LindenmayerFormular {
             let stepLength = (document.getElementById('steplength') as HTMLInputElement).value;
 
             let newObject = {
-                Satz: baseAxiom,
-                Axiom1: axiomString,
-                Rule1: ruleString,
-                IterationsCount: iterationsCount,
-                Drehwinkel: turningAngle,
-                Schrittlänge: stepLength,
+                baseAxiom: baseAxiom,
+                replaceFrom: axiomString,
+                replaceTo: ruleString,
+                iterationsCount: iterationsCount,
+                turningAngle: turningAngle,
+                stepLength: stepLength,
             };
             let json_string = JSON.stringify(newObject, undefined, 2);
             let link = document.createElement('a');
@@ -124,23 +124,22 @@ export class LindenmayerFormular {
             reader.onload = (event: any) => {
                 let obj: any = JSON.parse(reader.result.toString());
                 let moreRulesExist = true;
-                console.log(obj.Rule1[1]);
                 //Liest X Rule und Axiom Werte ab
                 for (let j = 1; moreRulesExist == true; j++) {
                     let value: string = j.toString();
-                    if (obj.Rule1[j - 1] == null) {
+                    if (obj.replaceTo[j - 1] == null) {
                         moreRulesExist = false;
                         this.removeRuleField();
                     } else {
-                        (<HTMLInputElement>document.getElementById('rule' + value)).value = obj.Rule1[j - 1];
-                        (<HTMLInputElement>document.getElementById('axiom' + value)).value = obj.Axiom1[j - 1];
+                        (<HTMLInputElement>document.getElementById('rule' + value)).value = obj.replaceTo[j - 1];
+                        (<HTMLInputElement>document.getElementById('axiom' + value)).value = obj.replaceFrom[j - 1];
                         this.addNewRuleField();
                     }
                 }
-                (<HTMLInputElement>document.getElementById('countIterations')).value = obj.IterationsCount;
-                (<HTMLInputElement>document.getElementById('degrees')).value = obj.Drehwinkel;
-                (<HTMLInputElement>document.getElementById('steplength')).value = obj.Schrittlänge;
-                (<HTMLInputElement>document.getElementById('sentence')).value = obj.Satz;
+                (<HTMLInputElement>document.getElementById('countIterations')).value = obj.iterationsCount;
+                (<HTMLInputElement>document.getElementById('degrees')).value = obj.turningAngle;
+                (<HTMLInputElement>document.getElementById('steplength')).value = obj.stepLength;
+                (<HTMLInputElement>document.getElementById('sentence')).value = obj.baseAxiom;
             };
             //Reduzierung von rule Feldern
             let staticRuleCounter = this.countAllRules;

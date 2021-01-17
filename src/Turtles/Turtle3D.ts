@@ -81,8 +81,6 @@ export class Turtle3D extends BaseTurtle {
             }
         }
 
-        // console.log('Vertices', lineVertices)
-
         bufferGeometry.setAttribute('position', new Float32BufferAttribute(lineVertices, 3));
         bufferGeometry.setAttribute('color', new Float32BufferAttribute(colorsArray, 3));
 
