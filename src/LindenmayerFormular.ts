@@ -148,7 +148,7 @@ export class LindenmayerFormular {
             }
 
             if(!this.fileUpload.files[0])
-                alert('Please select a file')
+                alert('Bitte Datei auswählen')
             else
                 reader.readAsText(this.fileUpload.files[0]);
         });
