@@ -1,4 +1,4 @@
-# Three.js HFU example
+# Three.LS
 
 ## Info
 3D L Systems with Three.js
@@ -12,4 +12,4 @@ npm start
 ```
 
 ## GitHub Pages Version
-https://vads.github.io/DaVerMePro-MIB5-Three.js/
+https://vads.github.io/Three.LS
