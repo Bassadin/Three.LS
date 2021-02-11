@@ -12,4 +12,4 @@ npm start
 ```
 
 ## GitHub Pages Version
-https://vads.github.io/Three.LS
+https://bassadin.github.io/Three.LS
