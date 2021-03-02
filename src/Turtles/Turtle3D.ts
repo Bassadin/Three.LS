@@ -4,7 +4,6 @@ import {
     Vector3,
     Mesh,
     Quaternion,
-    Geometry,
     BufferGeometry,
     Float32BufferAttribute,
     Line,
