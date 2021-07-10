@@ -14,4 +14,4 @@ npm start
 ```
 
 ## GitHub Pages Version
-https://bassadin.github.io/Three.LS
+Online auto-deploy version available here: https://bassadin.github.io/Three.LS
