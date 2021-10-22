@@ -17,17 +17,17 @@ export class Turtle3D extends BaseTurtle {
     addGeometryToScene(scene: THREE.Scene): void {
         console.time('Geometry creation');
 
-        let lineVertices: number[] = [];
+        const lineVertices: number[] = [];
         const bufferGeometry: BufferGeometry = new BufferGeometry();
         const colorsArray: number[] = [];
 
-        for (let i: number = 0; i < this.instructionString.length; i++) {
+        for (let i = 0; i < this.instructionString.length; i++) {
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove =
                         this.currentPosition.clone();
 
-                    let newColors = [
+                    const newColors = [
                         Math.random() * 0.7 + 0.3,
                         Math.random() * 0.7 + 0.3,
                         Math.random() * 0.7 + 0.3,
@@ -154,7 +154,7 @@ export class Turtle3D extends BaseTurtle {
     }
 
     move(): void {
-        let absoluteMovement: Vector3 = new Vector3(0, 1, 0)
+        const absoluteMovement: Vector3 = new Vector3(0, 1, 0)
             .applyQuaternion(this.currentRotation.clone())
             .multiplyScalar(this.stepLength);
 

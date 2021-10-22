@@ -4,7 +4,7 @@ module.exports = {
         src: '/_dist_',
     },
     buildOptions: {
-        sourceMaps: true
+        sourceMaps: true,
     },
     plugins: ['@snowpack/plugin-typescript'],
     install: [

@@ -14,11 +14,11 @@ export class LSystem {
 
     // Generate the next generation
     generate() {
-        let nextGenerationString: string[] = [];
-        for (let i: number = 0; i < this.sentence.length; i++) {
-            let currentCharacter: string = this.sentence[i];
+        const nextGenerationString: string[] = [];
+        for (let i = 0; i < this.sentence.length; i++) {
+            const currentCharacter: string = this.sentence[i];
             let replace: string = currentCharacter;
-            for (let j: number = 0; j < this.ruleset.length; j++) {
+            for (let j = 0; j < this.ruleset.length; j++) {
                 if (this.ruleset[j].getA() == currentCharacter) {
                     replace = this.ruleset[j].getB();
                     break;

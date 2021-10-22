@@ -87,14 +87,14 @@ export class LindenmayerFormular {
 
     private addListenerToDownloadButton(): void {
         this.btnDownload.addEventListener('click', () => {
-            let baseAxiom = (
+            const baseAxiom = (
                 document.getElementById('sentence') as HTMLInputElement
             ).value;
-            let ruleString = [];
-            let axiomString = [];
+            const ruleString = [];
+            const axiomString = [];
             //test
-            for (let j: number = 1; j <= this.countAllRules; j++) {
-                let value: string = j.toString();
+            for (let j = 1; j <= this.countAllRules; j++) {
+                const value: string = j.toString();
                 ruleString[j - 1] = (
                     document.getElementById('rule' + value) as HTMLInputElement
                 ).value;
@@ -103,18 +103,18 @@ export class LindenmayerFormular {
                 ).value;
             }
 
-            let iterationsCount = (
+            const iterationsCount = (
                 document.getElementById('countIterations') as HTMLInputElement
             ).value;
             //
-            let turningAngle = (
+            const turningAngle = (
                 document.getElementById('degrees') as HTMLInputElement
             ).value;
-            let stepLength = (
+            const stepLength = (
                 document.getElementById('steplength') as HTMLInputElement
             ).value;
 
-            let newObject = {
+            const newObject = {
                 baseAxiom: baseAxiom,
                 replaceFrom: axiomString,
                 replaceTo: ruleString,
@@ -122,10 +122,10 @@ export class LindenmayerFormular {
                 turningAngle: turningAngle,
                 stepLength: stepLength,
             };
-            let json_string = JSON.stringify(newObject, undefined, 2);
-            let link = document.createElement('a');
+            const json_string = JSON.stringify(newObject, undefined, 2);
+            const link = document.createElement('a');
             link.download = 'data.json';
-            let blob = new Blob([json_string], { type: 'text/plain' });
+            const blob = new Blob([json_string], { type: 'text/plain' });
             link.href = window.URL.createObjectURL(blob);
             link.click();
         });
@@ -133,13 +133,13 @@ export class LindenmayerFormular {
 
     private addListenerToUploadButton(): void {
         this.btnUpload.addEventListener('click', () => {
-            let reader = new FileReader();
+            const reader = new FileReader();
             reader.onload = (event: any) => {
-                let obj: any = JSON.parse(reader.result.toString());
+                const obj: any = JSON.parse(reader.result.toString());
                 let moreRulesExist = true;
                 //Liest X Rule und Axiom Werte ab
                 for (let j = 1; moreRulesExist == true; j++) {
-                    let value: string = j.toString();
+                    const value: string = j.toString();
                     if (obj.replaceTo[j - 1] == null) {
                         moreRulesExist = false;
                         this.removeRuleField();
@@ -165,7 +165,7 @@ export class LindenmayerFormular {
                     obj.baseAxiom;
             };
             //Reduzierung von rule Feldern
-            let staticRuleCounter = this.countAllRules;
+            const staticRuleCounter = this.countAllRules;
             for (let i = 1; i <= staticRuleCounter; i++) {
                 this.removeRuleField();
             }
@@ -176,8 +176,8 @@ export class LindenmayerFormular {
     }
 
     public generateLSystemImage(): Turtle3D {
-        const axioms: string[] = new Array();
-        const rules: string[] = new Array();
+        const axioms: string[] = [];
+        const rules: string[] = [];
 
         document.querySelectorAll('.axioms').forEach((element) => {
             axioms.push((<HTMLInputElement>element).value.toUpperCase());
@@ -202,20 +202,20 @@ export class LindenmayerFormular {
                 (<HTMLInputElement>document.querySelector('#steplength')).value
             ) / 10;
 
-        let ruleset: Rule[] = [];
+        const ruleset: Rule[] = [];
 
         for (let i = 0; i < axioms.length; i++) {
             ruleset.push(new Rule(axioms[i], rules[i]));
         }
 
-        let lsys: LSystem = new LSystem(sentence, ruleset);
+        const lsys: LSystem = new LSystem(sentence, ruleset);
 
         console.time('L System generation');
-        for (let i: number = 0; i < iterations; i++) lsys.generate();
+        for (let i = 0; i < iterations; i++) lsys.generate();
 
         console.timeEnd('L System generation');
 
-        let turtle: Turtle3D = new Turtle3D(
+        const turtle: Turtle3D = new Turtle3D(
             lsys.getSentence(),
             steplength,
             Utils.DegreesToRadians(degrees)
@@ -230,9 +230,9 @@ export class LindenmayerFormular {
             const exporter = new OBJExporter();
             const result = exporter.parse(scene);
 
-            let link = document.createElement('a');
+            const link = document.createElement('a');
             link.download = 'l_system.obj';
-            let blob = new Blob([result], { type: 'text/plain' });
+            const blob = new Blob([result], { type: 'text/plain' });
             link.href = window.URL.createObjectURL(blob);
             link.click();
         });

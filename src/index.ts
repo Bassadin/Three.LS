@@ -6,7 +6,7 @@ import { LindenmayerFormular } from './LindenmayerFormular';
 import Stats from 'stats-js';
 
 // #region Performance Stats
-let stats: Stats = new Stats();
+const stats: Stats = new Stats();
 stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
 stats.dom.style.removeProperty('left');
 stats.dom.style.setProperty('right', '0');
@@ -21,7 +21,7 @@ let controls: TrackballControls;
 const lindenmayerFormular: LindenmayerFormular =
     LindenmayerFormular.getInstance();
 
-let newTurtle: Turtle3D = lindenmayerFormular.generateLSystemImage();
+const newTurtle: Turtle3D = lindenmayerFormular.generateLSystemImage();
 
 if (scene !== undefined) {
     repaint(newTurtle);
@@ -33,7 +33,7 @@ if (scene !== undefined) {
 const btnGenerate: HTMLInputElement = document.querySelector('#btnGenerate');
 btnGenerate.addEventListener('click', (e) => {
     e.preventDefault();
-    let newTurtle: Turtle3D = lindenmayerFormular.generateLSystemImage();
+    const newTurtle: Turtle3D = lindenmayerFormular.generateLSystemImage();
 
     if (scene !== undefined) {
         repaint(newTurtle);

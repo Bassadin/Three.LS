@@ -1,6 +1,6 @@
 export class Utils {
     static DegreesToRadians(degrees: number): number {
-        let pi: number = Math.PI;
+        const pi: number = Math.PI;
         return degrees * (pi / 180);
     }
 
