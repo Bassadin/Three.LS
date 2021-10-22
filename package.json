@@ -13,6 +13,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@types/offscreencanvas": "^2019.6.4",
         "@types/stats": "^0.16.30",
         "stats-js": "^1.0.1",
         "three": "^0.125.2",
