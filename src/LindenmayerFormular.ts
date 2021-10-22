@@ -38,7 +38,8 @@ export class LindenmayerFormular {
     }
 
     public static getInstance(): LindenmayerFormular {
-        if (LindenmayerFormular.instance == undefined) LindenmayerFormular.instance = new LindenmayerFormular();
+        if (LindenmayerFormular.instance == undefined)
+            LindenmayerFormular.instance = new LindenmayerFormular();
         return LindenmayerFormular.instance;
     }
 
@@ -86,20 +87,32 @@ export class LindenmayerFormular {
 
     private addListenerToDownloadButton(): void {
         this.btnDownload.addEventListener('click', () => {
-            let baseAxiom = (document.getElementById('sentence') as HTMLInputElement).value;
+            let baseAxiom = (
+                document.getElementById('sentence') as HTMLInputElement
+            ).value;
             let ruleString = [];
             let axiomString = [];
             //test
             for (let j: number = 1; j <= this.countAllRules; j++) {
                 let value: string = j.toString();
-                ruleString[j - 1] = (document.getElementById('rule' + value) as HTMLInputElement).value;
-                axiomString[j - 1] = (document.getElementById('axiom' + value) as HTMLInputElement).value;
+                ruleString[j - 1] = (
+                    document.getElementById('rule' + value) as HTMLInputElement
+                ).value;
+                axiomString[j - 1] = (
+                    document.getElementById('axiom' + value) as HTMLInputElement
+                ).value;
             }
 
-            let iterationsCount = (document.getElementById('countIterations') as HTMLInputElement).value;
+            let iterationsCount = (
+                document.getElementById('countIterations') as HTMLInputElement
+            ).value;
             //
-            let turningAngle = (document.getElementById('degrees') as HTMLInputElement).value;
-            let stepLength = (document.getElementById('steplength') as HTMLInputElement).value;
+            let turningAngle = (
+                document.getElementById('degrees') as HTMLInputElement
+            ).value;
+            let stepLength = (
+                document.getElementById('steplength') as HTMLInputElement
+            ).value;
 
             let newObject = {
                 baseAxiom: baseAxiom,
@@ -131,15 +144,25 @@ export class LindenmayerFormular {
                         moreRulesExist = false;
                         this.removeRuleField();
                     } else {
-                        (<HTMLInputElement>document.getElementById('rule' + value)).value = obj.replaceTo[j - 1];
-                        (<HTMLInputElement>document.getElementById('axiom' + value)).value = obj.replaceFrom[j - 1];
+                        (<HTMLInputElement>(
+                            document.getElementById('rule' + value)
+                        )).value = obj.replaceTo[j - 1];
+                        (<HTMLInputElement>(
+                            document.getElementById('axiom' + value)
+                        )).value = obj.replaceFrom[j - 1];
                         this.addNewRuleField();
                     }
                 }
-                (<HTMLInputElement>document.getElementById('countIterations')).value = obj.iterationsCount;
-                (<HTMLInputElement>document.getElementById('degrees')).value = obj.turningAngle;
-                (<HTMLInputElement>document.getElementById('steplength')).value = obj.stepLength;
-                (<HTMLInputElement>document.getElementById('sentence')).value = obj.baseAxiom;
+                (<HTMLInputElement>(
+                    document.getElementById('countIterations')
+                )).value = obj.iterationsCount;
+                (<HTMLInputElement>document.getElementById('degrees')).value =
+                    obj.turningAngle;
+                (<HTMLInputElement>(
+                    document.getElementById('steplength')
+                )).value = obj.stepLength;
+                (<HTMLInputElement>document.getElementById('sentence')).value =
+                    obj.baseAxiom;
             };
             //Reduzierung von rule Feldern
             let staticRuleCounter = this.countAllRules;
@@ -147,10 +170,8 @@ export class LindenmayerFormular {
                 this.removeRuleField();
             }
 
-            if(!this.fileUpload.files[0])
-                alert('Bitte Datei auswählen')
-            else
-                reader.readAsText(this.fileUpload.files[0]);
+            if (!this.fileUpload.files[0]) alert('Bitte Datei auswählen');
+            else reader.readAsText(this.fileUpload.files[0]);
         });
     }
 
@@ -166,11 +187,20 @@ export class LindenmayerFormular {
             rules.push((<HTMLInputElement>element).value.toUpperCase());
         });
 
-        const sentence: string = (<HTMLInputElement>document.querySelector('#sentence')).value.toUpperCase();
+        const sentence: string = (<HTMLInputElement>(
+            document.querySelector('#sentence')
+        )).value.toUpperCase();
 
-        const iterations: number = parseInt((<HTMLInputElement>document.querySelector('#countIterations')).value);
-        const degrees: number = parseInt((<HTMLInputElement>document.querySelector('#degrees')).value);
-        const steplength: number = parseInt((<HTMLInputElement>document.querySelector('#steplength')).value) / 10;
+        const iterations: number = parseInt(
+            (<HTMLInputElement>document.querySelector('#countIterations')).value
+        );
+        const degrees: number = parseInt(
+            (<HTMLInputElement>document.querySelector('#degrees')).value
+        );
+        const steplength: number =
+            parseInt(
+                (<HTMLInputElement>document.querySelector('#steplength')).value
+            ) / 10;
 
         let ruleset: Rule[] = [];
 
@@ -185,7 +215,11 @@ export class LindenmayerFormular {
 
         console.timeEnd('L System generation');
 
-        let turtle: Turtle3D = new Turtle3D(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees));
+        let turtle: Turtle3D = new Turtle3D(
+            lsys.getSentence(),
+            steplength,
+            Utils.DegreesToRadians(degrees)
+        );
 
         return turtle;
     }

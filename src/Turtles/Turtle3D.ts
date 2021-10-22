@@ -24,17 +24,31 @@ export class Turtle3D extends BaseTurtle {
         for (let i: number = 0; i < this.instructionString.length; i++) {
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
-                    const currentPositionBeforeMove = this.currentPosition.clone();
+                    const currentPositionBeforeMove =
+                        this.currentPosition.clone();
 
-                    let newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
+                    let newColors = [
+                        Math.random() * 0.7 + 0.3,
+                        Math.random() * 0.7 + 0.3,
+                        Math.random() * 0.7 + 0.3,
+                    ];
 
-                    lineVertices.push(currentPositionBeforeMove.x, currentPositionBeforeMove.y, currentPositionBeforeMove.z);
+                    lineVertices.push(
+                        currentPositionBeforeMove.x,
+                        currentPositionBeforeMove.y,
+                        currentPositionBeforeMove.z
+                    );
                     colorsArray.push(...newColors);
 
                     this.move();
 
-                    const currentPositionAfterMove = this.currentPosition.clone();
-                    lineVertices.push(currentPositionAfterMove.x, currentPositionAfterMove.y, currentPositionAfterMove.z);
+                    const currentPositionAfterMove =
+                        this.currentPosition.clone();
+                    lineVertices.push(
+                        currentPositionAfterMove.x,
+                        currentPositionAfterMove.y,
+                        currentPositionAfterMove.z
+                    );
                     colorsArray.push(...newColors);
 
                     break;
@@ -48,40 +62,78 @@ export class Turtle3D extends BaseTurtle {
                     this.loadState();
                     break;
                 case '+':
-                    this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), this.rotationStepSize));
+                    this.currentRotation.multiply(
+                        new Quaternion().setFromAxisAngle(
+                            new Vector3(0, 0, 1),
+                            this.rotationStepSize
+                        )
+                    );
                     break;
                 case '-':
                     this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(new Vector3(0, 0, -1), this.rotationStepSize)
+                        new Quaternion().setFromAxisAngle(
+                            new Vector3(0, 0, -1),
+                            this.rotationStepSize
+                        )
                     );
                     break;
                 case '&':
-                    this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), this.rotationStepSize));
+                    this.currentRotation.multiply(
+                        new Quaternion().setFromAxisAngle(
+                            new Vector3(0, 1, 0),
+                            this.rotationStepSize
+                        )
+                    );
                     break;
                 case '∧': //Achtung, ∧ (mathematisches UND) und nicht ^ :D
                     this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(new Vector3(0, -1, 0), this.rotationStepSize)
+                        new Quaternion().setFromAxisAngle(
+                            new Vector3(0, -1, 0),
+                            this.rotationStepSize
+                        )
                     );
                     break;
                 case '\\':
-                    this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), this.rotationStepSize));
+                    this.currentRotation.multiply(
+                        new Quaternion().setFromAxisAngle(
+                            new Vector3(1, 0, 0),
+                            this.rotationStepSize
+                        )
+                    );
                     break;
                 case '/':
                     this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(new Vector3(-1, 0, 0), this.rotationStepSize)
+                        new Quaternion().setFromAxisAngle(
+                            new Vector3(-1, 0, 0),
+                            this.rotationStepSize
+                        )
                     );
                     break;
                 case '|':
-                    this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), Math.PI));
+                    this.currentRotation.multiply(
+                        new Quaternion().setFromAxisAngle(
+                            new Vector3(1, 0, 0),
+                            Math.PI
+                        )
+                    );
                     break;
                 default:
-                    console.log('Unknown axiom character: ' + this.instructionString.charAt(i));
+                    console.log(
+                        'Unknown axiom character: ' +
+                            this.instructionString.charAt(i)
+                    );
                     break;
             }
         }
 
-        bufferGeometry.setAttribute('position', new Float32BufferAttribute(lineVertices, 3));
-        bufferGeometry.setAttribute('color', new Float32BufferAttribute(colorsArray, 3));
+        bufferGeometry.setAttribute(
+            'position',
+            new Float32BufferAttribute(lineVertices, 3)
+        );
+        bufferGeometry.setAttribute(
+            'color',
+            new Float32BufferAttribute(colorsArray, 3)
+        );
 
         const material = new LineBasicMaterial({
             vertexColors: true,

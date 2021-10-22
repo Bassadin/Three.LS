@@ -18,7 +18,8 @@ let camera: THREE.PerspectiveCamera;
 let renderer: Renderer;
 let controls: TrackballControls;
 
-const lindenmayerFormular: LindenmayerFormular = LindenmayerFormular.getInstance();
+const lindenmayerFormular: LindenmayerFormular =
+    LindenmayerFormular.getInstance();
 
 let newTurtle: Turtle3D = lindenmayerFormular.generateLSystemImage();
 
@@ -31,7 +32,7 @@ if (scene !== undefined) {
 
 const btnGenerate: HTMLInputElement = document.querySelector('#btnGenerate');
 btnGenerate.addEventListener('click', (e) => {
-    e.preventDefault()
+    e.preventDefault();
     let newTurtle: Turtle3D = lindenmayerFormular.generateLSystemImage();
 
     if (scene !== undefined) {
@@ -47,7 +48,12 @@ function init(turtle: Turtle3D) {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
+    camera = new THREE.PerspectiveCamera(
+        50,
+        window.innerWidth / window.innerHeight,
+        1,
+        10000
+    );
 
     controls = new TrackballControls(camera, renderer.domElement);
     controls.rotateSpeed = 2;

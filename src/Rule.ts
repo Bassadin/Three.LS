@@ -4,7 +4,7 @@ export class Rule {
 
     constructor(a_: string, b_: string) {
         if (a_.length != 1) {
-            alert('Bitte alle Felder ausfüllen')
+            alert('Bitte alle Felder ausfüllen');
         } else {
             this.a = a_;
             this.b = b_;
