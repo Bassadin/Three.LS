@@ -17,7 +17,11 @@ export class Turtle3D extends BaseTurtle {
       switch (this.instructionString.charAt(i)) {
         case "F":
           const currentPositionBeforeMove = this.currentPosition.clone();
-          let newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
+          let newColors = [
+            Math.random() * 0.7 + 0.3,
+            Math.random() * 0.7 + 0.3,
+            Math.random() * 0.7 + 0.3
+          ];
           lineVertices.push(currentPositionBeforeMove.x, currentPositionBeforeMove.y, currentPositionBeforeMove.z);
           colorsArray.push(...newColors);
           this.move();
