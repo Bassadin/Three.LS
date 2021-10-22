@@ -5,9 +5,9 @@ export class LSystem {
     this.generation = 0;
   }
   generate() {
-    let nextGenerationString = [];
+    const nextGenerationString = [];
     for (let i = 0; i < this.sentence.length; i++) {
-      let currentCharacter = this.sentence[i];
+      const currentCharacter = this.sentence[i];
       let replace = currentCharacter;
       for (let j = 0; j < this.ruleset.length; j++) {
         if (this.ruleset[j].getA() == currentCharacter) {

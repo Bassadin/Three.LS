@@ -2,7 +2,7 @@ import * as THREE from "../web_modules/three.js";
 import {TrackballControls} from "../web_modules/three/examples/jsm/controls/TrackballControls.js";
 import {LindenmayerFormular} from "./LindenmayerFormular.js";
 import Stats from "../web_modules/stats-js.js";
-let stats = new Stats();
+const stats = new Stats();
 stats.showPanel(0);
 stats.dom.style.removeProperty("left");
 stats.dom.style.setProperty("right", "0");
@@ -12,7 +12,7 @@ let camera;
 let renderer;
 let controls;
 const lindenmayerFormular = LindenmayerFormular.getInstance();
-let newTurtle = lindenmayerFormular.generateLSystemImage();
+const newTurtle = lindenmayerFormular.generateLSystemImage();
 if (scene !== void 0) {
   repaint(newTurtle);
 } else {
@@ -22,7 +22,7 @@ if (scene !== void 0) {
 const btnGenerate = document.querySelector("#btnGenerate");
 btnGenerate.addEventListener("click", (e) => {
   e.preventDefault();
-  let newTurtle2 = lindenmayerFormular.generateLSystemImage();
+  const newTurtle2 = lindenmayerFormular.generateLSystemImage();
   if (scene !== void 0) {
     repaint(newTurtle2);
   } else {

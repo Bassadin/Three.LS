@@ -52,18 +52,18 @@ export class LindenmayerFormular {
   }
   addListenerToDownloadButton() {
     this.btnDownload.addEventListener("click", () => {
-      let baseAxiom = document.getElementById("sentence").value;
-      let ruleString = [];
-      let axiomString = [];
+      const baseAxiom = document.getElementById("sentence").value;
+      const ruleString = [];
+      const axiomString = [];
       for (let j = 1; j <= this.countAllRules; j++) {
-        let value = j.toString();
+        const value = j.toString();
         ruleString[j - 1] = document.getElementById("rule" + value).value;
         axiomString[j - 1] = document.getElementById("axiom" + value).value;
       }
-      let iterationsCount = document.getElementById("countIterations").value;
-      let turningAngle = document.getElementById("degrees").value;
-      let stepLength = document.getElementById("steplength").value;
-      let newObject = {
+      const iterationsCount = document.getElementById("countIterations").value;
+      const turningAngle = document.getElementById("degrees").value;
+      const stepLength = document.getElementById("steplength").value;
+      const newObject = {
         baseAxiom,
         replaceFrom: axiomString,
         replaceTo: ruleString,
@@ -71,22 +71,22 @@ export class LindenmayerFormular {
         turningAngle,
         stepLength
       };
-      let json_string = JSON.stringify(newObject, void 0, 2);
-      let link = document.createElement("a");
+      const json_string = JSON.stringify(newObject, void 0, 2);
+      const link = document.createElement("a");
       link.download = "data.json";
-      let blob = new Blob([json_string], {type: "text/plain"});
+      const blob = new Blob([json_string], {type: "text/plain"});
       link.href = window.URL.createObjectURL(blob);
       link.click();
     });
   }
   addListenerToUploadButton() {
     this.btnUpload.addEventListener("click", () => {
-      let reader = new FileReader();
+      const reader = new FileReader();
       reader.onload = (event) => {
-        let obj = JSON.parse(reader.result.toString());
+        const obj = JSON.parse(reader.result.toString());
         let moreRulesExist = true;
         for (let j = 1; moreRulesExist == true; j++) {
-          let value = j.toString();
+          const value = j.toString();
           if (obj.replaceTo[j - 1] == null) {
             moreRulesExist = false;
             this.removeRuleField();
@@ -101,7 +101,7 @@ export class LindenmayerFormular {
         document.getElementById("steplength").value = obj.stepLength;
         document.getElementById("sentence").value = obj.baseAxiom;
       };
-      let staticRuleCounter = this.countAllRules;
+      const staticRuleCounter = this.countAllRules;
       for (let i = 1; i <= staticRuleCounter; i++) {
         this.removeRuleField();
       }
@@ -112,8 +112,8 @@ export class LindenmayerFormular {
     });
   }
   generateLSystemImage() {
-    const axioms = new Array();
-    const rules = new Array();
+    const axioms = [];
+    const rules = [];
     document.querySelectorAll(".axioms").forEach((element) => {
       axioms.push(element.value.toUpperCase());
     });
@@ -124,25 +124,25 @@ export class LindenmayerFormular {
     const iterations = parseInt(document.querySelector("#countIterations").value);
     const degrees = parseInt(document.querySelector("#degrees").value);
     const steplength = parseInt(document.querySelector("#steplength").value) / 10;
-    let ruleset = [];
+    const ruleset = [];
     for (let i = 0; i < axioms.length; i++) {
       ruleset.push(new Rule(axioms[i], rules[i]));
     }
-    let lsys = new LSystem(sentence, ruleset);
+    const lsys = new LSystem(sentence, ruleset);
     console.time("L System generation");
     for (let i = 0; i < iterations; i++)
       lsys.generate();
     console.timeEnd("L System generation");
-    let turtle = new Turtle3D(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees));
+    const turtle = new Turtle3D(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees));
     return turtle;
   }
   addListenerToOBJDownloadButton() {
     this.objDownloadButton.addEventListener("click", () => {
       const exporter = new OBJExporter();
       const result = exporter.parse(scene);
-      let link = document.createElement("a");
+      const link = document.createElement("a");
       link.download = "l_system.obj";
-      let blob = new Blob([result], {type: "text/plain"});
+      const blob = new Blob([result], {type: "text/plain"});
       link.href = window.URL.createObjectURL(blob);
       link.click();
     });

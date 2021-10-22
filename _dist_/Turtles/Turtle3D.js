@@ -10,14 +10,14 @@ import {BaseTurtle} from "./BaseTurtle.js";
 export class Turtle3D extends BaseTurtle {
   addGeometryToScene(scene) {
     console.time("Geometry creation");
-    let lineVertices = [];
+    const lineVertices = [];
     const bufferGeometry = new BufferGeometry();
     const colorsArray = [];
     for (let i = 0; i < this.instructionString.length; i++) {
       switch (this.instructionString.charAt(i)) {
         case "F":
           const currentPositionBeforeMove = this.currentPosition.clone();
-          let newColors = [
+          const newColors = [
             Math.random() * 0.7 + 0.3,
             Math.random() * 0.7 + 0.3,
             Math.random() * 0.7 + 0.3
@@ -74,7 +74,7 @@ export class Turtle3D extends BaseTurtle {
     console.timeEnd("Geometry creation");
   }
   move() {
-    let absoluteMovement = new Vector3(0, 1, 0).applyQuaternion(this.currentRotation.clone()).multiplyScalar(this.stepLength);
+    const absoluteMovement = new Vector3(0, 1, 0).applyQuaternion(this.currentRotation.clone()).multiplyScalar(this.stepLength);
     this.currentPosition.add(absoluteMovement);
   }
 }

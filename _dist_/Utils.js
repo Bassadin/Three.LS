@@ -1,6 +1,6 @@
 export class Utils {
   static DegreesToRadians(degrees) {
-    let pi = Math.PI;
+    const pi = Math.PI;
     return degrees * (pi / 180);
   }
   static RandomNumber(min, max) {
