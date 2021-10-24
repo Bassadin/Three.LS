@@ -124,7 +124,7 @@ export class LindenmayerFormular {
             /*eslint-disable */
             reader.onload = (_event: ProgressEvent) => {
                 /*eslint-enable */
-                const obj: [] = JSON.parse(reader.result.toString());
+                const obj: any = JSON.parse(reader.result.toString());
                 let moreRulesExist = true;
                 //Liest X Rule und Axiom Werte ab
                 for (let j = 1; moreRulesExist == true; j++) {
