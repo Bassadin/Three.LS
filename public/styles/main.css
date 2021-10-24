@@ -1,114 +1,114 @@
 body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 hr {
-  border: 1px solid black;
+    border: 1px solid black;
 }
 
 .mb-0 {
-  margin-bottom: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 .interface__wrapper {
-  position: absolute;
-  display: block;
-  background-color: white;
-  top: 10px;
-  left: 10px;
-  padding: 1.5rem 1.75rem;
-  width: 420px;
-  border: 1px solid black;
+    position: absolute;
+    display: block;
+    background-color: white;
+    top: 10px;
+    left: 10px;
+    padding: 1.5rem 1.75rem;
+    width: 420px;
+    border: 1px solid black;
 }
 
 .interface__sub-heading {
-  margin: 0 0 1rem 0;
+    margin: 0 0 1rem 0;
 }
 
 .interface__btn-wrapper {
-  display: flex;
-  justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .interface__btn {
-  min-width: 25px;
+    min-width: 25px;
 }
 
 .interface__btn:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .interface__btn:focus {
-  outline:0;
+    outline: 0;
 }
 
 .interface__btn:first-child {
-  margin-right: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 .interface__input-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
 }
 
 .interface__input-wrapper--right {
-  justify-content: flex-end;
-  margin-bottom: 0;
+    justify-content: flex-end;
+    margin-bottom: 0;
 }
 
 .interface__input-wrapper:last-child {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .interface__rule-wrapper {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .interface__input-inner-wrapper {
-  flex: 0 0 190px;
-  display: flex;
-  justify-content: space-between;
+    flex: 0 0 190px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .interface__input-field {
-  width: 100px;
-  margin-left: 1rem;
+    width: 100px;
+    margin-left: 1rem;
 }
 
 .interface__load-btn {
-  width: 108px;
+    width: 108px;
 }
 
 .interface__load-btn:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .interface__load-btn:focus {
-  outline:0;
+    outline: 0;
 }
 
 .interface__generate-wrapper {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .interface__generate-btn {
-  align-self: flex-end;
-  margin: 0 !important;
+    align-self: flex-end;
+    margin: 0 !important;
 }
 
 .interface__upload-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .interface__upload-wrapper--right {
-  justify-content: flex-end;
+    justify-content: flex-end;
 }
