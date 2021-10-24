@@ -1,0 +1,12 @@
+{
+  "baseAxiom": "F",
+  "replaceFrom": [
+    "F"
+  ],
+  "replaceTo": [
+    "F[+F/F]∧"
+  ],
+  "iterationsCount": "7",
+  "turningAngle": "25",
+  "stepLength": "2"
+}
