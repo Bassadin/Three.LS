@@ -82,7 +82,7 @@ export class LindenmayerFormular {
   addListenerToUploadButton() {
     this.btnUpload.addEventListener("click", () => {
       const reader = new FileReader();
-      reader.onload = (event) => {
+      reader.onload = (_event) => {
         const obj = JSON.parse(reader.result.toString());
         let moreRulesExist = true;
         for (let j = 1; moreRulesExist == true; j++) {
@@ -148,3 +148,4 @@ export class LindenmayerFormular {
     });
   }
 }
+//# sourceMappingURL=LindenmayerFormular.js.map

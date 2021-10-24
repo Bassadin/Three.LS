@@ -1,11 +1,4 @@
-import {
-  Vector3,
-  Quaternion,
-  BufferGeometry,
-  Float32BufferAttribute,
-  LineBasicMaterial,
-  LineSegments
-} from "../../web_modules/three.js";
+import {Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, LineBasicMaterial, LineSegments} from "../../web_modules/three.js";
 import {BaseTurtle} from "./BaseTurtle.js";
 export class Turtle3D extends BaseTurtle {
   addGeometryToScene(scene) {
@@ -17,11 +10,7 @@ export class Turtle3D extends BaseTurtle {
       switch (this.instructionString.charAt(i)) {
         case "F":
           const currentPositionBeforeMove = this.currentPosition.clone();
-          const newColors = [
-            Math.random() * 0.7 + 0.3,
-            Math.random() * 0.7 + 0.3,
-            Math.random() * 0.7 + 0.3
-          ];
+          const newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
           lineVertices.push(currentPositionBeforeMove.x, currentPositionBeforeMove.y, currentPositionBeforeMove.z);
           colorsArray.push(...newColors);
           this.move();
@@ -78,3 +67,4 @@ export class Turtle3D extends BaseTurtle {
     this.currentPosition.add(absoluteMovement);
   }
 }
+//# sourceMappingURL=Turtle3D.js.map

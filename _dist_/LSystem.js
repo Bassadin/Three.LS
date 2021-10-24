@@ -27,3 +27,4 @@ export class LSystem {
     return this.generation;
   }
 }
+//# sourceMappingURL=LSystem.js.map
