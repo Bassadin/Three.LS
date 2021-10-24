@@ -1,7 +1,9 @@
 {
-    "trailingComma": "es5",
+    "trailingComma": "all",
     "tabWidth": 4,
+    "useTabs": false,
     "semi": true,
     "singleQuote": true,
-    "printWidth": 80
+    "printWidth": 120,
+    "endOfLine": "crlf"
 }

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     mount: {
         public: '/',
         src: '/_dist_',
@@ -14,9 +14,6 @@ module.exports = {
         installTypes: true,
     },
     devOptions: {
-        /* ... */
-    },
-    buildOptions: {
         /* ... */
     },
     proxy: {

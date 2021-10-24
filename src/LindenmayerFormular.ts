@@ -38,8 +38,7 @@ export class LindenmayerFormular {
     }
 
     public static getInstance(): LindenmayerFormular {
-        if (LindenmayerFormular.instance == undefined)
-            LindenmayerFormular.instance = new LindenmayerFormular();
+        if (LindenmayerFormular.instance == undefined) LindenmayerFormular.instance = new LindenmayerFormular();
         return LindenmayerFormular.instance;
     }
 
@@ -62,7 +61,7 @@ export class LindenmayerFormular {
                 (this.countAllRules + 1) +
                 '</label> <input class="interface__input-field rules" type="text" id="rule' +
                 (this.countAllRules + 1) +
-                '" placeholder="FF+[+F-F-F]-[-F+F+F]" required> </div> </div>'
+                '" placeholder="FF+[+F-F-F]-[-F+F+F]" required> </div> </div>',
         );
         this.countAllRules++;
         if (this.btnRemove.disabled == true) this.btnRemove.disabled = false;
@@ -87,32 +86,20 @@ export class LindenmayerFormular {
 
     private addListenerToDownloadButton(): void {
         this.btnDownload.addEventListener('click', () => {
-            const baseAxiom = (
-                document.getElementById('sentence') as HTMLInputElement
-            ).value;
+            const baseAxiom = (document.getElementById('sentence') as HTMLInputElement).value;
             const ruleString = [];
             const axiomString = [];
             //test
             for (let j = 1; j <= this.countAllRules; j++) {
                 const value: string = j.toString();
-                ruleString[j - 1] = (
-                    document.getElementById('rule' + value) as HTMLInputElement
-                ).value;
-                axiomString[j - 1] = (
-                    document.getElementById('axiom' + value) as HTMLInputElement
-                ).value;
+                ruleString[j - 1] = (document.getElementById('rule' + value) as HTMLInputElement).value;
+                axiomString[j - 1] = (document.getElementById('axiom' + value) as HTMLInputElement).value;
             }
 
-            const iterationsCount = (
-                document.getElementById('countIterations') as HTMLInputElement
-            ).value;
+            const iterationsCount = (document.getElementById('countIterations') as HTMLInputElement).value;
             //
-            const turningAngle = (
-                document.getElementById('degrees') as HTMLInputElement
-            ).value;
-            const stepLength = (
-                document.getElementById('steplength') as HTMLInputElement
-            ).value;
+            const turningAngle = (document.getElementById('degrees') as HTMLInputElement).value;
+            const stepLength = (document.getElementById('steplength') as HTMLInputElement).value;
 
             const newObject = {
                 baseAxiom: baseAxiom,
@@ -134,8 +121,10 @@ export class LindenmayerFormular {
     private addListenerToUploadButton(): void {
         this.btnUpload.addEventListener('click', () => {
             const reader = new FileReader();
-            reader.onload = (event: any) => {
-                const obj: any = JSON.parse(reader.result.toString());
+            /*eslint-disable */
+            reader.onload = (_event: ProgressEvent) => {
+                /*eslint-enable */
+                const obj: [] = JSON.parse(reader.result.toString());
                 let moreRulesExist = true;
                 //Liest X Rule und Axiom Werte ab
                 for (let j = 1; moreRulesExist == true; j++) {
@@ -144,25 +133,15 @@ export class LindenmayerFormular {
                         moreRulesExist = false;
                         this.removeRuleField();
                     } else {
-                        (<HTMLInputElement>(
-                            document.getElementById('rule' + value)
-                        )).value = obj.replaceTo[j - 1];
-                        (<HTMLInputElement>(
-                            document.getElementById('axiom' + value)
-                        )).value = obj.replaceFrom[j - 1];
+                        (<HTMLInputElement>document.getElementById('rule' + value)).value = obj.replaceTo[j - 1];
+                        (<HTMLInputElement>document.getElementById('axiom' + value)).value = obj.replaceFrom[j - 1];
                         this.addNewRuleField();
                     }
                 }
-                (<HTMLInputElement>(
-                    document.getElementById('countIterations')
-                )).value = obj.iterationsCount;
-                (<HTMLInputElement>document.getElementById('degrees')).value =
-                    obj.turningAngle;
-                (<HTMLInputElement>(
-                    document.getElementById('steplength')
-                )).value = obj.stepLength;
-                (<HTMLInputElement>document.getElementById('sentence')).value =
-                    obj.baseAxiom;
+                (<HTMLInputElement>document.getElementById('countIterations')).value = obj.iterationsCount;
+                (<HTMLInputElement>document.getElementById('degrees')).value = obj.turningAngle;
+                (<HTMLInputElement>document.getElementById('steplength')).value = obj.stepLength;
+                (<HTMLInputElement>document.getElementById('sentence')).value = obj.baseAxiom;
             };
             //Reduzierung von rule Feldern
             const staticRuleCounter = this.countAllRules;
@@ -187,20 +166,11 @@ export class LindenmayerFormular {
             rules.push((<HTMLInputElement>element).value.toUpperCase());
         });
 
-        const sentence: string = (<HTMLInputElement>(
-            document.querySelector('#sentence')
-        )).value.toUpperCase();
+        const sentence: string = (<HTMLInputElement>document.querySelector('#sentence')).value.toUpperCase();
 
-        const iterations: number = parseInt(
-            (<HTMLInputElement>document.querySelector('#countIterations')).value
-        );
-        const degrees: number = parseInt(
-            (<HTMLInputElement>document.querySelector('#degrees')).value
-        );
-        const steplength: number =
-            parseInt(
-                (<HTMLInputElement>document.querySelector('#steplength')).value
-            ) / 10;
+        const iterations: number = parseInt((<HTMLInputElement>document.querySelector('#countIterations')).value);
+        const degrees: number = parseInt((<HTMLInputElement>document.querySelector('#degrees')).value);
+        const steplength: number = parseInt((<HTMLInputElement>document.querySelector('#steplength')).value) / 10;
 
         const ruleset: Rule[] = [];
 
@@ -215,11 +185,7 @@ export class LindenmayerFormular {
 
         console.timeEnd('L System generation');
 
-        const turtle: Turtle3D = new Turtle3D(
-            lsys.getSentence(),
-            steplength,
-            Utils.DegreesToRadians(degrees)
-        );
+        const turtle: Turtle3D = new Turtle3D(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees));
 
         return turtle;
     }

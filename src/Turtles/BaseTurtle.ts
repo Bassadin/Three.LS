@@ -14,17 +14,13 @@ export abstract class BaseTurtle {
     protected currentPosition: Vector3 = new Vector3(0, -5, 0);
     private positionSaveStateArray: Vector3[] = [];
 
-    constructor(
-        instructionString: string,
-        stepLength: number,
-        rotationStepSize: number
-    ) {
+    constructor(instructionString: string, stepLength: number, rotationStepSize: number) {
         this.instructionString = instructionString;
         this.stepLength = stepLength;
         this.rotationStepSize = rotationStepSize;
     }
 
-    abstract addGeometryToScene(scene: THREE.Scene): void;
+    abstract addGeometryToScene(_scene: THREE.Scene): void;
 
     saveState(): void {
         this.positionSaveStateArray.push(this.currentPosition.clone());
@@ -33,9 +29,7 @@ export abstract class BaseTurtle {
 
     loadState(): void {
         if (this.positionSaveStateArray.length == 0) {
-            throw new Error(
-                'Cannot load state before it has been written at least once'
-            );
+            throw new Error('Cannot load state before it has been written at least once');
         }
         this.currentPosition = this.positionSaveStateArray.pop();
         this.currentRotation = this.rotationSaveStateArray.pop();
