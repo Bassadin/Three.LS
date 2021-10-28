@@ -1,4 +1,4 @@
-import { Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, LineBasicMaterial, LineSegments } from 'three';
+import { Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, LineBasicMaterial, LineSegments, Mesh } from 'three';
 import { BaseTurtle } from './BaseTurtle';
 
 export class Turtle3D extends BaseTurtle {
@@ -8,7 +8,7 @@ export class Turtle3D extends BaseTurtle {
         const lineVertices: number[] = [];
         const bufferGeometry: BufferGeometry = new BufferGeometry();
         const colorsArray: number[] = [];
-
+        // const cylinder: Mesh = new Mesh()
         for (let i = 0; i < this.instructionString.length; i++) {
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
@@ -88,6 +88,10 @@ export class Turtle3D extends BaseTurtle {
         const material = new LineBasicMaterial({
             vertexColors: true,
         });
+
+        const cylinder: Mesh = new Mesh(bufferGeometry, material);
+        console.log(cylinder);
+
         const line = new LineSegments(bufferGeometry, material);
         scene.add(line);
 
