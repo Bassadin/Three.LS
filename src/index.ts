@@ -3,15 +3,7 @@ import { Renderer, Scene } from 'three';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
 import { Turtle3D } from './Turtles/Turtle3D';
 import { LindenmayerFormular } from './LindenmayerFormular';
-import Stats from 'stats-js';
-
-// #region Performance Stats
-const stats: Stats = new Stats();
-stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-stats.dom.style.removeProperty('left');
-stats.dom.style.setProperty('right', '0');
-document.body.appendChild(stats.dom);
-// #endregion Performance Stats
+import PerformanceStats from './PerformanceStats';
 
 export let scene: Scene;
 let camera: THREE.PerspectiveCamera;
@@ -77,7 +69,7 @@ function animate() {
     renderer.render(scene, camera);
 
     //Performance Stats
-    stats.update();
+    PerformanceStats.instance.update();
 }
 
 function onWindowResize() {
