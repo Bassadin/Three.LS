@@ -10,31 +10,33 @@ let camera: THREE.PerspectiveCamera;
 let renderer: Renderer;
 let controls: TrackballControls;
 
-const lindenmayerFormular: LindenmayerFormular = LindenmayerFormular.getInstance();
+const lindenmayerSettingsForm: LindenmayerFormular = LindenmayerFormular.getInstance();
 
-const newTurtle: Turtle3D = lindenmayerFormular.generateLSystemImage();
+const newTurtle: Turtle3D = lindenmayerSettingsForm.generateLSystemImage();
 
 if (scene !== undefined) {
     repaint(newTurtle);
 } else {
-    init(newTurtle);
+    initTestingScene(newTurtle);
     animate();
 }
 
-const btnGenerate: HTMLInputElement = document.querySelector('#btnGenerate');
-btnGenerate.addEventListener('click', (e) => {
-    e.preventDefault();
-    const newTurtle: Turtle3D = lindenmayerFormular.generateLSystemImage();
+function hookUpGenerateButtonEventListener() {
+    const btnGenerate: HTMLInputElement = document.querySelector('#btnGenerate');
+    btnGenerate.addEventListener('click', (e) => {
+        e.preventDefault();
+        const newTurtle: Turtle3D = lindenmayerSettingsForm.generateLSystemImage();
 
-    if (scene !== undefined) {
-        repaint(newTurtle);
-    } else {
-        init(newTurtle);
-        animate();
-    }
-});
+        if (scene !== undefined) {
+            repaint(newTurtle);
+        } else {
+            initTestingScene(newTurtle);
+            animate();
+        }
+    });
+}
 
-function init(turtle: Turtle3D) {
+function initTestingScene(turtle: Turtle3D) {
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
@@ -53,6 +55,8 @@ function init(turtle: Turtle3D) {
     renderer.render(scene, camera);
 
     window.addEventListener('resize', onWindowResize, false);
+
+    hookUpGenerateButtonEventListener();
 }
 
 function repaint(turtle: Turtle3D) {
