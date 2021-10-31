@@ -1,12 +1,8 @@
 {
-  "baseAxiom": "F",
-  "replaceFrom": [
-    "F"
-  ],
-  "replaceTo": [
-    "F&F+[+F/-F-F]-[-F+F+F]"
-  ],
-  "iterationsCount": "4",
-  "turningAngle": "20",
-  "stepLength": "2"
+    "baseAxiom": "F",
+    "replaceFrom": ["F"],
+    "replaceTo": ["F&F+[+F/-F-F]-[-F+F+F]"],
+    "iterationsCount": "4",
+    "turningAngle": "20",
+    "stepLength": "2"
 }
