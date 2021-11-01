@@ -7,19 +7,7 @@ module.exports = {
         sourceMaps: true,
     },
     plugins: ['@snowpack/plugin-typescript'],
-    install: [
-        /* ... */
-    ],
     installOptions: {
         installTypes: true,
-    },
-    devOptions: {
-        /* ... */
-    },
-    proxy: {
-        /* ... */
-    },
-    alias: {
-        /* ... */
     },
 };
