@@ -1,37 +1,132 @@
-import { Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, LineBasicMaterial, LineSegments, Mesh } from 'three';
+import { Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, MeshBasicMaterial, Mesh } from 'three';
 import { BaseTurtle } from './BaseTurtle';
 
 export class Turtle3D extends BaseTurtle {
     addGeometryToScene(scene: THREE.Scene): void {
         console.time('Geometry creation');
-
-        const lineVertices: number[] = [];
+        const tries: number[] = [];
         const bufferGeometry: BufferGeometry = new BufferGeometry();
         const colorsArray: number[] = [];
-        // const cylinder: Mesh = new Mesh()
         for (let i = 0; i < this.instructionString.length; i++) {
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove = this.currentPosition.clone();
-
+                    const verticies: any[] = new Array(8);
                     const newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
 
-                    lineVertices.push(
-                        currentPositionBeforeMove.x,
-                        currentPositionBeforeMove.y,
-                        currentPositionBeforeMove.z,
-                    );
-                    colorsArray.push(...newColors);
-
                     this.move();
-
                     const currentPositionAfterMove = this.currentPosition.clone();
-                    lineVertices.push(
-                        currentPositionAfterMove.x,
-                        currentPositionAfterMove.y,
-                        currentPositionAfterMove.z,
+                    const track: Vector3 = new Vector3(
+                        currentPositionAfterMove.x - currentPositionBeforeMove.x,
+                        currentPositionAfterMove.y - currentPositionBeforeMove.y,
+                        currentPositionAfterMove.z - currentPositionBeforeMove.z,
                     );
-                    colorsArray.push(...newColors);
+
+                    const trackLength: number = track.length();
+
+                    verticies[0] = [
+                        currentPositionBeforeMove.x - trackLength / 2,
+                        currentPositionBeforeMove.y,
+                        currentPositionBeforeMove.z + trackLength / 2,
+                    ];
+                    verticies[1] = [
+                        currentPositionBeforeMove.x + trackLength / 2,
+                        currentPositionBeforeMove.y,
+                        currentPositionBeforeMove.z + trackLength / 2,
+                    ];
+                    verticies[2] = [
+                        currentPositionBeforeMove.x + trackLength / 2,
+                        currentPositionBeforeMove.y,
+                        currentPositionBeforeMove.z - trackLength / 2,
+                    ];
+                    verticies[3] = [
+                        currentPositionBeforeMove.x - trackLength / 2,
+                        currentPositionBeforeMove.y,
+                        currentPositionBeforeMove.z - trackLength / 2,
+                    ];
+                    verticies[4] = [
+                        currentPositionAfterMove.x - trackLength / 2,
+                        currentPositionAfterMove.y,
+                        currentPositionAfterMove.z + trackLength / 2,
+                    ];
+                    verticies[5] = [
+                        currentPositionAfterMove.x + trackLength / 2,
+                        currentPositionAfterMove.y,
+                        currentPositionAfterMove.z + trackLength / 2,
+                    ];
+                    verticies[6] = [
+                        currentPositionAfterMove.x + trackLength / 2,
+                        currentPositionAfterMove.y,
+                        currentPositionAfterMove.z - trackLength / 2,
+                    ];
+                    verticies[7] = [
+                        currentPositionAfterMove.x - trackLength / 2,
+                        currentPositionAfterMove.y,
+                        currentPositionAfterMove.z - trackLength / 2,
+                    ];
+
+                    tries.push(
+                        ...[
+                            // front face
+                            // first tri
+                            ...verticies[0],
+                            ...verticies[1],
+                            ...verticies[5],
+                            // second tri
+                            ...verticies[0],
+                            ...verticies[5],
+                            ...verticies[4],
+                            //right face
+                            //first tri
+                            ...verticies[1],
+                            ...verticies[2],
+                            ...verticies[6],
+                            //second tri
+                            ...verticies[1],
+                            ...verticies[6],
+                            ...verticies[5],
+                            //left face
+                            //first tri
+                            ...verticies[3],
+                            ...verticies[0],
+                            ...verticies[4],
+                            //second tri
+                            ...verticies[3],
+                            ...verticies[4],
+                            ...verticies[7],
+                            //back face
+                            //first tri
+                            ...verticies[2],
+                            ...verticies[3],
+                            ...verticies[7],
+                            // second tri
+                            ...verticies[2],
+                            ...verticies[7],
+                            ...verticies[6],
+                            // bottom face
+                            // first tri
+                            ...verticies[3],
+                            ...verticies[1],
+                            ...verticies[0],
+                            // second tri
+                            ...verticies[3],
+                            ...verticies[2],
+                            ...verticies[1],
+                            // top face
+                            // first tri
+                            ...verticies[4],
+                            ...verticies[5],
+                            ...verticies[7],
+                            // second tri
+                            ...verticies[5],
+                            ...verticies[6],
+                            ...verticies[7],
+                        ],
+                    );
+
+                    for (let i = 0; i < verticies.length * 12; i++) {
+                        colorsArray.push(...newColors);
+                    }
 
                     break;
                 case 'G': //Move in current direction
@@ -81,19 +176,22 @@ export class Turtle3D extends BaseTurtle {
                     break;
             }
         }
+        // console.log(tries);
 
-        bufferGeometry.setAttribute('position', new Float32BufferAttribute(lineVertices, 3));
+        bufferGeometry.setAttribute('position', new Float32BufferAttribute(tries, 3));
+
+        // console.log(colorsArray);
+
         bufferGeometry.setAttribute('color', new Float32BufferAttribute(colorsArray, 3));
 
-        const material = new LineBasicMaterial({
+        // console.log(bufferGeometry);
+
+        const material = new MeshBasicMaterial({
             vertexColors: true,
         });
 
-        const cylinder: Mesh = new Mesh(bufferGeometry, material);
-        console.log(cylinder);
-
-        const line = new LineSegments(bufferGeometry, material);
-        scene.add(line);
+        const mesh = new Mesh(bufferGeometry, material);
+        scene.add(mesh);
 
         // const line = new MeshLine()
         // line.setGeometry(bufferGeometry, (p: any) => 2 + Math.sin(50 * p))
