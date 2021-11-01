@@ -1,4 +1,4 @@
-import { cq as MOUSE, V as Vector3, fN as Vector2, Q as Quaternion, aW as EventDispatcher } from '../../../../common/three.module-9b3f6c53.js';
+import { cs as MOUSE, V as Vector3, fN as Vector2, Q as Quaternion, aW as EventDispatcher } from '../../../../common/three.module-e7f73f1b.js';
 
 var TrackballControls = function ( object, domElement ) {
 
