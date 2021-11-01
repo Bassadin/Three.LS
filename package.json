@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "snowpack dev",
+        "start-secure": "snowpack dev --secure",
         "build": "snowpack build",
         "format": "prettier . --write",
         "lint": "eslint ."
