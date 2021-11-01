@@ -11,7 +11,7 @@ export class Turtle3D extends BaseTurtle {
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove = this.currentPosition.clone();
-                    const verticies: any[] = new Array(8);
+                    const vertices: any[] = new Array(8);
                     const newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
 
                     this.move();
@@ -24,42 +24,42 @@ export class Turtle3D extends BaseTurtle {
 
                     const trackLength: number = track.length();
 
-                    verticies[0] = [
+                    vertices[0] = [
                         currentPositionBeforeMove.x - trackLength / 2,
                         currentPositionBeforeMove.y,
                         currentPositionBeforeMove.z + trackLength / 2,
                     ];
-                    verticies[1] = [
+                    vertices[1] = [
                         currentPositionBeforeMove.x + trackLength / 2,
                         currentPositionBeforeMove.y,
                         currentPositionBeforeMove.z + trackLength / 2,
                     ];
-                    verticies[2] = [
+                    vertices[2] = [
                         currentPositionBeforeMove.x + trackLength / 2,
                         currentPositionBeforeMove.y,
                         currentPositionBeforeMove.z - trackLength / 2,
                     ];
-                    verticies[3] = [
+                    vertices[3] = [
                         currentPositionBeforeMove.x - trackLength / 2,
                         currentPositionBeforeMove.y,
                         currentPositionBeforeMove.z - trackLength / 2,
                     ];
-                    verticies[4] = [
+                    vertices[4] = [
                         currentPositionAfterMove.x - trackLength / 2,
                         currentPositionAfterMove.y,
                         currentPositionAfterMove.z + trackLength / 2,
                     ];
-                    verticies[5] = [
+                    vertices[5] = [
                         currentPositionAfterMove.x + trackLength / 2,
                         currentPositionAfterMove.y,
                         currentPositionAfterMove.z + trackLength / 2,
                     ];
-                    verticies[6] = [
+                    vertices[6] = [
                         currentPositionAfterMove.x + trackLength / 2,
                         currentPositionAfterMove.y,
                         currentPositionAfterMove.z - trackLength / 2,
                     ];
-                    verticies[7] = [
+                    vertices[7] = [
                         currentPositionAfterMove.x - trackLength / 2,
                         currentPositionAfterMove.y,
                         currentPositionAfterMove.z - trackLength / 2,
@@ -69,62 +69,62 @@ export class Turtle3D extends BaseTurtle {
                         ...[
                             // front face
                             // first tri
-                            ...verticies[0],
-                            ...verticies[1],
-                            ...verticies[5],
+                            ...vertices[0],
+                            ...vertices[1],
+                            ...vertices[5],
                             // second tri
-                            ...verticies[0],
-                            ...verticies[5],
-                            ...verticies[4],
+                            ...vertices[0],
+                            ...vertices[5],
+                            ...vertices[4],
                             //right face
                             //first tri
-                            ...verticies[1],
-                            ...verticies[2],
-                            ...verticies[6],
+                            ...vertices[1],
+                            ...vertices[2],
+                            ...vertices[6],
                             //second tri
-                            ...verticies[1],
-                            ...verticies[6],
-                            ...verticies[5],
+                            ...vertices[1],
+                            ...vertices[6],
+                            ...vertices[5],
                             //left face
                             //first tri
-                            ...verticies[3],
-                            ...verticies[0],
-                            ...verticies[4],
+                            ...vertices[3],
+                            ...vertices[0],
+                            ...vertices[4],
                             //second tri
-                            ...verticies[3],
-                            ...verticies[4],
-                            ...verticies[7],
+                            ...vertices[3],
+                            ...vertices[4],
+                            ...vertices[7],
                             //back face
                             //first tri
-                            ...verticies[2],
-                            ...verticies[3],
-                            ...verticies[7],
+                            ...vertices[2],
+                            ...vertices[3],
+                            ...vertices[7],
                             // second tri
-                            ...verticies[2],
-                            ...verticies[7],
-                            ...verticies[6],
+                            ...vertices[2],
+                            ...vertices[7],
+                            ...vertices[6],
                             // bottom face
                             // first tri
-                            ...verticies[3],
-                            ...verticies[1],
-                            ...verticies[0],
+                            ...vertices[3],
+                            ...vertices[1],
+                            ...vertices[0],
                             // second tri
-                            ...verticies[3],
-                            ...verticies[2],
-                            ...verticies[1],
+                            ...vertices[3],
+                            ...vertices[2],
+                            ...vertices[1],
                             // top face
                             // first tri
-                            ...verticies[4],
-                            ...verticies[5],
-                            ...verticies[7],
+                            ...vertices[4],
+                            ...vertices[5],
+                            ...vertices[7],
                             // second tri
-                            ...verticies[5],
-                            ...verticies[6],
-                            ...verticies[7],
+                            ...vertices[5],
+                            ...vertices[6],
+                            ...vertices[7],
                         ],
                     );
 
-                    for (let i = 0; i < verticies.length * 12; i++) {
+                    for (let i = 0; i < vertices.length * 12; i++) {
                         colorsArray.push(...newColors);
                     }
 
