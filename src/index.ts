@@ -3,46 +3,40 @@ import { Renderer, Scene } from 'three';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
 import { Turtle3D } from './Turtles/Turtle3D';
 import { LindenmayerFormular } from './LindenmayerFormular';
-import Stats from 'stats-js';
-
-// #region Performance Stats
-const stats: Stats = new Stats();
-stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-stats.dom.style.removeProperty('left');
-stats.dom.style.setProperty('right', '0');
-document.body.appendChild(stats.dom);
-// #endregion Performance Stats
+import PerformanceStats from './PerformanceStats';
 
 export let scene: Scene;
 let camera: THREE.PerspectiveCamera;
 let renderer: Renderer;
 let controls: TrackballControls;
 
-const lindenmayerFormular: LindenmayerFormular = LindenmayerFormular.getInstance();
+const lindenmayerSettingsForm: LindenmayerFormular = LindenmayerFormular.getInstance();
 
-const newTurtle: Turtle3D = lindenmayerFormular.generateLSystemImage();
+const newTurtle: Turtle3D = lindenmayerSettingsForm.generateLSystemImage();
 
 if (scene !== undefined) {
     repaint(newTurtle);
 } else {
-    init(newTurtle);
+    initTestingScene(newTurtle);
     animate();
 }
 
-const btnGenerate: HTMLInputElement = document.querySelector('#btnGenerate');
-btnGenerate.addEventListener('click', (e) => {
-    e.preventDefault();
-    const newTurtle: Turtle3D = lindenmayerFormular.generateLSystemImage();
+function hookUpGenerateButtonEventListener() {
+    const btnGenerate: HTMLInputElement = document.querySelector('#btnGenerate');
+    btnGenerate.addEventListener('click', (e) => {
+        e.preventDefault();
+        const newTurtle: Turtle3D = lindenmayerSettingsForm.generateLSystemImage();
 
-    if (scene !== undefined) {
-        repaint(newTurtle);
-    } else {
-        init(newTurtle);
-        animate();
-    }
-});
+        if (scene !== undefined) {
+            repaint(newTurtle);
+        } else {
+            initTestingScene(newTurtle);
+            animate();
+        }
+    });
+}
 
-function init(turtle: Turtle3D) {
+function initTestingScene(turtle: Turtle3D) {
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
@@ -61,6 +55,8 @@ function init(turtle: Turtle3D) {
     renderer.render(scene, camera);
 
     window.addEventListener('resize', onWindowResize, false);
+
+    hookUpGenerateButtonEventListener();
 }
 
 function repaint(turtle: Turtle3D) {
@@ -77,7 +73,7 @@ function animate() {
     renderer.render(scene, camera);
 
     //Performance Stats
-    stats.update();
+    PerformanceStats.instance.update();
 }
 
 function onWindowResize() {
