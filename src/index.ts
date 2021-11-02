@@ -10,6 +10,7 @@ let camera: THREE.PerspectiveCamera;
 let renderer: Renderer;
 let controls: TrackballControls;
 
+
 const lindenmayerSettingsForm: LindenmayerFormular = LindenmayerFormular.getInstance();
 
 const newTurtle: Turtle3D = lindenmayerSettingsForm.generateLSystemImage();
@@ -70,6 +71,7 @@ function repaint(turtle: Turtle3D) {
 function animate() {
     requestAnimationFrame(animate);
     controls.update();
+
     renderer.render(scene, camera);
 
     //Performance Stats

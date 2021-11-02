@@ -1,18 +1,23 @@
-import { Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, MeshBasicMaterial, Mesh } from 'three';
+import { Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, MeshBasicMaterial, Mesh, UniformsLib } from 'three';
 import { BaseTurtle } from './BaseTurtle';
 
 export class Turtle3D extends BaseTurtle {
-    addGeometryToScene(scene: THREE.Scene): void {
+    async addGeometryToScene(scene: THREE.Scene): Promise<void> {
         console.time('Geometry creation');
-        const tries: number[] = [];
-        const bufferGeometry: BufferGeometry = new BufferGeometry();
-        const colorsArray: number[] = [];
+
         for (let i = 0; i < this.instructionString.length; i++) {
+
+            const tries: number[] = [];
+            const bufferGeometry: BufferGeometry = new BufferGeometry();
+            const colorsArray: number[] = [];
+            const newColors = [0.7*i/this.instructionString.length,0.3,0.1*i/this.instructionString.length];
+
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove = this.currentPosition.clone();
                     const vertices: any[] = new Array(8);
-                    const newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
+                    // const newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
+                    
 
                     this.move();
                     const currentPositionAfterMove = this.currentPosition.clone();
@@ -128,6 +133,25 @@ export class Turtle3D extends BaseTurtle {
                         colorsArray.push(...newColors);
                     }
 
+                    bufferGeometry.setAttribute('position', new Float32BufferAttribute(tries, 3));
+
+                    // console.log(colorsArray);
+
+                    bufferGeometry.setAttribute('color', new Float32BufferAttribute(colorsArray, 3));
+
+                    // console.log(bufferGeometry);
+
+                    const material = new MeshBasicMaterial({
+                        vertexColors: true,
+                    });
+
+                    const mesh = new Mesh(bufferGeometry, material);
+
+                    setTimeout(function (scene, mesh){
+                        // this.renderScene(scene, mesh);
+                        scene.add(mesh);
+                    }, 500, scene, mesh);
+
                     break;
                 case 'G': //Move in current direction
                     this.move();
@@ -178,20 +202,7 @@ export class Turtle3D extends BaseTurtle {
         }
         // console.log(tries);
 
-        bufferGeometry.setAttribute('position', new Float32BufferAttribute(tries, 3));
 
-        // console.log(colorsArray);
-
-        bufferGeometry.setAttribute('color', new Float32BufferAttribute(colorsArray, 3));
-
-        // console.log(bufferGeometry);
-
-        const material = new MeshBasicMaterial({
-            vertexColors: true,
-        });
-
-        const mesh = new Mesh(bufferGeometry, material);
-        scene.add(mesh);
 
         // const line = new MeshLine()
         // line.setGeometry(bufferGeometry, (p: any) => 2 + Math.sin(50 * p))
@@ -212,4 +223,16 @@ export class Turtle3D extends BaseTurtle {
 
         this.currentPosition.add(absoluteMovement);
     }
+
+     async renderScene(scene: THREE.Scene, mesh: THREE.Mesh) : Promise<void> {
+
+        //  setTimeout(function (scene, mesh) {
+            await scene.add(mesh);
+            console.log("paintTree")
+        // }, 3000, scene, mesh);
+
+    }
+
+
 }
+
