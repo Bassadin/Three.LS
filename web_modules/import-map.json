@@ -3,6 +3,7 @@
     "stats-js": "./stats-js.js",
     "three": "./three.js",
     "three/examples/jsm/controls/TrackballControls.js": "./three/examples/jsm/controls/TrackballControls.js",
-    "three/examples/jsm/exporters/OBJExporter.js": "./three/examples/jsm/exporters/OBJExporter.js"
+    "three/examples/jsm/exporters/OBJExporter.js": "./three/examples/jsm/exporters/OBJExporter.js",
+    "three/examples/jsm/webxr/ARButton.js": "./three/examples/jsm/webxr/ARButton.js"
   }
 }
