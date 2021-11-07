@@ -27,3 +27,5 @@ Online auto-deploy version available here: <https://bassadin.github.io/Three.LS>
 - Obtain a local certificate: `mkcert -install && mkcert -key-file snowpack.key -cert-file snowpack.crt localhost`
 - Run `npm run start-secure`
 - Go to <https://localhost:8080/ar.html>
+
+- An online demo is also available at https://bassadin.github.io/Three.LS/ar.html for supported devices
