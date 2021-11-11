@@ -182,26 +182,18 @@ export class Turtle3D extends BaseTurtle {
                     break;
             }
         }
-        // console.log(tries);
 
         bufferGeometry.setAttribute('position', new Float32BufferAttribute(tris, 3));
-
-        // console.log(colorsArray);
-
         bufferGeometry.setAttribute('color', new Float32BufferAttribute(colorsArray, 3));
-
-        // console.log(bufferGeometry);
 
         const material = new MeshBasicMaterial({
             vertexColors: true,
         });
 
         let centerPoint: Vector3 = new Vector3();
-
         leafCenterPositions.forEach((eachVector3: Vector3) => {
             centerPoint.add(eachVector3);
         });
-
         centerPoint = centerPoint.divideScalar(leafCenterPositions.length);
 
         const mesh = new Mesh(bufferGeometry, material);
