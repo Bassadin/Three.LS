@@ -23,7 +23,7 @@ switch (windowFileLocationName) {
         if (scene !== undefined) {
             repaint(newTurtle);
         } else {
-            initTestingScene(newTurtle, lindenmayerSettingsForm);
+            initTestingScene(newTurtle);
             animate();
         }
         break;
@@ -36,22 +36,27 @@ switch (windowFileLocationName) {
         console.error('Route not found');
 }
 
-function hookUpGenerateButtonEventListener(lindenmayerSettingsForm: LindenmayerFormular) {
+function hookUpGenerateButtonEventListener() {
     const btnGenerate: HTMLInputElement = document.querySelector('#btnGenerate');
     btnGenerate.addEventListener('click', (e) => {
         e.preventDefault();
-        const newTurtle: Turtle3D = lindenmayerSettingsForm.generateLSystemImage();
-
-        if (scene !== undefined) {
-            repaint(newTurtle);
-        } else {
-            initTestingScene(newTurtle, lindenmayerSettingsForm);
-            animate();
-        }
+        this.generateAndRepaintLindenmayerMesh();
     });
 }
 
-function initTestingScene(turtle: Turtle3D, lindenmayerSettingsForm: LindenmayerFormular) {
+export function generateAndRepaintLindenmayerMesh() {
+    const form: LindenmayerFormular = LindenmayerFormular.getInstance();
+    const newTurtle: Turtle3D = form.generateLSystemImage();
+
+    if (scene !== undefined) {
+        repaint(newTurtle);
+    } else {
+        initTestingScene(newTurtle);
+        animate();
+    }
+}
+
+function initTestingScene(turtle: Turtle3D) {
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
@@ -80,7 +85,7 @@ function initTestingScene(turtle: Turtle3D, lindenmayerSettingsForm: Lindenmayer
 
     window.addEventListener('resize', onWindowResize, false);
 
-    hookUpGenerateButtonEventListener(lindenmayerSettingsForm);
+    hookUpGenerateButtonEventListener();
 }
 
 function initArTestingScene() {
