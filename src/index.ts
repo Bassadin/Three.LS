@@ -40,7 +40,7 @@ function hookUpGenerateButtonEventListener() {
     const btnGenerate: HTMLInputElement = document.querySelector('#btnGenerate');
     btnGenerate.addEventListener('click', (e) => {
         e.preventDefault();
-        this.generateAndRepaintLindenmayerMesh();
+        generateAndRepaintLindenmayerMesh();
     });
 }
 
