@@ -72,6 +72,7 @@ function initTestingScene(turtle: Turtle3D, lindenmayerSettingsForm: Lindenmayer
 
     const directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.target = mesh;
+    directionalLight.position.set(0, 3, 10);
     scene.add(directionalLight);
 
     // const axesHelper = new THREE.AxesHelper(5);
