@@ -1,4 +1,4 @@
-import {Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, MeshBasicMaterial, Mesh} from "../../web_modules/three.js";
+import {Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, MeshBasicMaterial, Mesh, Matrix4} from "../../web_modules/three.js";
 import {BaseTurtle} from "./BaseTurtle.js";
 export class Turtle3D extends BaseTurtle {
   addGeometryToScene(scene) {
@@ -6,6 +6,7 @@ export class Turtle3D extends BaseTurtle {
     const tris = [];
     const bufferGeometry = new BufferGeometry();
     const colorsArray = [];
+    const leafCenterPositions = [];
     for (let i = 0; i < this.instructionString.length; i++) {
       switch (this.instructionString.charAt(i)) {
         case "F":
@@ -14,6 +15,7 @@ export class Turtle3D extends BaseTurtle {
           const newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
           this.move();
           const currentPositionAfterMove = this.currentPosition.clone();
+          leafCenterPositions.push(currentPositionAfterMove.clone().sub(currentPositionBeforeMove.clone()).divideScalar(2));
           const track = new Vector3(currentPositionAfterMove.x - currentPositionBeforeMove.x, currentPositionAfterMove.y - currentPositionBeforeMove.y, currentPositionAfterMove.z - currentPositionBeforeMove.z);
           const trackLength = track.length() + (Math.random() * 0.08 - 0.04);
           vertices[0] = [
@@ -138,7 +140,13 @@ export class Turtle3D extends BaseTurtle {
     const material = new MeshBasicMaterial({
       vertexColors: true
     });
+    let centerPoint = new Vector3();
+    leafCenterPositions.forEach((eachVector3) => {
+      centerPoint.add(eachVector3);
+    });
+    centerPoint = centerPoint.divideScalar(leafCenterPositions.length);
     const mesh = new Mesh(bufferGeometry, material);
+    mesh.applyMatrix4(new Matrix4().makeTranslation(centerPoint.x, centerPoint.y, centerPoint.z));
     scene.add(mesh);
     console.timeEnd("Geometry creation");
     scene.add(createPlane());
