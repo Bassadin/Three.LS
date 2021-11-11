@@ -56,7 +56,6 @@ function initTestingScene(turtle, lindenmayerSettingsForm) {
   const directionalLight = new THREE.DirectionalLight(16777215, 1);
   directionalLight.target = mesh;
   scene.add(directionalLight);
-  scene.add(addPlane());
   window.addEventListener("resize", onWindowResize, false);
   hookUpGenerateButtonEventListener(lindenmayerSettingsForm);
 }
@@ -105,24 +104,5 @@ function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-}
-function addPlane() {
-  const bufferGeometry = new THREE.BufferGeometry();
-  const newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
-  const vertices = [];
-  const tris = [];
-  vertices[0] = [-5, -5, 2.5];
-  vertices[1] = [5, -5, 2.5];
-  vertices[2] = [5, -5, -2.5];
-  vertices[3] = [-5, -5, -2.5];
-  tris.push(...[...vertices[0], ...vertices[1], ...vertices[2], ...vertices[0], ...vertices[2], ...vertices[3]]);
-  const colorsArray = [...newColors, ...newColors, ...newColors, ...newColors, ...newColors, ...newColors];
-  bufferGeometry.setAttribute("position", new THREE.Float32BufferAttribute(tris, 3));
-  bufferGeometry.setAttribute("color", new THREE.Float32BufferAttribute(colorsArray, 3));
-  const material = new THREE.MeshBasicMaterial({
-    vertexColors: true
-  });
-  const mesh = new THREE.Mesh(bufferGeometry, material);
-  return mesh;
 }
 //# sourceMappingURL=index.js.map
