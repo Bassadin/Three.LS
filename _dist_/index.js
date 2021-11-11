@@ -31,7 +31,7 @@ function hookUpGenerateButtonEventListener() {
   const btnGenerate = document.querySelector("#btnGenerate");
   btnGenerate.addEventListener("click", (e) => {
     e.preventDefault();
-    this.generateAndRepaintLindenmayerMesh();
+    generateAndRepaintLindenmayerMesh();
   });
 }
 export function generateAndRepaintLindenmayerMesh() {
