@@ -5,19 +5,21 @@ export class Turtle3D extends BaseTurtle {
     async addGeometryToScene(scene: THREE.Scene): Promise<void> {
         console.time('Geometry creation');
 
-        for (let i = 0; i < this.instructionString.length; i++) {
+        // this.newColors = [0.7,0.3,0.1];
+        let k = 0;
 
+        for (let i = 0; i < this.instructionString.length; i++) {
             const tries: number[] = [];
             const bufferGeometry: BufferGeometry = new BufferGeometry();
             const colorsArray: number[] = [];
-            const newColors = [0.7*i/this.instructionString.length,0.3,0.1*i/this.instructionString.length];
+
 
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove = this.currentPosition.clone();
                     const vertices: any[] = new Array(8);
-                    // const newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
-                    
+                    this.newColors = [(k / this.instructionString.length) * 0.2 + (Math.random() * (0.20 - 0.05) + 0.05), (k / this.instructionString.length) * 0.7 + (Math.random() * (0.20 - 0.05) + 0.05), (k / this.instructionString.length) * 0.1 + (Math.random() * (0.10 - 0.05) + 0.05)];
+
 
                     this.move();
                     const currentPositionAfterMove = this.currentPosition.clone();
@@ -129,8 +131,8 @@ export class Turtle3D extends BaseTurtle {
                         ],
                     );
 
-                    for (let i = 0; i < vertices.length * 12; i++) {
-                        colorsArray.push(...newColors);
+                    for (let j = 0; j < vertices.length * 12; j++) {
+                        colorsArray.push(...this.newColors);
                     }
 
                     bufferGeometry.setAttribute('position', new Float32BufferAttribute(tries, 3));
@@ -147,7 +149,7 @@ export class Turtle3D extends BaseTurtle {
 
                     const mesh = new Mesh(bufferGeometry, material);
 
-                    setTimeout(function (scene, mesh){
+                    setTimeout(function (scene, mesh) {
                         // this.renderScene(scene, mesh);
                         scene.add(mesh);
                     }, 500, scene, mesh);
@@ -158,16 +160,20 @@ export class Turtle3D extends BaseTurtle {
                     break;
                 case '[':
                     this.saveState();
+                    k = i;
                     break;
                 case ']':
                     this.loadState();
+                    k = i - k;
                     break;
                 case '+':
+                    // this.newColors = [0.3/(0.1/i),0.7,0.1];
                     this.currentRotation.multiply(
                         new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), this.rotationStepSize),
                     );
                     break;
                 case '-':
+                    // this.newColors = [0.3/(0.1*i),0.7,0.1];
                     this.currentRotation.multiply(
                         new Quaternion().setFromAxisAngle(new Vector3(0, 0, -1), this.rotationStepSize),
                     );
@@ -178,6 +184,7 @@ export class Turtle3D extends BaseTurtle {
                     );
                     break;
                 case '∧': //Achtung, ∧ (mathematisches UND) und nicht ^ :D
+                    // this.newColors = [0.3/(0.1*i),0.5,0.1];
                     this.currentRotation.multiply(
                         new Quaternion().setFromAxisAngle(new Vector3(0, -1, 0), this.rotationStepSize),
                     );
@@ -199,6 +206,8 @@ export class Turtle3D extends BaseTurtle {
                     console.log('Unknown axiom character: ' + this.instructionString.charAt(i));
                     break;
             }
+
+            k++;
         }
         // console.log(tries);
 
@@ -224,11 +233,11 @@ export class Turtle3D extends BaseTurtle {
         this.currentPosition.add(absoluteMovement);
     }
 
-     async renderScene(scene: THREE.Scene, mesh: THREE.Mesh) : Promise<void> {
+    async renderScene(scene: THREE.Scene, mesh: THREE.Mesh): Promise<void> {
 
         //  setTimeout(function (scene, mesh) {
-            await scene.add(mesh);
-            console.log("paintTree")
+        await scene.add(mesh);
+        console.log("paintTree")
         // }, 3000, scene, mesh);
 
     }

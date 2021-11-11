@@ -15,7 +15,7 @@ export abstract class BaseTurtle {
     private positionSaveStateArray: Vector3[] = [];
 
     //Color
-    protected currentColor: number = 0;
+    protected newColors: number[] = [0.3,0.7,0.1];
     private colorSaveStateArray: number[] = [];
 
 
@@ -30,7 +30,8 @@ export abstract class BaseTurtle {
     saveState(): void {
         this.positionSaveStateArray.push(this.currentPosition.clone());
         this.rotationSaveStateArray.push(this.currentRotation.clone());
-        this.colorSaveStateArray.push(this.currentColor);
+        // this.colorSaveStateArray.push(this.newColors.push());
+        console.log("save", this.newColors);
     }
 
     loadState(): void {
@@ -39,6 +40,8 @@ export abstract class BaseTurtle {
         }
         this.currentPosition = this.positionSaveStateArray.pop();
         this.currentRotation = this.rotationSaveStateArray.pop();
-        this.currentColor = this.colorSaveStateArray.pop();
+        // this.newColors[0] = this.colorSaveStateArray.pop();
+        console.log("load", this.newColors);
+
     }
 }
