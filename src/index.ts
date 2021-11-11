@@ -128,8 +128,6 @@ function repaint(turtle: Turtle3D) {
     }
     turtle.addGeometryToScene(scene);
 
-    const light = new THREE.AmbientLight(0x404040); // soft white light
-    scene.add(light);
 }
 
 function animate() {

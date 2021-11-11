@@ -6,12 +6,12 @@ export class Turtle3D extends BaseTurtle {
         console.time('Geometry creation');
         const tris: number[] = [];
         const bufferGeometry: BufferGeometry = new BufferGeometry();
-        const colorsArray: number[] = [];
+         const colorsArray: number[] = [];
         const leafCenterPositions: Vector3[] = [];
         for (let i = 0; i < this.instructionString.length; i++) {
             const tries: number[] = [];
             const bufferGeometry: BufferGeometry = new BufferGeometry();
-            const colorsArray: number[] = [];
+            //  const colorsArray: number[] = [];
 
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
@@ -28,7 +28,7 @@ export class Turtle3D extends BaseTurtle {
                             this.colorIndex / 100 +
                             (Math.random() * (0.1 - 0.05) + 0.05),
                     ];
-                    // console.log("Farbe:", this.newColors)
+                     console.log("Farbe:", this.newColors)
                     this.colorIndex++;
 
                     this.move();
@@ -154,7 +154,7 @@ export class Turtle3D extends BaseTurtle {
 
                     // console.log(colorsArray);
 
-                    bufferGeometry.setAttribute('color', new Float32BufferAttribute(colorsArray, 3));
+                    bufferGeometry.setAttribute('color', new Float32BufferAttribute(this.newColors, 3));
 
                     // console.log(bufferGeometry);
 
@@ -164,14 +164,14 @@ export class Turtle3D extends BaseTurtle {
 
                     const mesh = new Mesh(bufferGeometry, material);
 
-                    setTimeout(
-                        function (scene, mesh) {
-                            scene.add(mesh);
-                        },
-                        500,
-                        scene,
-                        mesh,
-                    );
+                    // setTimeout(
+                    //     function (scene, mesh) {
+                    //         scene.add(mesh);
+                    //     },
+                    //     500,
+                    //     scene,
+                    //     mesh,
+                    // );
 
                     break;
                 case 'G': //Move in current direction
@@ -184,13 +184,11 @@ export class Turtle3D extends BaseTurtle {
                     this.loadState();
                     break;
                 case '+':
-                    // this.newColors = [0.3/(0.1/i),0.7,0.1];
                     this.currentRotation.multiply(
                         new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), this.rotationStepSize),
                     );
                     break;
                 case '-':
-                    // this.newColors = [0.3/(0.1*i),0.7,0.1];
                     this.currentRotation.multiply(
                         new Quaternion().setFromAxisAngle(new Vector3(0, 0, -1), this.rotationStepSize),
                     );
@@ -201,7 +199,6 @@ export class Turtle3D extends BaseTurtle {
                     );
                     break;
                 case '∧': //Achtung, ∧ (mathematisches UND) und nicht ^ :D
-                    // this.newColors = [0.3/(0.1*i),0.5,0.1];
                     this.currentRotation.multiply(
                         new Quaternion().setFromAxisAngle(new Vector3(0, -1, 0), this.rotationStepSize),
                     );
