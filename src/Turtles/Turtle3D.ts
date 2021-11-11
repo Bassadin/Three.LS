@@ -203,7 +203,7 @@ export class Turtle3D extends BaseTurtle {
         // scene.add(mesh)
 
         console.timeEnd('Geometry creation');
-        scene.add(addPlane());
+        scene.add(createPlane());
         return mesh;
     }
 
@@ -215,7 +215,7 @@ export class Turtle3D extends BaseTurtle {
         this.currentPosition.add(absoluteMovement);
     }
 }
-function addPlane(): THREE.Mesh {
+function createPlane(): THREE.Mesh {
     const bufferGeometry: THREE.BufferGeometry = new BufferGeometry();
     const newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
     const vertices: any[] = [];
