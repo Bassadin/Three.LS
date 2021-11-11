@@ -21,7 +21,7 @@ export class Turtle3D extends BaseTurtle {
                     const currentPositionBeforeMove = this.currentPosition.clone();
                     const vertices: any[] = new Array(8);
                     this.newColors = [(this.colorIndex / this.instructionString.length) * 0.2 + this.colorIndex/100 + (Math.random() * (0.20 - 0.05) + 0.05), (this.colorIndex / this.instructionString.length * 30) * 0.8 + this.colorIndex/100 + (Math.random() * (0.20 - 0.05) + 0.05), (this.colorIndex / this.instructionString.length * 50) * 0.1 + this.colorIndex/100 + (Math.random() * (0.10 - 0.05) + 0.05)];
-                    console.log("Farbe:", this.newColors)
+                    // console.log("Farbe:", this.newColors)
                     this.colorIndex++;
 
                     this.move();
@@ -154,7 +154,6 @@ export class Turtle3D extends BaseTurtle {
                     const mesh = new Mesh(bufferGeometry, material);
 
                     setTimeout(function (scene, mesh) {
-                        // this.renderScene(scene, mesh);
                         scene.add(mesh);
                     }, 500, scene, mesh);
 
@@ -234,16 +233,6 @@ export class Turtle3D extends BaseTurtle {
 
         this.currentPosition.add(absoluteMovement);
     }
-
-    async renderScene(scene: THREE.Scene, mesh: THREE.Mesh): Promise<void> {
-
-        //  setTimeout(function (scene, mesh) {
-        await scene.add(mesh);
-        console.log("paintTree")
-        // }, 3000, scene, mesh);
-
-    }
-
 
 }
 

@@ -32,7 +32,7 @@ export abstract class BaseTurtle {
         this.positionSaveStateArray.push(this.currentPosition.clone());
         this.rotationSaveStateArray.push(this.currentRotation.clone());
         this.colorSaveStateArray.push(this.colorIndex);
-        console.log("save", this.colorIndex);
+        // console.log("save", this.colorIndex);
     }
 
     loadState(): void {
@@ -42,7 +42,7 @@ export abstract class BaseTurtle {
         this.currentPosition = this.positionSaveStateArray.pop();
         this.currentRotation = this.rotationSaveStateArray.pop();
         this.colorIndex = this.colorSaveStateArray.pop();
-        console.log("load", this.colorIndex);
+        // console.log("load", this.colorIndex);
 
     }
 }
