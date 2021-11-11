@@ -56,10 +56,8 @@ function initTestingScene(turtle) {
   controls.update();
   scene = new THREE.Scene();
   const mesh = turtle.addGeometryToScene(scene);
+  console.log(mesh);
   renderer.render(scene, camera);
-  const directionalLight = new THREE.DirectionalLight(16777215, 1);
-  directionalLight.target = mesh;
-  scene.add(directionalLight);
   window.addEventListener("resize", onWindowResize, false);
   hookUpGenerateButtonEventListener();
 }
