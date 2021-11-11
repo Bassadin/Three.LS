@@ -1,20 +1,13 @@
-import {
-    Vector3,
-    Quaternion,
-    BufferGeometry,
-    Float32BufferAttribute,
-    MeshBasicMaterial,
-    Mesh,
-    UniformsLib,
-} from 'three';
+import { Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, MeshBasicMaterial, Mesh, Matrix4 } from 'three';
 import { BaseTurtle } from './BaseTurtle';
 
 export class Turtle3D extends BaseTurtle {
-    async addGeometryToScene(scene: THREE.Scene): Promise<void> {
+    addGeometryToScene(scene: THREE.Scene): Mesh {
         console.time('Geometry creation');
-
-        // this.newColors = [0.7,0.3,0.1];
-
+        const tris: number[] = [];
+        const bufferGeometry: BufferGeometry = new BufferGeometry();
+        const colorsArray: number[] = [];
+        const leafCenterPositions: Vector3[] = [];
         for (let i = 0; i < this.instructionString.length; i++) {
             const tries: number[] = [];
             const bufferGeometry: BufferGeometry = new BufferGeometry();
@@ -40,13 +33,18 @@ export class Turtle3D extends BaseTurtle {
 
                     this.move();
                     const currentPositionAfterMove = this.currentPosition.clone();
+
+                    leafCenterPositions.push(
+                        currentPositionAfterMove.clone().sub(currentPositionBeforeMove.clone()).divideScalar(2),
+                    );
+
                     const track: Vector3 = new Vector3(
                         currentPositionAfterMove.x - currentPositionBeforeMove.x,
                         currentPositionAfterMove.y - currentPositionBeforeMove.y,
                         currentPositionAfterMove.z - currentPositionBeforeMove.z,
                     );
 
-                    const trackLength: number = track.length();
+                    const trackLength: number = track.length() + (Math.random() * 0.08 - 0.04);
 
                     vertices[0] = [
                         currentPositionBeforeMove.x - trackLength / 2,
@@ -89,7 +87,7 @@ export class Turtle3D extends BaseTurtle {
                         currentPositionAfterMove.z - trackLength / 2,
                     ];
 
-                    tries.push(
+                    tris.push(
                         ...[
                             // front face
                             // first tri
@@ -226,7 +224,23 @@ export class Turtle3D extends BaseTurtle {
                     break;
             }
         }
-        // console.log(tries);
+
+        bufferGeometry.setAttribute('position', new Float32BufferAttribute(tris, 3));
+        bufferGeometry.setAttribute('color', new Float32BufferAttribute(colorsArray, 3));
+
+        const material = new MeshBasicMaterial({
+            vertexColors: true,
+        });
+
+        let centerPoint: Vector3 = new Vector3();
+        leafCenterPositions.forEach((eachVector3: Vector3) => {
+            centerPoint.add(eachVector3);
+        });
+        centerPoint = centerPoint.divideScalar(leafCenterPositions.length);
+
+        const mesh = new Mesh(bufferGeometry, material);
+        mesh.applyMatrix4(new Matrix4().makeTranslation(centerPoint.x, centerPoint.y, centerPoint.z));
+        scene.add(mesh);
 
         // const line = new MeshLine()
         // line.setGeometry(bufferGeometry, (p: any) => 2 + Math.sin(50 * p))
@@ -238,6 +252,8 @@ export class Turtle3D extends BaseTurtle {
         // scene.add(mesh)
 
         console.timeEnd('Geometry creation');
+        scene.add(createPlane());
+        return mesh;
     }
 
     move(): void {
@@ -247,4 +263,30 @@ export class Turtle3D extends BaseTurtle {
 
         this.currentPosition.add(absoluteMovement);
     }
+}
+function createPlane(): THREE.Mesh {
+    const bufferGeometry: THREE.BufferGeometry = new BufferGeometry();
+    const newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
+    const vertices: any[] = [];
+    const tris: number[] = [];
+    vertices[0] = [-5, -5, 2.5];
+    vertices[1] = [5, -5, 2.5];
+    vertices[2] = [5, -5, -2.5];
+    vertices[3] = [-5, -5, -2.5];
+    tris.push(...[...vertices[0], ...vertices[1], ...vertices[2], ...vertices[0], ...vertices[2], ...vertices[3]]);
+    const colorsArray: number[] = [...newColors, ...newColors, ...newColors, ...newColors, ...newColors, ...newColors];
+    bufferGeometry.setAttribute('position', new Float32BufferAttribute(tris, 3));
+
+    // console.log(colorsArray);
+
+    bufferGeometry.setAttribute('color', new Float32BufferAttribute(colorsArray, 3));
+
+    // console.log(bufferGeometry);
+
+    const material = new MeshBasicMaterial({
+        vertexColors: true,
+    });
+
+    const mesh = new Mesh(bufferGeometry, material);
+    return mesh;
 }

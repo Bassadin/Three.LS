@@ -3,7 +3,7 @@ import { Rule } from './Rule';
 import { LSystem } from './LSystem';
 import { Utils } from './Utils';
 import { OBJExporter } from 'three/examples/jsm/exporters/OBJExporter.js';
-import { scene } from './index';
+import { scene, generateAndRepaintLindenmayerMesh } from './index';
 
 export class LindenmayerFormular {
     private static instance: LindenmayerFormular;
@@ -142,6 +142,8 @@ export class LindenmayerFormular {
                 (<HTMLInputElement>document.getElementById('degrees')).value = obj.turningAngle;
                 (<HTMLInputElement>document.getElementById('steplength')).value = obj.stepLength;
                 (<HTMLInputElement>document.getElementById('sentence')).value = obj.baseAxiom;
+
+                generateAndRepaintLindenmayerMesh();
             };
             //Reduzierung von rule Feldern
             const staticRuleCounter = this.countAllRules;
