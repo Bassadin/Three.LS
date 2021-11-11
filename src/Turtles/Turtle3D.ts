@@ -1,4 +1,4 @@
-import { Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, MeshBasicMaterial, Mesh } from 'three';
+import { Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, MeshBasicMaterial, Mesh, Matrix4 } from 'three';
 import { BaseTurtle } from './BaseTurtle';
 
 export class Turtle3D extends BaseTurtle {
@@ -7,6 +7,7 @@ export class Turtle3D extends BaseTurtle {
         const tris: number[] = [];
         const bufferGeometry: BufferGeometry = new BufferGeometry();
         const colorsArray: number[] = [];
+        const leafCenterPositions: Vector3[] = [];
         for (let i = 0; i < this.instructionString.length; i++) {
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
@@ -16,6 +17,11 @@ export class Turtle3D extends BaseTurtle {
 
                     this.move();
                     const currentPositionAfterMove = this.currentPosition.clone();
+
+                    leafCenterPositions.push(
+                        currentPositionAfterMove.clone().sub(currentPositionBeforeMove.clone()).divideScalar(2),
+                    );
+
                     const track: Vector3 = new Vector3(
                         currentPositionAfterMove.x - currentPositionBeforeMove.x,
                         currentPositionAfterMove.y - currentPositionBeforeMove.y,
@@ -190,7 +196,16 @@ export class Turtle3D extends BaseTurtle {
             vertexColors: true,
         });
 
+        let centerPoint: Vector3 = new Vector3();
+
+        leafCenterPositions.forEach((eachVector3: Vector3) => {
+            centerPoint.add(eachVector3);
+        });
+
+        centerPoint = centerPoint.divideScalar(leafCenterPositions.length);
+
         const mesh = new Mesh(bufferGeometry, material);
+        mesh.applyMatrix4(new Matrix4().makeTranslation(centerPoint.x, centerPoint.y, centerPoint.z));
         scene.add(mesh);
 
         // const line = new MeshLine()
