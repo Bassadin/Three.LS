@@ -15,10 +15,9 @@ export abstract class BaseTurtle {
     private positionSaveStateArray: Vector3[] = [];
 
     //Color
-     newColors = [0.7,0.3,0.1];
+    newColors = [0.7, 0.3, 0.1];
     protected colorIndex: number = 0;
     private colorSaveStateArray: number[] = [];
-
 
     constructor(instructionString: string, stepLength: number, rotationStepSize: number) {
         this.instructionString = instructionString;
@@ -43,6 +42,5 @@ export abstract class BaseTurtle {
         this.currentRotation = this.rotationSaveStateArray.pop();
         this.colorIndex = this.colorSaveStateArray.pop();
         // console.log("load", this.colorIndex);
-
     }
 }

@@ -10,7 +10,6 @@ let camera: THREE.PerspectiveCamera;
 let renderer: Renderer;
 let controls: TrackballControls;
 
-
 const lindenmayerSettingsForm: LindenmayerFormular = LindenmayerFormular.getInstance();
 
 const newTurtle: Turtle3D = lindenmayerSettingsForm.generateLSystemImage();
@@ -66,6 +65,9 @@ function repaint(turtle: Turtle3D) {
         scene.remove(obj);
     }
     turtle.addGeometryToScene(scene);
+
+    const light = new THREE.AmbientLight(0x404040); // soft white light
+    scene.add(light);
 }
 
 function animate() {

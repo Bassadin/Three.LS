@@ -1,26 +1,40 @@
-import { Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, MeshBasicMaterial, Mesh, UniformsLib } from 'three';
+import {
+    Vector3,
+    Quaternion,
+    BufferGeometry,
+    Float32BufferAttribute,
+    MeshBasicMaterial,
+    Mesh,
+    UniformsLib,
+} from 'three';
 import { BaseTurtle } from './BaseTurtle';
 
 export class Turtle3D extends BaseTurtle {
     async addGeometryToScene(scene: THREE.Scene): Promise<void> {
         console.time('Geometry creation');
 
-        
-
         // this.newColors = [0.7,0.3,0.1];
-        
 
         for (let i = 0; i < this.instructionString.length; i++) {
             const tries: number[] = [];
             const bufferGeometry: BufferGeometry = new BufferGeometry();
             const colorsArray: number[] = [];
 
-
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove = this.currentPosition.clone();
                     const vertices: any[] = new Array(8);
-                    this.newColors = [(this.colorIndex / this.instructionString.length) * 0.2 + this.colorIndex/100 + (Math.random() * (0.20 - 0.05) + 0.05), (this.colorIndex / this.instructionString.length * 30) * 0.8 + this.colorIndex/100 + (Math.random() * (0.20 - 0.05) + 0.05), (this.colorIndex / this.instructionString.length * 50) * 0.1 + this.colorIndex/100 + (Math.random() * (0.10 - 0.05) + 0.05)];
+                    this.newColors = [
+                        (this.colorIndex / this.instructionString.length) * 0.2 +
+                            this.colorIndex / 100 +
+                            (Math.random() * (0.2 - 0.05) + 0.05),
+                        (this.colorIndex / this.instructionString.length) * 30 * 0.8 +
+                            this.colorIndex / 100 +
+                            (Math.random() * (0.2 - 0.05) + 0.05),
+                        (this.colorIndex / this.instructionString.length) * 50 * 0.1 +
+                            this.colorIndex / 100 +
+                            (Math.random() * (0.1 - 0.05) + 0.05),
+                    ];
                     // console.log("Farbe:", this.newColors)
                     this.colorIndex++;
 
@@ -150,12 +164,16 @@ export class Turtle3D extends BaseTurtle {
                         vertexColors: true,
                     });
 
-
                     const mesh = new Mesh(bufferGeometry, material);
 
-                    setTimeout(function (scene, mesh) {
-                        scene.add(mesh);
-                    }, 500, scene, mesh);
+                    setTimeout(
+                        function (scene, mesh) {
+                            scene.add(mesh);
+                        },
+                        500,
+                        scene,
+                        mesh,
+                    );
 
                     break;
                 case 'G': //Move in current direction
@@ -207,12 +225,8 @@ export class Turtle3D extends BaseTurtle {
                     console.log('Unknown axiom character: ' + this.instructionString.charAt(i));
                     break;
             }
-
-            
         }
         // console.log(tries);
-
-
 
         // const line = new MeshLine()
         // line.setGeometry(bufferGeometry, (p: any) => 2 + Math.sin(50 * p))
@@ -233,6 +247,4 @@ export class Turtle3D extends BaseTurtle {
 
         this.currentPosition.add(absoluteMovement);
     }
-
 }
-
