@@ -22,7 +22,7 @@ export class Turtle3D extends BaseTurtle {
                         currentPositionAfterMove.z - currentPositionBeforeMove.z,
                     );
 
-                    const trackLength: number = track.length() + (Math.random() * 0.05 - 0.025);
+                    const trackLength: number = track.length() + (Math.random() * 0.08 - 0.04);
 
                     vertices[0] = [
                         currentPositionBeforeMove.x - trackLength / 2,
