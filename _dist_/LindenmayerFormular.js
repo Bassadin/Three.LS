@@ -3,7 +3,7 @@ import {Rule} from "./Rule.js";
 import {LSystem} from "./LSystem.js";
 import {Utils} from "./Utils.js";
 import {OBJExporter} from "../web_modules/three/examples/jsm/exporters/OBJExporter.js";
-import {scene} from "./index.js";
+import {scene, generateAndRepaintLindenmayerMesh} from "./index.js";
 export class LindenmayerFormular {
   constructor() {
     this.btnAdd = document.querySelector("#btnAddRule");
@@ -100,6 +100,7 @@ export class LindenmayerFormular {
         document.getElementById("degrees").value = obj.turningAngle;
         document.getElementById("steplength").value = obj.stepLength;
         document.getElementById("sentence").value = obj.baseAxiom;
+        generateAndRepaintLindenmayerMesh();
       };
       const staticRuleCounter = this.countAllRules;
       for (let i = 1; i <= staticRuleCounter; i++) {

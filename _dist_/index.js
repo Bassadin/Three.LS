@@ -16,7 +16,7 @@ switch (windowFileLocationName) {
     if (scene !== void 0) {
       repaint(newTurtle);
     } else {
-      initTestingScene(newTurtle, lindenmayerSettingsForm);
+      initTestingScene(newTurtle);
       animate();
     }
     break;
@@ -27,20 +27,24 @@ switch (windowFileLocationName) {
   default:
     console.error("Route not found");
 }
-function hookUpGenerateButtonEventListener(lindenmayerSettingsForm) {
+function hookUpGenerateButtonEventListener() {
   const btnGenerate = document.querySelector("#btnGenerate");
   btnGenerate.addEventListener("click", (e) => {
     e.preventDefault();
-    const newTurtle = lindenmayerSettingsForm.generateLSystemImage();
-    if (scene !== void 0) {
-      repaint(newTurtle);
-    } else {
-      initTestingScene(newTurtle, lindenmayerSettingsForm);
-      animate();
-    }
+    this.generateAndRepaintLindenmayerMesh();
   });
 }
-function initTestingScene(turtle, lindenmayerSettingsForm) {
+export function generateAndRepaintLindenmayerMesh() {
+  const form = LindenmayerFormular.getInstance();
+  const newTurtle = form.generateLSystemImage();
+  if (scene !== void 0) {
+    repaint(newTurtle);
+  } else {
+    initTestingScene(newTurtle);
+    animate();
+  }
+}
+function initTestingScene(turtle) {
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -57,7 +61,7 @@ function initTestingScene(turtle, lindenmayerSettingsForm) {
   directionalLight.target = mesh;
   scene.add(directionalLight);
   window.addEventListener("resize", onWindowResize, false);
-  hookUpGenerateButtonEventListener(lindenmayerSettingsForm);
+  hookUpGenerateButtonEventListener();
 }
 function initArTestingScene() {
   camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 20);
