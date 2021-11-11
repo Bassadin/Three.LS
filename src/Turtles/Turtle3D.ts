@@ -5,8 +5,10 @@ export class Turtle3D extends BaseTurtle {
     async addGeometryToScene(scene: THREE.Scene): Promise<void> {
         console.time('Geometry creation');
 
+        
+
         // this.newColors = [0.7,0.3,0.1];
-        let k = 0;
+        
 
         for (let i = 0; i < this.instructionString.length; i++) {
             const tries: number[] = [];
@@ -18,8 +20,9 @@ export class Turtle3D extends BaseTurtle {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove = this.currentPosition.clone();
                     const vertices: any[] = new Array(8);
-                    this.newColors = [(k / this.instructionString.length) * 0.2 + (Math.random() * (0.20 - 0.05) + 0.05), (k / this.instructionString.length) * 0.7 + (Math.random() * (0.20 - 0.05) + 0.05), (k / this.instructionString.length) * 0.1 + (Math.random() * (0.10 - 0.05) + 0.05)];
-
+                    this.newColors = [(this.colorIndex / this.instructionString.length) * 0.2 + this.colorIndex/100 + (Math.random() * (0.20 - 0.05) + 0.05), (this.colorIndex / this.instructionString.length * 30) * 0.8 + this.colorIndex/100 + (Math.random() * (0.20 - 0.05) + 0.05), (this.colorIndex / this.instructionString.length * 50) * 0.1 + this.colorIndex/100 + (Math.random() * (0.10 - 0.05) + 0.05)];
+                    console.log("Farbe:", this.newColors)
+                    this.colorIndex++;
 
                     this.move();
                     const currentPositionAfterMove = this.currentPosition.clone();
@@ -147,6 +150,7 @@ export class Turtle3D extends BaseTurtle {
                         vertexColors: true,
                     });
 
+
                     const mesh = new Mesh(bufferGeometry, material);
 
                     setTimeout(function (scene, mesh) {
@@ -160,11 +164,9 @@ export class Turtle3D extends BaseTurtle {
                     break;
                 case '[':
                     this.saveState();
-                    k = i;
                     break;
                 case ']':
                     this.loadState();
-                    k = i - k;
                     break;
                 case '+':
                     // this.newColors = [0.3/(0.1/i),0.7,0.1];
@@ -207,7 +209,7 @@ export class Turtle3D extends BaseTurtle {
                     break;
             }
 
-            k++;
+            
         }
         // console.log(tries);
 
