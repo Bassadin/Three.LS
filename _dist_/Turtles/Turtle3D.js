@@ -141,6 +141,7 @@ export class Turtle3D extends BaseTurtle {
     const mesh = new Mesh(bufferGeometry, material);
     scene.add(mesh);
     console.timeEnd("Geometry creation");
+    return mesh;
   }
   move() {
     const absoluteMovement = new Vector3(0, 1, 0).applyQuaternion(this.currentRotation.clone()).multiplyScalar(this.stepLength);
