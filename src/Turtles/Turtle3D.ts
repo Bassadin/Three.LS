@@ -2,7 +2,7 @@ import { Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, MeshBasicM
 import { BaseTurtle } from './BaseTurtle';
 
 export class Turtle3D extends BaseTurtle {
-    addGeometryToScene(scene: THREE.Scene): void {
+    addGeometryToScene(scene: THREE.Scene): Mesh {
         console.time('Geometry creation');
         const tries: number[] = [];
         const bufferGeometry: BufferGeometry = new BufferGeometry();
@@ -203,6 +203,8 @@ export class Turtle3D extends BaseTurtle {
         // scene.add(mesh)
 
         console.timeEnd('Geometry creation');
+
+        return mesh;
     }
 
     move(): void {

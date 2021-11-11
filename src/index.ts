@@ -66,9 +66,18 @@ function initTestingScene(turtle: Turtle3D, lindenmayerSettingsForm: Lindenmayer
 
     scene = new THREE.Scene();
 
-    turtle.addGeometryToScene(scene);
+    const mesh: THREE.Mesh = turtle.addGeometryToScene(scene);
 
     renderer.render(scene, camera);
+
+    const directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.target = mesh;
+    scene.add(directionalLight);
+
+    scene.add(addPlane());
+
+    // const axesHelper = new THREE.AxesHelper(5);
+    // scene.add(axesHelper);
 
     window.addEventListener('resize', onWindowResize, false);
 
@@ -137,4 +146,30 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
 
     renderer.setSize(window.innerWidth, window.innerHeight);
+}
+function addPlane(): THREE.Mesh {
+    const bufferGeometry: THREE.BufferGeometry = new THREE.BufferGeometry();
+    const newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
+    const vertices: any[] = [];
+    const tris: number[] = [];
+    vertices[0] = [-5, -5, 2.5];
+    vertices[1] = [5, -5, 2.5];
+    vertices[2] = [5, -5, -2.5];
+    vertices[3] = [-5, -5, -2.5];
+    tris.push(...[...vertices[0], ...vertices[1], ...vertices[2], ...vertices[0], ...vertices[2], ...vertices[3]]);
+    const colorsArray: number[] = [...newColors, ...newColors, ...newColors, ...newColors, ...newColors, ...newColors];
+    bufferGeometry.setAttribute('position', new THREE.Float32BufferAttribute(tris, 3));
+
+    // console.log(colorsArray);
+
+    bufferGeometry.setAttribute('color', new THREE.Float32BufferAttribute(colorsArray, 3));
+
+    // console.log(bufferGeometry);
+
+    const material = new THREE.MeshBasicMaterial({
+        vertexColors: true,
+    });
+
+    const mesh = new THREE.Mesh(bufferGeometry, material);
+    return mesh;
 }
