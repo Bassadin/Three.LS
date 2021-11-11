@@ -2,9 +2,9 @@ import { Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, MeshBasicM
 import { BaseTurtle } from './BaseTurtle';
 
 export class Turtle3D extends BaseTurtle {
-    addGeometryToScene(scene: THREE.Scene): void {
+    addGeometryToScene(scene: THREE.Scene): Mesh {
         console.time('Geometry creation');
-        const tries: number[] = [];
+        const tris: number[] = [];
         const bufferGeometry: BufferGeometry = new BufferGeometry();
         const colorsArray: number[] = [];
         for (let i = 0; i < this.instructionString.length; i++) {
@@ -22,7 +22,7 @@ export class Turtle3D extends BaseTurtle {
                         currentPositionAfterMove.z - currentPositionBeforeMove.z,
                     );
 
-                    const trackLength: number = track.length();
+                    const trackLength: number = track.length() + (Math.random() * 0.08 - 0.04);
 
                     vertices[0] = [
                         currentPositionBeforeMove.x - trackLength / 2,
@@ -65,7 +65,7 @@ export class Turtle3D extends BaseTurtle {
                         currentPositionAfterMove.z - trackLength / 2,
                     ];
 
-                    tries.push(
+                    tris.push(
                         ...[
                             // front face
                             // first tri
@@ -178,7 +178,7 @@ export class Turtle3D extends BaseTurtle {
         }
         // console.log(tries);
 
-        bufferGeometry.setAttribute('position', new Float32BufferAttribute(tries, 3));
+        bufferGeometry.setAttribute('position', new Float32BufferAttribute(tris, 3));
 
         // console.log(colorsArray);
 
@@ -203,6 +203,8 @@ export class Turtle3D extends BaseTurtle {
         // scene.add(mesh)
 
         console.timeEnd('Geometry creation');
+
+        return mesh;
     }
 
     move(): void {
