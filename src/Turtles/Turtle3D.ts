@@ -13,7 +13,7 @@ export class Turtle3D extends BaseTurtle {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove = this.currentPosition.clone();
                     const vertices: any[] = new Array(8);
-                    const newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
+                    const newColors = [0, 0,0];
 
                     this.move();
                     const currentPositionAfterMove = this.currentPosition.clone();
