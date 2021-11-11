@@ -40,7 +40,7 @@ function hookUpGenerateButtonEventListener() {
     const btnGenerate: HTMLInputElement = document.querySelector('#btnGenerate');
     btnGenerate.addEventListener('click', (e) => {
         e.preventDefault();
-        this.generateAndRepaintLindenmayerMesh();
+        generateAndRepaintLindenmayerMesh();
     });
 }
 
@@ -83,9 +83,6 @@ function initTestingScene(turtle: Turtle3D) {
     const light = new THREE.AmbientLight(0xffffff, 1); // soft white light
     scene.add(light);
 
-    // const axesHelper = new THREE.AxesHelper(5);
-    // scene.add(axesHelper);
-
     window.addEventListener('resize', onWindowResize, false);
 
     hookUpGenerateButtonEventListener();
@@ -108,7 +105,7 @@ function initArTestingScene() {
     light.position.set(0.5, 1, 0.25);
     scene.add(light);
 
-    // TODO: replace this geometrx with a generated tree somehow
+    // TODO: replace this geometry with a generated tree somehow
     const geometry = new THREE.CylinderGeometry(0, 0.05, 0.2, 32).rotateX(Math.PI / 2);
 
     function onSelect() {
@@ -142,9 +139,8 @@ function animate() {
 
 function render() {
     renderer.render(scene, camera);
-    controls?.update(); // Only update controls if present
 
-    //Performance Stats update
+    controls?.update(); // Only update controls if present
     PerformanceStats.instance?.update(); // Only update stats if present
 }
 
