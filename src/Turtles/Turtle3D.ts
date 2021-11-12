@@ -7,7 +7,6 @@ import {
     Mesh,
     BoxGeometry,
     Material,
-    MeshPhongMaterial,
 } from 'three';
 import { BaseTurtle } from './BaseTurtle';
 
@@ -17,7 +16,7 @@ export class Turtle3D extends BaseTurtle {
 
         const leafCenterPositions: Vector3[] = [];
 
-        const material: Material = new MeshPhongMaterial({ emissive: 0xffff00 });
+        const material: Material = new MeshBasicMaterial();
         const geometry: BoxGeometry = new BoxGeometry(1, 1, 1);
 
         for (let i = 0; i < this.instructionString.length; i++) {
@@ -40,10 +39,10 @@ export class Turtle3D extends BaseTurtle {
                     const boxScale = 0.15;
                     boxMesh.scale.set(boxScale, boxScale, boxScale);
 
-
                     boxMesh.position.copy(centerPositionBetweenMovePoints);
 
                     scene.add(boxMesh);
+                    console.count('Number of meshes');
 
                     break;
                 case 'G': //Move in current direction
