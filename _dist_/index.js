@@ -55,9 +55,10 @@ function initTestingScene(turtle) {
   camera.position.set(0, 0, 15);
   controls.update();
   scene = new THREE.Scene();
-  const mesh = turtle.addGeometryToScene(scene);
-  console.log(mesh);
+  turtle.addGeometryToScene(scene);
   renderer.render(scene, camera);
+  const light = new THREE.AmbientLight(16777215, 1);
+  scene.add(light);
   window.addEventListener("resize", onWindowResize, false);
   hookUpGenerateButtonEventListener();
 }
