@@ -71,8 +71,7 @@ function initTestingScene(turtle: Turtle3D) {
 
     scene = new THREE.Scene();
 
-    const mesh: THREE.Mesh = turtle.addGeometryToScene(scene);
-    console.log(mesh);
+    turtle.addGeometryToScene(scene);
     renderer.render(scene, camera);
 
     // const directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(0xffffff, 1);
