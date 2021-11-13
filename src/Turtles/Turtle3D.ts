@@ -11,13 +11,18 @@ import {
 import { BaseTurtle } from './BaseTurtle';
 
 export class Turtle3D extends BaseTurtle {
+    public branchingIds: Set<number> = new Set();
+
     addGeometryToScene(scene: THREE.Scene): void {
         console.time('Geometry creation');
 
         const leafCenterPositions: Vector3[] = [];
 
         const material: Material = new MeshBasicMaterial();
-        const geometry: BoxGeometry = new BoxGeometry(1, 1, 1);
+        const boxScale = 0.1;
+        const geometry: BoxGeometry = new BoxGeometry(boxScale, boxScale, boxScale);
+
+        let meshToAddTo: Mesh = null;
 
         for (let i = 0; i < this.instructionString.length; i++) {
             switch (this.instructionString.charAt(i)) {
@@ -36,13 +41,18 @@ export class Turtle3D extends BaseTurtle {
 
                     const boxMesh = new Mesh(geometry, material);
 
-                    const boxScale = 0.15;
-                    boxMesh.scale.set(boxScale, boxScale, boxScale);
+                    // const absoluteMovement: Vector3 = new Vector3(0, 1, 0)
+                    //     .applyQuaternion(this.currentRotation.clone())
+                    //     .multiplyScalar(this.stepLength);
 
-                    boxMesh.position.copy(centerPositionBetweenMovePoints);
-
-                    scene.add(boxMesh);
-                    console.count('Number of meshes');
+                    if (meshToAddTo) {
+                        boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
+                        meshToAddTo.attach(boxMesh);
+                    } else {
+                        scene.add(boxMesh);
+                    }
+                    meshToAddTo = boxMesh;
+                    // console.count('Number of meshes');
 
                     break;
                 case 'G': //Move in current direction
@@ -50,9 +60,12 @@ export class Turtle3D extends BaseTurtle {
                     break;
                 case '[':
                     this.saveState();
+                    this.meshToAddToSaveStateArray.push(meshToAddTo);
+                    this.branchingIds.add(meshToAddTo.id);
                     break;
                 case ']':
                     this.loadState();
+                    meshToAddTo = this.meshToAddToSaveStateArray.pop();
                     break;
                 case '+':
                     this.currentRotation.multiply(

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { Scene } from 'three';
+import { Clock, Euler, Scene } from 'three';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
 import { Turtle3D } from './Turtles/Turtle3D';
 import { LindenmayerFormular } from './LindenmayerFormular';
@@ -10,6 +10,9 @@ export let scene: Scene;
 let camera: THREE.PerspectiveCamera;
 let renderer: THREE.WebGLRenderer;
 let controls: TrackballControls;
+const sceneClock: Clock = new Clock();
+
+let branchingIds: Set<number> = new Set();
 
 // Can we handle routes differently somehow? ~bas
 const windowLocationHref: string = window.location.href;
@@ -72,6 +75,13 @@ function initTestingScene(turtle: Turtle3D) {
     scene = new THREE.Scene();
 
     turtle.addGeometryToScene(scene);
+
+    branchingIds = turtle.branchingIds;
+
+    console.log(scene);
+
+    sceneClock.start();
+
     renderer.render(scene, camera);
 
     // const directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -141,6 +151,19 @@ function render() {
 
     controls?.update(); // Only update controls if present
     PerformanceStats.instance?.update(); // Only update stats if present
+
+    branchingIds.forEach((eachId) => {
+        scene
+            .getObjectById(eachId)
+            .rotation.copy(
+                new Euler(
+                    Math.sin(sceneClock.getElapsedTime() * 2) * 0.002 - 0.001,
+                    Math.sin(sceneClock.getElapsedTime() * 1) * 0.02 - 0.01,
+                    Math.cos(sceneClock.getElapsedTime() * 1.3) * 0.003 - 0.0015,
+                    'XYZ',
+                ),
+            );
+    });
 }
 
 function onWindowResize() {
