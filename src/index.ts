@@ -71,13 +71,16 @@ function initTestingScene(turtle: Turtle3D) {
 
     scene = new THREE.Scene();
 
-    const mesh: THREE.Mesh = turtle.addGeometryToScene(scene);
-
+    turtle.addGeometryToScene(scene);
     renderer.render(scene, camera);
 
-    const directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.target = mesh;
-    scene.add(directionalLight);
+    // const directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    // // directionalLight.target = mesh;
+    // directionalLight.position.set(0, -4, 10);
+    // scene.add(directionalLight);
+
+    const light = new THREE.AmbientLight(0xffffff, 1); // soft white light
+    scene.add(light);
 
     window.addEventListener('resize', onWindowResize, false);
 

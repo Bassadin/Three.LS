@@ -1,13 +1,30 @@
-import { Vector3, Quaternion, BufferGeometry, Float32BufferAttribute, MeshBasicMaterial, Mesh, Matrix4 } from 'three';
+import {
+    Vector3,
+    Quaternion,
+    BufferGeometry,
+    Float32BufferAttribute,
+    MeshBasicMaterial,
+    Mesh,
+    BoxGeometry,
+    Material,
+} from 'three';
 import { BaseTurtle } from './BaseTurtle';
 
 export class Turtle3D extends BaseTurtle {
-    addGeometryToScene(scene: THREE.Scene): Mesh {
+    addGeometryToScene(scene: THREE.Scene): void {
         console.time('Geometry creation');
+<<<<<<< HEAD
         const tris: number[] = [];
         const bufferGeometry: BufferGeometry = new BufferGeometry();
          const colorsArray: number[] = [];
+=======
+
+>>>>>>> main
         const leafCenterPositions: Vector3[] = [];
+
+        const material: Material = new MeshBasicMaterial();
+        const geometry: BoxGeometry = new BoxGeometry(1, 1, 1);
+
         for (let i = 0; i < this.instructionString.length; i++) {
             const tries: number[] = [];
             const bufferGeometry: BufferGeometry = new BufferGeometry();
@@ -16,6 +33,7 @@ export class Turtle3D extends BaseTurtle {
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove = this.currentPosition.clone();
+<<<<<<< HEAD
                     const vertices: any[] = new Array(8);
                     this.newColors = [
                         (this.colorIndex / this.instructionString.length) * 0.2 +
@@ -31,124 +49,36 @@ export class Turtle3D extends BaseTurtle {
                      console.log("Farbe:", this.newColors)
                     this.colorIndex++;
 
+=======
+>>>>>>> main
                     this.move();
                     const currentPositionAfterMove = this.currentPosition.clone();
+
+                    const centerPositionBetweenMovePoints: Vector3 = currentPositionAfterMove
+                        .clone()
+                        .lerp(currentPositionBeforeMove.clone(), 2);
 
                     leafCenterPositions.push(
                         currentPositionAfterMove.clone().sub(currentPositionBeforeMove.clone()).divideScalar(2),
                     );
 
-                    const track: Vector3 = new Vector3(
-                        currentPositionAfterMove.x - currentPositionBeforeMove.x,
-                        currentPositionAfterMove.y - currentPositionBeforeMove.y,
-                        currentPositionAfterMove.z - currentPositionBeforeMove.z,
-                    );
+                    const boxMesh = new Mesh(geometry, material);
 
-                    const trackLength: number = track.length() + (Math.random() * 0.08 - 0.04);
+                    const boxScale = 0.2;
+                    boxMesh.scale.set(boxScale, boxScale, boxScale);
 
-                    vertices[0] = [
-                        currentPositionBeforeMove.x - trackLength / 2,
-                        currentPositionBeforeMove.y,
-                        currentPositionBeforeMove.z + trackLength / 2,
-                    ];
-                    vertices[1] = [
-                        currentPositionBeforeMove.x + trackLength / 2,
-                        currentPositionBeforeMove.y,
-                        currentPositionBeforeMove.z + trackLength / 2,
-                    ];
-                    vertices[2] = [
-                        currentPositionBeforeMove.x + trackLength / 2,
-                        currentPositionBeforeMove.y,
-                        currentPositionBeforeMove.z - trackLength / 2,
-                    ];
-                    vertices[3] = [
-                        currentPositionBeforeMove.x - trackLength / 2,
-                        currentPositionBeforeMove.y,
-                        currentPositionBeforeMove.z - trackLength / 2,
-                    ];
-                    vertices[4] = [
-                        currentPositionAfterMove.x - trackLength / 2,
-                        currentPositionAfterMove.y,
-                        currentPositionAfterMove.z + trackLength / 2,
-                    ];
-                    vertices[5] = [
-                        currentPositionAfterMove.x + trackLength / 2,
-                        currentPositionAfterMove.y,
-                        currentPositionAfterMove.z + trackLength / 2,
-                    ];
-                    vertices[6] = [
-                        currentPositionAfterMove.x + trackLength / 2,
-                        currentPositionAfterMove.y,
-                        currentPositionAfterMove.z - trackLength / 2,
-                    ];
-                    vertices[7] = [
-                        currentPositionAfterMove.x - trackLength / 2,
-                        currentPositionAfterMove.y,
-                        currentPositionAfterMove.z - trackLength / 2,
-                    ];
+                    boxMesh.position.copy(centerPositionBetweenMovePoints);
 
-                    tris.push(
-                        ...[
-                            // front face
-                            // first tri
-                            ...vertices[0],
-                            ...vertices[1],
-                            ...vertices[5],
-                            // second tri
-                            ...vertices[0],
-                            ...vertices[5],
-                            ...vertices[4],
-                            //right face
-                            //first tri
-                            ...vertices[1],
-                            ...vertices[2],
-                            ...vertices[6],
-                            //second tri
-                            ...vertices[1],
-                            ...vertices[6],
-                            ...vertices[5],
-                            //left face
-                            //first tri
-                            ...vertices[3],
-                            ...vertices[0],
-                            ...vertices[4],
-                            //second tri
-                            ...vertices[3],
-                            ...vertices[4],
-                            ...vertices[7],
-                            //back face
-                            //first tri
-                            ...vertices[2],
-                            ...vertices[3],
-                            ...vertices[7],
-                            // second tri
-                            ...vertices[2],
-                            ...vertices[7],
-                            ...vertices[6],
-                            // bottom face
-                            // first tri
-                            ...vertices[3],
-                            ...vertices[1],
-                            ...vertices[0],
-                            // second tri
-                            ...vertices[3],
-                            ...vertices[2],
-                            ...vertices[1],
-                            // top face
-                            // first tri
-                            ...vertices[4],
-                            ...vertices[5],
-                            ...vertices[7],
-                            // second tri
-                            ...vertices[5],
-                            ...vertices[6],
-                            ...vertices[7],
-                        ],
-                    );
-
+<<<<<<< HEAD
                     for (let j = 0; j < vertices.length * 12; j++) {
                         colorsArray.push(...this.newColors);
                     }
+=======
+                    boxMesh.lookAt(currentPositionAfterMove);
+
+                    scene.add(boxMesh);
+                    console.count('Number of meshes');
+>>>>>>> main
 
                     bufferGeometry.setAttribute('position', new Float32BufferAttribute(tries, 3));
 
@@ -222,35 +152,16 @@ export class Turtle3D extends BaseTurtle {
             }
         }
 
-        bufferGeometry.setAttribute('position', new Float32BufferAttribute(tris, 3));
-        bufferGeometry.setAttribute('color', new Float32BufferAttribute(colorsArray, 3));
-
-        const material = new MeshBasicMaterial({
-            vertexColors: true,
-        });
-
-        let centerPoint: Vector3 = new Vector3();
+        let globalCenterPoint: Vector3 = new Vector3();
         leafCenterPositions.forEach((eachVector3: Vector3) => {
-            centerPoint.add(eachVector3);
+            globalCenterPoint.add(eachVector3);
         });
-        centerPoint = centerPoint.divideScalar(leafCenterPositions.length);
+        globalCenterPoint = globalCenterPoint.divideScalar(leafCenterPositions.length);
 
-        const mesh = new Mesh(bufferGeometry, material);
-        mesh.applyMatrix4(new Matrix4().makeTranslation(centerPoint.x, centerPoint.y, centerPoint.z));
-        scene.add(mesh);
-
-        // const line = new MeshLine()
-        // line.setGeometry(bufferGeometry, (p: any) => 2 + Math.sin(50 * p))
-        // const material = new MeshLineMaterial({
-        //     lineWidth: 0.02,
-        //     dashArray: 1,
-        // })
-        // const mesh = new Mesh(line, material)
-        // scene.add(mesh)
+        // mesh.applyMatrix4(new Matrix4().makeTranslation(globalCenterPoint.x, globalCenterPoint.y, globalCenterPoint.z));
 
         console.timeEnd('Geometry creation');
         scene.add(createPlane());
-        return mesh;
     }
 
     move(): void {
@@ -274,11 +185,7 @@ function createPlane(): THREE.Mesh {
     const colorsArray: number[] = [...newColors, ...newColors, ...newColors, ...newColors, ...newColors, ...newColors];
     bufferGeometry.setAttribute('position', new Float32BufferAttribute(tris, 3));
 
-    // console.log(colorsArray);
-
     bufferGeometry.setAttribute('color', new Float32BufferAttribute(colorsArray, 3));
-
-    // console.log(bufferGeometry);
 
     const material = new MeshBasicMaterial({
         vertexColors: true,
