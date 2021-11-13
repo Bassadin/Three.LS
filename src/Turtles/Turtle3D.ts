@@ -7,22 +7,18 @@ import {
     Mesh,
     BoxGeometry,
     Material,
+    Color,
 } from 'three';
 import { BaseTurtle } from './BaseTurtle';
 
 export class Turtle3D extends BaseTurtle {
     addGeometryToScene(scene: THREE.Scene): void {
         console.time('Geometry creation');
-<<<<<<< HEAD
-        const tris: number[] = [];
-        const bufferGeometry: BufferGeometry = new BufferGeometry();
-         const colorsArray: number[] = [];
-=======
 
->>>>>>> main
+        const colorsArray: number[] = [];
         const leafCenterPositions: Vector3[] = [];
 
-        const material: Material = new MeshBasicMaterial();
+        
         const geometry: BoxGeometry = new BoxGeometry(1, 1, 1);
 
         for (let i = 0; i < this.instructionString.length; i++) {
@@ -33,8 +29,6 @@ export class Turtle3D extends BaseTurtle {
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove = this.currentPosition.clone();
-<<<<<<< HEAD
-                    const vertices: any[] = new Array(8);
                     this.newColors = [
                         (this.colorIndex / this.instructionString.length) * 0.2 +
                             this.colorIndex / 100 +
@@ -46,11 +40,11 @@ export class Turtle3D extends BaseTurtle {
                             this.colorIndex / 100 +
                             (Math.random() * (0.1 - 0.05) + 0.05),
                     ];
-                     console.log("Farbe:", this.newColors)
+                    console.log('Farbe:', ...this.newColors);
                     this.colorIndex++;
 
-=======
->>>>>>> main
+                    const material: Material = new MeshBasicMaterial( {color: new Color(...this.newColors)} );
+
                     this.move();
                     const currentPositionAfterMove = this.currentPosition.clone();
 
@@ -69,16 +63,12 @@ export class Turtle3D extends BaseTurtle {
 
                     boxMesh.position.copy(centerPositionBetweenMovePoints);
 
-<<<<<<< HEAD
-                    for (let j = 0; j < vertices.length * 12; j++) {
-                        colorsArray.push(...this.newColors);
-                    }
-=======
                     boxMesh.lookAt(currentPositionAfterMove);
 
                     scene.add(boxMesh);
                     console.count('Number of meshes');
->>>>>>> main
+                    
+                    boxMesh.rotation.x = i;
 
                     bufferGeometry.setAttribute('position', new Float32BufferAttribute(tries, 3));
 
@@ -87,10 +77,6 @@ export class Turtle3D extends BaseTurtle {
                     bufferGeometry.setAttribute('color', new Float32BufferAttribute(this.newColors, 3));
 
                     // console.log(bufferGeometry);
-
-                    const material = new MeshBasicMaterial({
-                        vertexColors: true,
-                    });
 
                     const mesh = new Mesh(bufferGeometry, material);
 

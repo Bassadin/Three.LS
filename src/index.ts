@@ -130,7 +130,6 @@ function repaint(turtle: Turtle3D) {
         scene.remove(obj);
     }
     turtle.addGeometryToScene(scene);
-
 }
 
 function animate() {
