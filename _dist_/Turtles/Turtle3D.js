@@ -23,9 +23,10 @@ export class Turtle3D extends BaseTurtle {
           const centerPositionBetweenMovePoints = currentPositionAfterMove.clone().lerp(currentPositionBeforeMove.clone(), 2);
           leafCenterPositions.push(currentPositionAfterMove.clone().sub(currentPositionBeforeMove.clone()).divideScalar(2));
           const boxMesh = new Mesh(geometry, material);
-          const boxScale = 0.15;
+          const boxScale = 0.2;
           boxMesh.scale.set(boxScale, boxScale, boxScale);
           boxMesh.position.copy(centerPositionBetweenMovePoints);
+          boxMesh.lookAt(currentPositionAfterMove);
           scene.add(boxMesh);
           console.count("Number of meshes");
           break;
