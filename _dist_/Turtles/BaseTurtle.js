@@ -5,6 +5,9 @@ export class BaseTurtle {
     this.rotationSaveStateArray = [];
     this.currentPosition = new Vector3(0, -5, 0);
     this.positionSaveStateArray = [];
+    this.newColors = [0.7, 0.3, 0.1];
+    this.colorIndex = 0;
+    this.colorSaveStateArray = [];
     this.instructionString = instructionString;
     this.stepLength = stepLength;
     this.rotationStepSize = rotationStepSize;
@@ -12,6 +15,7 @@ export class BaseTurtle {
   saveState() {
     this.positionSaveStateArray.push(this.currentPosition.clone());
     this.rotationSaveStateArray.push(this.currentRotation.clone());
+    this.colorSaveStateArray.push(this.colorIndex);
   }
   loadState() {
     if (this.positionSaveStateArray.length == 0) {
@@ -19,6 +23,7 @@ export class BaseTurtle {
     }
     this.currentPosition = this.positionSaveStateArray.pop();
     this.currentRotation = this.rotationSaveStateArray.pop();
+    this.colorIndex = this.colorSaveStateArray.pop();
   }
 }
 //# sourceMappingURL=BaseTurtle.js.map

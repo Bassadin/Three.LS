@@ -2,6 +2,6 @@
   "version": 3,
   "sources": ["/home/runner/work/Three.LS/Three.LS/src/Utils.ts"],
   "sourcesContent": ["export class Utils {\n    static DegreesToRadians(degrees: number): number {\n        const pi: number = Math.PI;\n        return degrees * (pi / 180);\n    }\n\n    static RandomNumber(min: number, max: number): number {\n        return Math.random() * (+max - +min) + +min;\n    }\n}\n"],
-  "mappings": "AAAA;AAAA,SACW,iBAAiB;AACpB,eAAmB,KAAK;AACxB,WAAO,UAAW,MAAK;AAAA;AAAA,SAGpB;AACH,WAAO,KAAK,WAAY,EAAC,MAAM,CAAC,OAAO,CAAC;AAAA;AAAA;",
+  "mappings": "AAAO,mBAAY;AAAA,SACR,iBAAiB,SAAyB;AAC7C,UAAM,KAAa,KAAK;AACxB,WAAO,UAAW,MAAK;AAAA;AAAA,SAGpB,aAAa,KAAa,KAAqB;AAClD,WAAO,KAAK,WAAY,EAAC,MAAM,CAAC,OAAO,CAAC;AAAA;AAAA;",
   "names": []
 }

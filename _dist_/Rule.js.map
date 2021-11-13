@@ -2,6 +2,6 @@
   "version": 3,
   "sources": ["/home/runner/work/Three.LS/Three.LS/src/Rule.ts"],
   "sourcesContent": ["export class Rule {\n    private a: string;\n    private b: string;\n\n    constructor(a_: string, b_: string) {\n        if (a_.length != 1) {\n            alert('Bitte alle Felder ausf\u00FCllen');\n        } else {\n            this.a = a_;\n            this.b = b_;\n        }\n    }\n\n    getA(): string {\n        return this.a;\n    }\n\n    getB(): string {\n        return this.b;\n    }\n}\n"],
-  "mappings": "AAAA;AAAA,EAII,YAAY;AACR,QAAI,GAAG,UAAU;AACb,YAAM;AAAA;AAEN,WAAK,IAAI;AACT,WAAK,IAAI;AAAA;AAAA;AAAA,EAIjB;AACI,WAAO,KAAK;AAAA;AAAA,EAGhB;AACI,WAAO,KAAK;AAAA;AAAA;",
+  "mappings": "AAAO,kBAAW;AAAA,EAId,YAAY,IAAY,IAAY;AAChC,QAAI,GAAG,UAAU,GAAG;AAChB,YAAM;AAAA,WACH;AACH,WAAK,IAAI;AACT,WAAK,IAAI;AAAA;AAAA;AAAA,EAIjB,OAAe;AACX,WAAO,KAAK;AAAA;AAAA,EAGhB,OAAe;AACX,WAAO,KAAK;AAAA;AAAA;",
   "names": []
 }
