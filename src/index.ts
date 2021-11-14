@@ -50,7 +50,6 @@ function hookUpGenerateButtonEventListener() {
 export function generateAndRepaintLindenmayerMesh() {
     const form: LindenmayerFormular = LindenmayerFormular.getInstance();
     const newTurtle: Turtle3D = form.generateLSystemImage();
-
     if (scene !== undefined) {
         repaint(newTurtle);
     } else {
@@ -140,6 +139,7 @@ function repaint(turtle: Turtle3D) {
         scene.remove(obj);
     }
     turtle.addGeometryToScene(scene);
+    branchingIds = turtle.branchingIds;
 }
 
 function animate() {
@@ -153,9 +153,9 @@ function render() {
     PerformanceStats.instance?.update(); // Only update stats if present
 
     branchingIds.forEach((eachId) => {
-        scene
-            .getObjectById(eachId)
-            .rotation.copy(
+        const obj: THREE.Object3D = scene.getObjectById(eachId);
+        if (obj) {
+            obj.rotation.copy(
                 new Euler(
                     Math.sin(sceneClock.getElapsedTime() * 2) * 0.002 - 0.001,
                     Math.sin(sceneClock.getElapsedTime() * 1) * 0.02 - 0.01,
@@ -163,6 +163,7 @@ function render() {
                     'XYZ',
                 ),
             );
+        }
     });
 }
 
