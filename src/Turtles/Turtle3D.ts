@@ -76,7 +76,7 @@ export class Turtle3D extends BaseTurtle {
                     );
 
                     const boxMesh = new Mesh(geometry, material);
-                    this.cubeIds .add(boxMesh.id);
+                    this.cubeIds.add(boxMesh.id);
                     // boxMesh.lookAt(currentPositionAfterMove);
                     if (meshToAddTo) {
                         // meshToAddTo.lookAt(currentPositionAfterMove);
