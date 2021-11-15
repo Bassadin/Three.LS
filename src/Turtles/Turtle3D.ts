@@ -16,7 +16,6 @@ import * as VertexData from '../shaders/testShader/vertex';
 
 export class Turtle3D extends BaseTurtle {
     public branchingIds: Set<number> = new Set();
-    public cubeIds: Set<number> = new Set();
 
     addGeometryToScene(scene: THREE.Scene): void {
         console.time('Geometry creation');
@@ -76,7 +75,6 @@ export class Turtle3D extends BaseTurtle {
                     );
 
                     const boxMesh = new Mesh(geometry, material);
-                    this.cubeIds.add(boxMesh.id);
                     // boxMesh.lookAt(currentPositionAfterMove);
                     if (meshToAddTo) {
                         // meshToAddTo.lookAt(currentPositionAfterMove);

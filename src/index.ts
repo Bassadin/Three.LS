@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { Clock, Euler, Scene, Shader, ShaderMaterial } from 'three';
+import { Clock, Euler, Scene, ShaderMaterial } from 'three';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
 import { Turtle3D } from './Turtles/Turtle3D';
 import { LindenmayerFormular } from './LindenmayerFormular';
@@ -13,7 +13,6 @@ let controls: TrackballControls;
 const sceneClock: Clock = new Clock();
 
 let branchingIds: Set<number> = new Set();
-let cubeIds: Set<number> = new Set();
 // Can we handle routes differently somehow? ~bas
 const windowLocationHref: string = window.location.href;
 const windowFileLocationName: string = windowLocationHref.substring(windowLocationHref.lastIndexOf('/'));
@@ -76,7 +75,6 @@ function initTestingScene(turtle: Turtle3D) {
     turtle.addGeometryToScene(scene);
 
     branchingIds = turtle.branchingIds;
-    cubeIds = turtle.cubeIds;
     console.log(scene);
 
     sceneClock.start();
@@ -140,7 +138,6 @@ function repaint(turtle: Turtle3D) {
     }
     turtle.addGeometryToScene(scene);
     branchingIds = turtle.branchingIds;
-    cubeIds = turtle.cubeIds;
 }
 
 function animate() {
