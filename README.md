@@ -1,14 +1,26 @@
 # Three.LS
 
-![2021-07-01 09_35_44-MIB5 DaVerMePro Three js stuff](https://user-images.githubusercontent.com/1810902/124086653-90b63b00-da51-11eb-8aab-8ea717240a2e.jpg)
+![image](https://user-images.githubusercontent.com/1810902/141848804-9c96e46d-0ba1-4ade-985f-e23965f127a9.png)
+
+IT even (kinda) runs on an Apple Watch :)
+
+![141848972-b3483d27-ca3e-46b6-af02-9a5c83efec1b](https://user-images.githubusercontent.com/1810902/141849203-d0e1b49c-2bf9-4c97-87d8-3478a84b783b.jpg)
 
 ## Info
 
 3D L-Systems with Three.js
 
-This was a rather small university project we did in our fifth semester. The task was to do some kind of automatic processing of 3D model data and we decided to do something with Lindenmayer Systems.
+We used Three.js to create trees and other plant-like structures using Lindenmayer Systems. A code of rulesets can be used and iterated upon to create all kinds of "growing" structures.
 
-## Development
+## AR version
+
+Coming soon!
+
+## GitHub Pages Version
+
+Online auto-deploy version available here: <https://bassadin.github.io/Three.LS>
+
+# Development
 
 Clone the project and install dependencies:
 
@@ -16,10 +28,6 @@ Clone the project and install dependencies:
 npm i
 npm start
 ```
-
-## GitHub Pages Version
-
-Online auto-deploy version available here: <https://bassadin.github.io/Three.LS>
 
 ## Local WebXR testing
 
