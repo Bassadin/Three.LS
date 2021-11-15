@@ -7,6 +7,7 @@ import {
     Mesh,
     BoxGeometry,
     Material,
+    Color,
 } from 'three';
 import { BaseTurtle } from './BaseTurtle';
 
@@ -18,16 +19,37 @@ export class Turtle3D extends BaseTurtle {
 
         const leafCenterPositions: Vector3[] = [];
 
-        const material: Material = new MeshBasicMaterial();
+        // const material: Material = new MeshBasicMaterial();
         const boxScale = 0.1;
         const geometry: BoxGeometry = new BoxGeometry(boxScale, boxScale, boxScale);
 
         let meshToAddTo: Mesh = null;
 
         for (let i = 0; i < this.instructionString.length; i++) {
+            // const tries: number[] = [];
+            // const bufferGeometry: BufferGeometry = new BufferGeometry();
+            //  const colorsArray: number[] = [];
+
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove = this.currentPosition.clone();
+
+                    // this.colorIndex++;
+
+                    this.newColors = [
+                        0.45 +
+                            i * ((0.4 - 0.45) / this.instructionString.length) +
+                            (Math.random() * (0.1 - 0.05) + 0.05),
+                        0.29 +
+                            i * ((0.72 - 0.29) / this.instructionString.length) +
+                            (Math.random() * (0.2 - 0.05) + 0.05),
+                        0.13 +
+                            i * ((0.2 - 0.13) / this.instructionString.length) +
+                            (Math.random() * (0.1 - 0.05) + 0.05),
+                    ];
+
+                    const material: Material = new MeshBasicMaterial({ color: new Color(...this.newColors) });
+
                     this.move();
                     const currentPositionAfterMove = this.currentPosition.clone();
 
@@ -41,10 +63,7 @@ export class Turtle3D extends BaseTurtle {
 
                     const boxMesh = new Mesh(geometry, material);
 
-                    // const absoluteMovement: Vector3 = new Vector3(0, 1, 0)
-                    //     .applyQuaternion(this.currentRotation.clone())
-                    //     .multiplyScalar(this.stepLength);
-
+                    boxMesh.lookAt(currentPositionAfterMove);
                     if (meshToAddTo) {
                         boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
                         meshToAddTo.attach(boxMesh);
@@ -52,7 +71,6 @@ export class Turtle3D extends BaseTurtle {
                         scene.add(boxMesh);
                     }
                     meshToAddTo = boxMesh;
-                    // console.count('Number of meshes');
 
                     break;
                 case 'G': //Move in current direction
@@ -139,11 +157,7 @@ function createPlane(): THREE.Mesh {
     const colorsArray: number[] = [...newColors, ...newColors, ...newColors, ...newColors, ...newColors, ...newColors];
     bufferGeometry.setAttribute('position', new Float32BufferAttribute(tris, 3));
 
-    // console.log(colorsArray);
-
     bufferGeometry.setAttribute('color', new Float32BufferAttribute(colorsArray, 3));
-
-    // console.log(bufferGeometry);
 
     const material = new MeshBasicMaterial({
         vertexColors: true,
