@@ -17,7 +17,6 @@ export class Turtle3D extends BaseTurtle {
   constructor() {
     super(...arguments);
     this.branchingIds = new Set();
-    this.cubeIds = new Set();
   }
   addGeometryToScene(scene) {
     console.time("Geometry creation");
@@ -50,7 +49,6 @@ export class Turtle3D extends BaseTurtle {
           const centerPositionBetweenMovePoints = currentPositionAfterMove.clone().lerp(currentPositionBeforeMove.clone(), 2);
           leafCenterPositions.push(currentPositionAfterMove.clone().sub(currentPositionBeforeMove.clone()).divideScalar(2));
           const boxMesh = new Mesh(geometry, material);
-          this.cubeIds.add(boxMesh.id);
           if (meshToAddTo) {
             boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
             meshToAddTo.attach(boxMesh);
