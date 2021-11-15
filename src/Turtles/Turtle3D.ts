@@ -12,12 +12,18 @@ import {
 import { BaseTurtle } from './BaseTurtle';
 
 export class Turtle3D extends BaseTurtle {
+    public branchingIds: Set<number> = new Set();
+
     addGeometryToScene(scene: THREE.Scene): void {
         console.time('Geometry creation');
 
         const leafCenterPositions: Vector3[] = [];
 
-        const geometry: BoxGeometry = new BoxGeometry(1, 1, 1);
+        // const material: Material = new MeshBasicMaterial();
+        const boxScale = 0.1;
+        const geometry: BoxGeometry = new BoxGeometry(boxScale, boxScale, boxScale);
+
+        let meshToAddTo: Mesh = null;
 
         for (let i = 0; i < this.instructionString.length; i++) {
             // const tries: number[] = [];
@@ -31,27 +37,16 @@ export class Turtle3D extends BaseTurtle {
                     // this.colorIndex++;
 
                     this.newColors = [
-                        0.45 + ( i * ((0.4 - 0.45) / this.instructionString.length )) + (Math.random() * (0.1 - 0.05) + 0.05),
-                        0.29 + ( i * ((0.72 - 0.29) /  this.instructionString.length )) + (Math.random() * (0.2 - 0.05) + 0.05),
-                        0.13 + ( i * ((0.2 - 0.13) /  this.instructionString.length )) + (Math.random() * (0.1 - 0.05) + 0.05),
+                        0.45 +
+                            i * ((0.4 - 0.45) / this.instructionString.length) +
+                            (Math.random() * (0.1 - 0.05) + 0.05),
+                        0.29 +
+                            i * ((0.72 - 0.29) / this.instructionString.length) +
+                            (Math.random() * (0.2 - 0.05) + 0.05),
+                        0.13 +
+                            i * ((0.2 - 0.13) / this.instructionString.length) +
+                            (Math.random() * (0.1 - 0.05) + 0.05),
                     ];
-
-    
-
-                    // this.newColors = [
-                    //     (this.colorIndex / this.instructionString.length) * 0.2 +
-                    //         this.colorIndex / 100 +
-                    //         (Math.random() * (0.2 - 0.05) + 0.05),
-                    //     (this.colorIndex / this.instructionString.length) * 30 * 0.8 +
-                    //         this.colorIndex / 100 +
-                    //         (Math.random() * (0.2 - 0.05) + 0.05),
-                    //     (this.colorIndex / this.instructionString.length) * 50 * 0.1 +
-                    //         this.colorIndex / 100 +
-                    //         (Math.random() * (0.1 - 0.05) + 0.05),
-                    // ];
-
-                    // console.log('Farbe:', ...this.newColors, this.colorIndex, this.count, this.count / this.colorIndex);
-
 
                     const material: Material = new MeshBasicMaterial({ color: new Color(...this.newColors) });
 
@@ -68,35 +63,14 @@ export class Turtle3D extends BaseTurtle {
 
                     const boxMesh = new Mesh(geometry, material);
 
-                    const boxScale = 0.2;
-                    boxMesh.scale.set(boxScale, boxScale, boxScale);
-
-                    boxMesh.position.copy(centerPositionBetweenMovePoints);
-
                     boxMesh.lookAt(currentPositionAfterMove);
-
-                    scene.add(boxMesh);
-                    console.count('Number of meshes');
-
-
-                    // bufferGeometry.setAttribute('position', new Float32BufferAttribute(tries, 3));
-
-                    // console.log(colorsArray);
-
-                    // bufferGeometry.setAttribute('color', new Float32BufferAttribute(this.newColors, 3));
-
-                    // console.log(bufferGeometry);
-
-                    // const mesh = new Mesh(bufferGeometry, material);
-
-                    // setTimeout(
-                    //     function (scene, mesh) {
-                    //         scene.add(mesh);
-                    //     },
-                    //     500,
-                    //     scene,
-                    //     mesh,
-                    // );
+                    if (meshToAddTo) {
+                        boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
+                        meshToAddTo.attach(boxMesh);
+                    } else {
+                        scene.add(boxMesh);
+                    }
+                    meshToAddTo = boxMesh;
 
                     break;
                 case 'G': //Move in current direction
@@ -104,9 +78,12 @@ export class Turtle3D extends BaseTurtle {
                     break;
                 case '[':
                     this.saveState();
+                    this.meshToAddToSaveStateArray.push(meshToAddTo);
+                    this.branchingIds.add(meshToAddTo.id);
                     break;
                 case ']':
                     this.loadState();
+                    meshToAddTo = this.meshToAddToSaveStateArray.pop();
                     break;
                 case '+':
                     this.currentRotation.multiply(
