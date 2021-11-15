@@ -6,13 +6,18 @@ import {
   MeshBasicMaterial,
   Mesh,
   BoxGeometry,
+  ShaderMaterial,
+  DoubleSide,
   Color
 } from "../../web_modules/three.js";
 import {BaseTurtle} from "./BaseTurtle.js";
+import * as FragmentData from "../shaders/testShader/fragment.js";
+import * as VertexData from "../shaders/testShader/vertex.js";
 export class Turtle3D extends BaseTurtle {
   constructor() {
     super(...arguments);
     this.branchingIds = new Set();
+    this.cubeIds = new Set();
   }
   addGeometryToScene(scene) {
     console.time("Geometry creation");
@@ -29,12 +34,23 @@ export class Turtle3D extends BaseTurtle {
             0.29 + i * ((0.72 - 0.29) / this.instructionString.length) + (Math.random() * (0.2 - 0.05) + 0.05),
             0.13 + i * ((0.2 - 0.13) / this.instructionString.length) + (Math.random() * (0.1 - 0.05) + 0.05)
           ];
-          const material = new MeshBasicMaterial({color: new Color(...this.newColors)});
+          const material = new ShaderMaterial({
+            uniforms: {
+              thickness: {value: 1},
+              color: {value: new Color(...this.newColors)},
+              time: {value: 0}
+            },
+            vertexShader: VertexData.data,
+            fragmentShader: FragmentData.data,
+            side: DoubleSide,
+            alphaToCoverage: true
+          });
           this.move();
           const currentPositionAfterMove = this.currentPosition.clone();
           const centerPositionBetweenMovePoints = currentPositionAfterMove.clone().lerp(currentPositionBeforeMove.clone(), 2);
           leafCenterPositions.push(currentPositionAfterMove.clone().sub(currentPositionBeforeMove.clone()).divideScalar(2));
           const boxMesh = new Mesh(geometry, material);
+          this.cubeIds.add(boxMesh.id);
           if (meshToAddTo) {
             boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
             meshToAddTo.attach(boxMesh);

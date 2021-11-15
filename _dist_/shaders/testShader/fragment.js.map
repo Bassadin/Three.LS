@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["/home/runner/work/Three.LS/Three.LS/src/shaders/testShader/fragment.ts"],
+  "sourcesContent": ["export const data = `\nuniform vec3 color;\nuniform float time;\n\nfloat rand(vec2 co){\n    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);\n  }\n\n\nvoid main() {\n    gl_FragColor = vec4( 0.5 * sin(time * 70.0) + 0.5, color.y, color.z, 1);\n}\n\n`;\n"],
+  "mappings": "AAAO,aAAM,OAAO;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;",
+  "names": []
+}

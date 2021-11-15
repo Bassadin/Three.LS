@@ -10,6 +10,7 @@ let renderer;
 let controls;
 const sceneClock = new Clock();
 let branchingIds = new Set();
+let cubeIds = new Set();
 const windowLocationHref = window.location.href;
 const windowFileLocationName = windowLocationHref.substring(windowLocationHref.lastIndexOf("/"));
 switch (windowFileLocationName) {
@@ -60,6 +61,7 @@ function initTestingScene(turtle) {
   scene = new THREE.Scene();
   turtle.addGeometryToScene(scene);
   branchingIds = turtle.branchingIds;
+  cubeIds = turtle.cubeIds;
   console.log(scene);
   sceneClock.start();
   renderer.render(scene, camera);
@@ -101,6 +103,7 @@ function repaint(turtle) {
   }
   turtle.addGeometryToScene(scene);
   branchingIds = turtle.branchingIds;
+  cubeIds = turtle.cubeIds;
 }
 function animate() {
   renderer.setAnimationLoop(render);
@@ -112,6 +115,8 @@ function render() {
   branchingIds.forEach((eachId) => {
     const obj = scene.getObjectById(eachId);
     if (obj) {
+      const shaderMaterial = obj.material;
+      shaderMaterial.uniforms.time.value += 0.01;
       obj.rotation.copy(new Euler(Math.sin(sceneClock.getElapsedTime() * 2) * 2e-3 - 1e-3, Math.sin(sceneClock.getElapsedTime() * 1) * 0.02 - 0.01, Math.cos(sceneClock.getElapsedTime() * 1.3) * 3e-3 - 15e-4, "XYZ"));
     }
   });
