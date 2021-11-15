@@ -20,6 +20,18 @@ hr {
     padding: 1.5rem 1.75rem;
     width: 420px;
     border: 1px solid black;
+
+    
+}
+
+@media screen and (max-width: 512px) {
+        
+.interface__wrapper {
+    position: unset;
+    max-width: 100%;
+
+    
+}
 }
 
 .interface__sub-heading {
