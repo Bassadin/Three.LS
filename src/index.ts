@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { Clock, Euler, Scene } from 'three';
+import { Clock, Euler, Scene, Shader, ShaderMaterial } from 'three';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
 import { Turtle3D } from './Turtles/Turtle3D';
 import { LindenmayerFormular } from './LindenmayerFormular';
@@ -13,7 +13,7 @@ let controls: TrackballControls;
 const sceneClock: Clock = new Clock();
 
 let branchingIds: Set<number> = new Set();
-
+let cubeIds: Set<number> = new Set();
 // Can we handle routes differently somehow? ~bas
 const windowLocationHref: string = window.location.href;
 const windowFileLocationName: string = windowLocationHref.substring(windowLocationHref.lastIndexOf('/'));
@@ -76,7 +76,7 @@ function initTestingScene(turtle: Turtle3D) {
     turtle.addGeometryToScene(scene);
 
     branchingIds = turtle.branchingIds;
-
+    cubeIds = turtle.cubeIds;
     console.log(scene);
 
     sceneClock.start();
@@ -140,6 +140,7 @@ function repaint(turtle: Turtle3D) {
     }
     turtle.addGeometryToScene(scene);
     branchingIds = turtle.branchingIds;
+    cubeIds = turtle.cubeIds;
 }
 
 function animate() {
@@ -153,8 +154,10 @@ function render() {
     PerformanceStats.instance?.update(); // Only update stats if present
 
     branchingIds.forEach((eachId) => {
-        const obj: THREE.Object3D = scene.getObjectById(eachId);
+        const obj: THREE.Mesh = scene.getObjectById(eachId) as THREE.Mesh;
         if (obj) {
+            const shaderMaterial: ShaderMaterial = obj.material as ShaderMaterial;
+            shaderMaterial.uniforms.time.value += 0.01;
             obj.rotation.copy(
                 new Euler(
                     Math.sin(sceneClock.getElapsedTime() * 2) * 0.002 - 0.001,

@@ -6,13 +6,17 @@ import {
     MeshBasicMaterial,
     Mesh,
     BoxGeometry,
-    Material,
+    ShaderMaterial,
+    DoubleSide,
     Color,
 } from 'three';
 import { BaseTurtle } from './BaseTurtle';
+import * as FragmentData from '../shaders/testShader/fragment';
+import * as VertexData from '../shaders/testShader/vertex';
 
 export class Turtle3D extends BaseTurtle {
     public branchingIds: Set<number> = new Set();
+    public cubeIds: Set<number> = new Set();
 
     addGeometryToScene(scene: THREE.Scene): void {
         console.time('Geometry creation');
@@ -48,7 +52,17 @@ export class Turtle3D extends BaseTurtle {
                             (Math.random() * (0.1 - 0.05) + 0.05),
                     ];
 
-                    const material: Material = new MeshBasicMaterial({ color: new Color(...this.newColors) });
+                    const material: ShaderMaterial = new ShaderMaterial({
+                        uniforms: {
+                            thickness: { value: 1 },
+                            color: { value: new Color(...this.newColors) },
+                            time: { value: 0 },
+                        },
+                        vertexShader: VertexData.data,
+                        fragmentShader: FragmentData.data,
+                        side: DoubleSide,
+                        alphaToCoverage: true,
+                    });
 
                     this.move();
                     const currentPositionAfterMove = this.currentPosition.clone();
@@ -62,7 +76,7 @@ export class Turtle3D extends BaseTurtle {
                     );
 
                     const boxMesh = new Mesh(geometry, material);
-
+                    this.cubeIds .add(boxMesh.id);
                     // boxMesh.lookAt(currentPositionAfterMove);
                     if (meshToAddTo) {
                         // meshToAddTo.lookAt(currentPositionAfterMove);
