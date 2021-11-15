@@ -63,8 +63,9 @@ export class Turtle3D extends BaseTurtle {
 
                     const boxMesh = new Mesh(geometry, material);
 
-                    boxMesh.lookAt(currentPositionAfterMove);
+                    // boxMesh.lookAt(currentPositionAfterMove);
                     if (meshToAddTo) {
+                        // meshToAddTo.lookAt(currentPositionAfterMove);
                         boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
                         meshToAddTo.attach(boxMesh);
                     } else {
