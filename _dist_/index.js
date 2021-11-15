@@ -1,4 +1,5 @@
 import * as THREE from "../web_modules/three.js";
+import {Clock, Euler} from "../web_modules/three.js";
 import {TrackballControls} from "../web_modules/three/examples/jsm/controls/TrackballControls.js";
 import {LindenmayerFormular} from "./LindenmayerFormular.js";
 import PerformanceStats from "./PerformanceStats.js";
@@ -7,6 +8,8 @@ export let scene;
 let camera;
 let renderer;
 let controls;
+const sceneClock = new Clock();
+let branchingIds = new Set();
 const windowLocationHref = window.location.href;
 const windowFileLocationName = windowLocationHref.substring(windowLocationHref.lastIndexOf("/"));
 switch (windowFileLocationName) {
@@ -56,6 +59,9 @@ function initTestingScene(turtle) {
   controls.update();
   scene = new THREE.Scene();
   turtle.addGeometryToScene(scene);
+  branchingIds = turtle.branchingIds;
+  console.log(scene);
+  sceneClock.start();
   renderer.render(scene, camera);
   const light = new THREE.AmbientLight(16777215, 1);
   scene.add(light);
@@ -94,6 +100,7 @@ function repaint(turtle) {
     scene.remove(obj);
   }
   turtle.addGeometryToScene(scene);
+  branchingIds = turtle.branchingIds;
 }
 function animate() {
   renderer.setAnimationLoop(render);
@@ -102,6 +109,12 @@ function render() {
   renderer.render(scene, camera);
   controls?.update();
   PerformanceStats.instance?.update();
+  branchingIds.forEach((eachId) => {
+    const obj = scene.getObjectById(eachId);
+    if (obj) {
+      obj.rotation.copy(new Euler(Math.sin(sceneClock.getElapsedTime() * 2) * 2e-3 - 1e-3, Math.sin(sceneClock.getElapsedTime() * 1) * 0.02 - 0.01, Math.cos(sceneClock.getElapsedTime() * 1.3) * 3e-3 - 15e-4, "XYZ"));
+    }
+  });
 }
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;

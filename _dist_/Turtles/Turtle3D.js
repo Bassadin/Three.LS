@@ -10,10 +10,16 @@ import {
 } from "../../web_modules/three.js";
 import {BaseTurtle} from "./BaseTurtle.js";
 export class Turtle3D extends BaseTurtle {
+  constructor() {
+    super(...arguments);
+    this.branchingIds = new Set();
+  }
   addGeometryToScene(scene) {
     console.time("Geometry creation");
     const leafCenterPositions = [];
-    const geometry = new BoxGeometry(1, 1, 1);
+    const boxScale = 0.1;
+    const geometry = new BoxGeometry(boxScale, boxScale, boxScale);
+    let meshToAddTo = null;
     for (let i = 0; i < this.instructionString.length; i++) {
       switch (this.instructionString.charAt(i)) {
         case "F":
@@ -29,21 +35,26 @@ export class Turtle3D extends BaseTurtle {
           const centerPositionBetweenMovePoints = currentPositionAfterMove.clone().lerp(currentPositionBeforeMove.clone(), 2);
           leafCenterPositions.push(currentPositionAfterMove.clone().sub(currentPositionBeforeMove.clone()).divideScalar(2));
           const boxMesh = new Mesh(geometry, material);
-          const boxScale = 0.2;
-          boxMesh.scale.set(boxScale, boxScale, boxScale);
-          boxMesh.position.copy(centerPositionBetweenMovePoints);
           boxMesh.lookAt(currentPositionAfterMove);
-          scene.add(boxMesh);
-          console.count("Number of meshes");
+          if (meshToAddTo) {
+            boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
+            meshToAddTo.attach(boxMesh);
+          } else {
+            scene.add(boxMesh);
+          }
+          meshToAddTo = boxMesh;
           break;
         case "G":
           this.move();
           break;
         case "[":
           this.saveState();
+          this.meshToAddToSaveStateArray.push(meshToAddTo);
+          this.branchingIds.add(meshToAddTo.id);
           break;
         case "]":
           this.loadState();
+          meshToAddTo = this.meshToAddToSaveStateArray.pop();
           break;
         case "+":
           this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), this.rotationStepSize));

@@ -3,6 +3,7 @@ export class BaseTurtle {
   constructor(instructionString, stepLength, rotationStepSize) {
     this.currentRotation = new Quaternion();
     this.rotationSaveStateArray = [];
+    this.meshToAddToSaveStateArray = [];
     this.currentPosition = new Vector3(0, -5, 0);
     this.positionSaveStateArray = [];
     this.newColors = [0.7, 0.3, 0.1];
