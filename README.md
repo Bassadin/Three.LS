@@ -6,6 +6,10 @@ IT even (kinda) runs on an Apple Watch :)
 
 ![141848972-b3483d27-ca3e-46b6-af02-9a5c83efec1b](https://user-images.githubusercontent.com/1810902/141849203-d0e1b49c-2bf9-4c97-87d8-3478a84b783b.jpg)
 
+On smartphones:
+![image](https://user-images.githubusercontent.com/1810902/141849847-e466adab-5a88-4975-ab94-3974326f5334.png)
+
+
 ## Info
 
 3D L-Systems with Three.js
