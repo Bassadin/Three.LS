@@ -35,7 +35,6 @@ export class Turtle3D extends BaseTurtle {
           const centerPositionBetweenMovePoints = currentPositionAfterMove.clone().lerp(currentPositionBeforeMove.clone(), 2);
           leafCenterPositions.push(currentPositionAfterMove.clone().sub(currentPositionBeforeMove.clone()).divideScalar(2));
           const boxMesh = new Mesh(geometry, material);
-          boxMesh.lookAt(currentPositionAfterMove);
           if (meshToAddTo) {
             boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
             meshToAddTo.attach(boxMesh);
