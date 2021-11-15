@@ -12,22 +12,17 @@ import {BaseTurtle} from "./BaseTurtle.js";
 export class Turtle3D extends BaseTurtle {
   addGeometryToScene(scene) {
     console.time("Geometry creation");
-    const colorsArray = [];
     const leafCenterPositions = [];
     const geometry = new BoxGeometry(1, 1, 1);
     for (let i = 0; i < this.instructionString.length; i++) {
-      const tries = [];
-      const bufferGeometry = new BufferGeometry();
       switch (this.instructionString.charAt(i)) {
         case "F":
           const currentPositionBeforeMove = this.currentPosition.clone();
           this.newColors = [
-            this.colorIndex / this.instructionString.length * 0.2 + this.colorIndex / 100 + (Math.random() * (0.2 - 0.05) + 0.05),
-            this.colorIndex / this.instructionString.length * 30 * 0.8 + this.colorIndex / 100 + (Math.random() * (0.2 - 0.05) + 0.05),
-            this.colorIndex / this.instructionString.length * 50 * 0.1 + this.colorIndex / 100 + (Math.random() * (0.1 - 0.05) + 0.05)
+            0.45 + i * ((0.4 - 0.45) / this.instructionString.length) + (Math.random() * (0.1 - 0.05) + 0.05),
+            0.29 + i * ((0.72 - 0.29) / this.instructionString.length) + (Math.random() * (0.2 - 0.05) + 0.05),
+            0.13 + i * ((0.2 - 0.13) / this.instructionString.length) + (Math.random() * (0.1 - 0.05) + 0.05)
           ];
-          console.log("Farbe:", ...this.newColors);
-          this.colorIndex++;
           const material = new MeshBasicMaterial({color: new Color(...this.newColors)});
           this.move();
           const currentPositionAfterMove = this.currentPosition.clone();
@@ -40,10 +35,6 @@ export class Turtle3D extends BaseTurtle {
           boxMesh.lookAt(currentPositionAfterMove);
           scene.add(boxMesh);
           console.count("Number of meshes");
-          boxMesh.rotation.x = i;
-          bufferGeometry.setAttribute("position", new Float32BufferAttribute(tries, 3));
-          bufferGeometry.setAttribute("color", new Float32BufferAttribute(this.newColors, 3));
-          const mesh = new Mesh(bufferGeometry, material);
           break;
         case "G":
           this.move();
