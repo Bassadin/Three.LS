@@ -1,6 +1,6 @@
 # Three.LS
 
-![image](https://user-images.githubusercontent.com/1810902/141848804-9c96e46d-0ba1-4ade-985f-e23965f127a9.png)
+![image](https://user-images.githubusercontent.com/1810902/141849317-4e6547c1-4afa-4e9b-bcd8-71d5707f18a2.png)
 
 IT even (kinda) runs on an Apple Watch :)
 
@@ -10,11 +10,19 @@ IT even (kinda) runs on an Apple Watch :)
 
 3D L-Systems with Three.js
 
-We used Three.js to create trees and other plant-like structures using Lindenmayer Systems. A code of rulesets can be used and iterated upon to create all kinds of "growing" structures.
+We used Three.js to create trees and other plant-like structures using Lindenmayer Systems. A code of rulesets can be used and iterated upon to create all kinds of "growing" structures. 
+
+## Contributors
+
+[Nick Häcker](https://github.com/NickHaecker)
+[Marc Eberhard](https://github.com/bymarcx)
+[Bastian Hodapp](https://github.com/Bassadin)
+[Lukas Brausch](https://github.com/LukasBrauschHFU)
+[Manuel Proß](https://github.com/manuel-pross)
 
 ## AR version
 
-Coming soon!
+Web XR supported AR version coming soon!
 
 ## GitHub Pages Version
 
