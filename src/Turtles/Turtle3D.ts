@@ -20,7 +20,7 @@ export class Turtle3D extends BaseTurtle {
         const leafCenterPositions: Vector3[] = [];
 
         // const material: Material = new MeshBasicMaterial();
-        const boxScale = 0.1;
+        const boxScale = 0.2;
         const geometry: BoxGeometry = new BoxGeometry(boxScale, boxScale, boxScale);
 
         let meshToAddTo: Mesh = null;
