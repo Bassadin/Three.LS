@@ -14,11 +14,11 @@ We used Three.js to create trees and other plant-like structures using Lindenmay
 
 ## Contributors
 
-[Nick Häcker](https://github.com/NickHaecker)
-[Marc Eberhard](https://github.com/bymarcx)
-[Bastian Hodapp](https://github.com/Bassadin)
-[Lukas Brausch](https://github.com/LukasBrauschHFU)
-[Manuel Proß](https://github.com/manuel-pross)
+- [Nick Häcker](https://github.com/NickHaecker)
+- [Marc Eberhard](https://github.com/bymarcx)
+- [Bastian Hodapp](https://github.com/Bassadin)
+- [Lukas Brausch](https://github.com/LukasBrauschHFU)
+- [Manuel Proß](https://github.com/manuel-pross)
 
 ## AR version
 
