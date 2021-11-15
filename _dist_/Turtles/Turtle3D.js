@@ -17,7 +17,7 @@ export class Turtle3D extends BaseTurtle {
   addGeometryToScene(scene) {
     console.time("Geometry creation");
     const leafCenterPositions = [];
-    const boxScale = 0.1;
+    const boxScale = 0.2;
     const geometry = new BoxGeometry(boxScale, boxScale, boxScale);
     let meshToAddTo = null;
     for (let i = 0; i < this.instructionString.length; i++) {
