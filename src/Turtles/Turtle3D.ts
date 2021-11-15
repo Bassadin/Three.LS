@@ -15,35 +15,45 @@ export class Turtle3D extends BaseTurtle {
     addGeometryToScene(scene: THREE.Scene): void {
         console.time('Geometry creation');
 
-        const colorsArray: number[] = [];
         const leafCenterPositions: Vector3[] = [];
 
-        
         const geometry: BoxGeometry = new BoxGeometry(1, 1, 1);
 
         for (let i = 0; i < this.instructionString.length; i++) {
-            const tries: number[] = [];
-            const bufferGeometry: BufferGeometry = new BufferGeometry();
+            // const tries: number[] = [];
+            // const bufferGeometry: BufferGeometry = new BufferGeometry();
             //  const colorsArray: number[] = [];
 
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove = this.currentPosition.clone();
-                    this.newColors = [
-                        (this.colorIndex / this.instructionString.length) * 0.2 +
-                            this.colorIndex / 100 +
-                            (Math.random() * (0.2 - 0.05) + 0.05),
-                        (this.colorIndex / this.instructionString.length) * 30 * 0.8 +
-                            this.colorIndex / 100 +
-                            (Math.random() * (0.2 - 0.05) + 0.05),
-                        (this.colorIndex / this.instructionString.length) * 50 * 0.1 +
-                            this.colorIndex / 100 +
-                            (Math.random() * (0.1 - 0.05) + 0.05),
-                    ];
-                    console.log('Farbe:', ...this.newColors);
-                    this.colorIndex++;
 
-                    const material: Material = new MeshBasicMaterial( {color: new Color(...this.newColors)} );
+                    // this.colorIndex++;
+
+                    this.newColors = [
+                        0.45 + ( i * ((0.4 - 0.45) / this.instructionString.length )) + (Math.random() * (0.1 - 0.05) + 0.05),
+                        0.29 + ( i * ((0.72 - 0.29) /  this.instructionString.length )) + (Math.random() * (0.2 - 0.05) + 0.05),
+                        0.13 + ( i * ((0.2 - 0.13) /  this.instructionString.length )) + (Math.random() * (0.1 - 0.05) + 0.05),
+                    ];
+
+    
+
+                    // this.newColors = [
+                    //     (this.colorIndex / this.instructionString.length) * 0.2 +
+                    //         this.colorIndex / 100 +
+                    //         (Math.random() * (0.2 - 0.05) + 0.05),
+                    //     (this.colorIndex / this.instructionString.length) * 30 * 0.8 +
+                    //         this.colorIndex / 100 +
+                    //         (Math.random() * (0.2 - 0.05) + 0.05),
+                    //     (this.colorIndex / this.instructionString.length) * 50 * 0.1 +
+                    //         this.colorIndex / 100 +
+                    //         (Math.random() * (0.1 - 0.05) + 0.05),
+                    // ];
+
+                    // console.log('Farbe:', ...this.newColors, this.colorIndex, this.count, this.count / this.colorIndex);
+
+
+                    const material: Material = new MeshBasicMaterial({ color: new Color(...this.newColors) });
 
                     this.move();
                     const currentPositionAfterMove = this.currentPosition.clone();
@@ -67,18 +77,17 @@ export class Turtle3D extends BaseTurtle {
 
                     scene.add(boxMesh);
                     console.count('Number of meshes');
-                    
-                    boxMesh.rotation.x = i;
 
-                    bufferGeometry.setAttribute('position', new Float32BufferAttribute(tries, 3));
+
+                    // bufferGeometry.setAttribute('position', new Float32BufferAttribute(tries, 3));
 
                     // console.log(colorsArray);
 
-                    bufferGeometry.setAttribute('color', new Float32BufferAttribute(this.newColors, 3));
+                    // bufferGeometry.setAttribute('color', new Float32BufferAttribute(this.newColors, 3));
 
                     // console.log(bufferGeometry);
 
-                    const mesh = new Mesh(bufferGeometry, material);
+                    // const mesh = new Mesh(bufferGeometry, material);
 
                     // setTimeout(
                     //     function (scene, mesh) {
