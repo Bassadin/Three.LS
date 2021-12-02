@@ -58,7 +58,7 @@ function initTestingScene(turtle) {
   camera.position.set(0, 0, 15);
   controls.update();
   scene = new THREE.Scene();
-  turtle.addGeometryToScene(scene);
+  scene.add(turtle.generateMeshObject());
   branchingIds = turtle.branchingIds;
   console.log(scene);
   sceneClock.start();
@@ -99,7 +99,7 @@ function repaint(turtle) {
     const obj = scene.children[i];
     scene.remove(obj);
   }
-  turtle.addGeometryToScene(scene);
+  scene.add(turtle.generateMeshObject());
   branchingIds = turtle.branchingIds;
 }
 function animate() {

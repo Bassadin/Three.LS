@@ -1,7 +1,6 @@
 import {BoxGeometry, Color, DoubleSide, Mesh, Quaternion, ShaderMaterial, Vector3} from "../web_modules/three.js";
 import * as FragmentData from "./shaders/testShader/fragment.js";
 import * as VertexData from "./shaders/testShader/vertex.js";
-import {Utils} from "./Utils.js";
 export default class Turtle {
   constructor(instructionString, stepLength, rotationStepSize) {
     this.currentRotation = new Quaternion();
@@ -27,12 +26,13 @@ export default class Turtle {
     this.currentPosition = this.positionSaveStateArray.pop();
     this.currentRotation = this.rotationSaveStateArray.pop();
   }
-  addGeometryToScene(scene) {
+  generateMeshObject() {
     console.time("Geometry creation");
     const leafCenterPositions = [];
     const boxScale = 0.2;
     const geometry = new BoxGeometry(boxScale, boxScale, boxScale);
     let meshToAddTo = null;
+    const generatedMesh = new Mesh();
     for (let i = 0; i < this.instructionString.length; i++) {
       switch (this.instructionString.charAt(i)) {
         case "F":
@@ -62,7 +62,7 @@ export default class Turtle {
             boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
             meshToAddTo.attach(boxMesh);
           } else {
-            scene.add(boxMesh);
+            generatedMesh.add(boxMesh);
           }
           meshToAddTo = boxMesh;
           break;
@@ -110,7 +110,7 @@ export default class Turtle {
     });
     globalCenterPoint = globalCenterPoint.divideScalar(leafCenterPositions.length);
     console.timeEnd("Geometry creation");
-    scene.add(Utils.createPlane());
+    return generatedMesh;
   }
   move() {
     const absoluteMovement = new Vector3(0, 1, 0).applyQuaternion(this.currentRotation.clone()).multiplyScalar(this.stepLength);
