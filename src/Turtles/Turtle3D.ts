@@ -1,15 +1,4 @@
-import {
-    Vector3,
-    Quaternion,
-    BufferGeometry,
-    Float32BufferAttribute,
-    MeshBasicMaterial,
-    Mesh,
-    BoxGeometry,
-    ShaderMaterial,
-    DoubleSide,
-    Color,
-} from 'three';
+import { Vector3, Quaternion, Mesh, BoxGeometry, ShaderMaterial, DoubleSide, Color } from 'three';
 import { BaseTurtle } from './BaseTurtle';
 import * as FragmentData from '../shaders/testShader/fragment';
 import * as VertexData from '../shaders/testShader/vertex';
