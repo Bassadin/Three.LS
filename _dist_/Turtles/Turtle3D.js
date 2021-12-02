@@ -1,12 +1,4 @@
-import {
-  Vector3,
-  Quaternion,
-  Mesh,
-  BoxGeometry,
-  ShaderMaterial,
-  DoubleSide,
-  Color
-} from "../../web_modules/three.js";
+import {Vector3, Quaternion, Mesh, BoxGeometry, ShaderMaterial, DoubleSide, Color} from "../../web_modules/three.js";
 import {BaseTurtle} from "./BaseTurtle.js";
 import * as FragmentData from "../shaders/testShader/fragment.js";
 import * as VertexData from "../shaders/testShader/vertex.js";
