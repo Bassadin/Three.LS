@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { Clock, Euler, Scene, ShaderMaterial } from 'three';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
-import { Turtle3D } from './Turtles/Turtle3D';
+import Turtle from './Turtle';
 import { LindenmayerFormular } from './LindenmayerFormular';
 import PerformanceStats from './PerformanceStats';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
@@ -20,7 +20,7 @@ const windowFileLocationName: string = windowLocationHref.substring(windowLocati
 switch (windowFileLocationName) {
     case '/':
         const lindenmayerSettingsForm: LindenmayerFormular = LindenmayerFormular.getInstance();
-        const newTurtle: Turtle3D = lindenmayerSettingsForm.generateLSystemImage();
+        const newTurtle: Turtle = lindenmayerSettingsForm.generateLSystemImage();
 
         if (scene !== undefined) {
             repaint(newTurtle);
@@ -48,7 +48,7 @@ function hookUpGenerateButtonEventListener() {
 
 export function generateAndRepaintLindenmayerMesh() {
     const form: LindenmayerFormular = LindenmayerFormular.getInstance();
-    const newTurtle: Turtle3D = form.generateLSystemImage();
+    const newTurtle: Turtle = form.generateLSystemImage();
     if (scene !== undefined) {
         repaint(newTurtle);
     } else {
@@ -57,7 +57,7 @@ export function generateAndRepaintLindenmayerMesh() {
     }
 }
 
-function initTestingScene(turtle: Turtle3D) {
+function initTestingScene(turtle: Turtle) {
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
@@ -131,7 +131,7 @@ function initArTestingScene() {
     window.addEventListener('resize', onWindowResize, false);
 }
 
-function repaint(turtle: Turtle3D) {
+function repaint(turtle: Turtle) {
     for (let i = scene.children.length - 1; i >= 0; i--) {
         const obj = scene.children[i];
         scene.remove(obj);

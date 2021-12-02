@@ -1,10 +1,53 @@
-import { Vector3, Quaternion, Mesh, BoxGeometry, ShaderMaterial, DoubleSide, Color } from 'three';
-import { BaseTurtle } from './BaseTurtle';
-import * as FragmentData from '../shaders/testShader/fragment';
-import * as VertexData from '../shaders/testShader/vertex';
-import { Utils } from '../Utils';
+import * as THREE from 'three';
+import { BoxGeometry, Color, DoubleSide, Mesh, Quaternion, ShaderMaterial, Vector3 } from 'three';
+import * as FragmentData from './shaders/testShader/fragment';
+import * as VertexData from './shaders/testShader/vertex';
+import { Utils } from './Utils';
 
-export class Turtle3D extends BaseTurtle {
+export default class Turtle {
+    //
+    private instructionString: string;
+    private stepLength: number;
+    private rotationStepSize: number; //In radians
+
+    //Rotation
+    private currentRotation: Quaternion = new Quaternion();
+    private rotationSaveStateArray: Quaternion[] = [];
+
+    //MeshToAddTo
+    private meshToAddToSaveStateArray: Mesh[] = [];
+
+    //Position
+    private currentPosition: Vector3 = new Vector3(0, -5, 0);
+    private positionSaveStateArray: Vector3[] = [];
+
+    //Color
+    newColors = [0.7, 0.3, 0.1];
+    private colorSaveStateArray: number[] = [];
+
+    constructor(instructionString: string, stepLength: number, rotationStepSize: number) {
+        this.instructionString = instructionString;
+        this.stepLength = stepLength;
+        this.rotationStepSize = rotationStepSize;
+    }
+
+    saveState(): void {
+        this.positionSaveStateArray.push(this.currentPosition.clone());
+        this.rotationSaveStateArray.push(this.currentRotation.clone());
+        // this.colorSaveStateArray.push(this.colorIndex);
+        // console.log("save", this.colorIndex);
+    }
+
+    loadState(): void {
+        if (this.positionSaveStateArray.length == 0) {
+            throw new Error('Cannot load state before it has been written at least once');
+        }
+        this.currentPosition = this.positionSaveStateArray.pop();
+        this.currentRotation = this.rotationSaveStateArray.pop();
+        // this.colorIndex = this.colorSaveStateArray.pop();
+        // console.log("load", this.colorIndex);
+    }
+
     public branchingIds: Set<number> = new Set();
 
     addGeometryToScene(scene: THREE.Scene): void {

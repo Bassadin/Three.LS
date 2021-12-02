@@ -1,4 +1,4 @@
-import { Turtle3D } from './Turtles/Turtle3D';
+import Turtle from './Turtle';
 import { Rule } from './Rule';
 import { LSystem } from './LSystem';
 import { Utils } from './Utils';
@@ -156,7 +156,7 @@ export class LindenmayerFormular {
         });
     }
 
-    public generateLSystemImage(): Turtle3D {
+    public generateLSystemImage(): Turtle {
         const axioms: string[] = [];
         const rules: string[] = [];
 
@@ -187,7 +187,7 @@ export class LindenmayerFormular {
 
         console.timeEnd('L System generation');
 
-        const turtle: Turtle3D = new Turtle3D(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees));
+        const turtle: Turtle = new Turtle(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees));
 
         return turtle;
     }
