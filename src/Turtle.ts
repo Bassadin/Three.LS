@@ -22,7 +22,7 @@ export default class Turtle {
     private positionSaveStateArray: Vector3[] = [];
 
     //Color
-    newColors = [0.7, 0.3, 0.1];
+    private newColors = [0.7, 0.3, 0.1];
     private colorSaveStateArray: number[] = [];
 
     constructor(instructionString: string, stepLength: number, rotationStepSize: number) {
@@ -31,26 +31,22 @@ export default class Turtle {
         this.rotationStepSize = rotationStepSize;
     }
 
-    saveState(): void {
+    private saveState(): void {
         this.positionSaveStateArray.push(this.currentPosition.clone());
         this.rotationSaveStateArray.push(this.currentRotation.clone());
-        // this.colorSaveStateArray.push(this.colorIndex);
-        // console.log("save", this.colorIndex);
     }
 
-    loadState(): void {
+    private loadState(): void {
         if (this.positionSaveStateArray.length == 0) {
             throw new Error('Cannot load state before it has been written at least once');
         }
         this.currentPosition = this.positionSaveStateArray.pop();
         this.currentRotation = this.rotationSaveStateArray.pop();
-        // this.colorIndex = this.colorSaveStateArray.pop();
-        // console.log("load", this.colorIndex);
     }
 
     public branchingIds: Set<number> = new Set();
 
-    addGeometryToScene(scene: THREE.Scene): void {
+    public generateMeshObject(): Mesh {
         console.time('Geometry creation');
 
         const leafCenterPositions: Vector3[] = [];
@@ -61,16 +57,12 @@ export default class Turtle {
 
         let meshToAddTo: Mesh = null;
 
-        for (let i = 0; i < this.instructionString.length; i++) {
-            // const tries: number[] = [];
-            // const bufferGeometry: BufferGeometry = new BufferGeometry();
-            //  const colorsArray: number[] = [];
+        const generatedMesh: Mesh = new Mesh();
 
+        for (let i = 0; i < this.instructionString.length; i++) {
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove = this.currentPosition.clone();
-
-                    // this.colorIndex++;
 
                     this.newColors = [
                         0.45 +
@@ -114,7 +106,7 @@ export default class Turtle {
                         boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
                         meshToAddTo.attach(boxMesh);
                     } else {
-                        scene.add(boxMesh);
+                        generatedMesh.add(boxMesh);
                     }
                     meshToAddTo = boxMesh;
 
@@ -176,10 +168,9 @@ export default class Turtle {
         });
         globalCenterPoint = globalCenterPoint.divideScalar(leafCenterPositions.length);
 
-        // mesh.applyMatrix4(new Matrix4().makeTranslation(globalCenterPoint.x, globalCenterPoint.y, globalCenterPoint.z));
-
         console.timeEnd('Geometry creation');
-        scene.add(Utils.createPlane());
+
+        return generatedMesh;
     }
 
     move(): void {

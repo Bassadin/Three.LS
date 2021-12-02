@@ -72,7 +72,7 @@ function initTestingScene(turtle: Turtle) {
 
     scene = new THREE.Scene();
 
-    turtle.addGeometryToScene(scene);
+    scene.add(turtle.generateMeshObject());
 
     branchingIds = turtle.branchingIds;
     console.log(scene);
@@ -136,7 +136,7 @@ function repaint(turtle: Turtle) {
         const obj = scene.children[i];
         scene.remove(obj);
     }
-    turtle.addGeometryToScene(scene);
+    scene.add(turtle.generateMeshObject());
     branchingIds = turtle.branchingIds;
 }
 
