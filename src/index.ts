@@ -1,11 +1,13 @@
 import * as THREE from 'three';
-import { Clock, Euler, Scene, ShaderMaterial } from 'three';
+import { Clock, Scene } from 'three';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
 import Turtle from './Turtle';
 import { LindenmayerFormular } from './LindenmayerFormular';
 import PerformanceStats from './PerformanceStats';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
 import { Utils } from './Utils';
+import { LSystem } from './LSystem';
+import { Rule } from './Rule';
 
 export let scene: Scene;
 let camera: THREE.PerspectiveCamera;
@@ -13,7 +15,6 @@ let renderer: THREE.WebGLRenderer;
 let controls: TrackballControls;
 const sceneClock: Clock = new Clock();
 
-let branchingIds: Set<number> = new Set();
 // Can we handle routes differently somehow? ~bas
 const windowLocationHref: string = window.location.href;
 const windowFileLocationName: string = windowLocationHref.substring(windowLocationHref.lastIndexOf('/'));
@@ -112,15 +113,19 @@ function initArTestingScene() {
     light.position.set(0.5, 1, 0.25);
     scene.add(light);
 
-    // TODO: replace this geometry with a generated tree somehow
-    const geometry = new THREE.CylinderGeometry(0, 0.05, 0.2, 32).rotateX(Math.PI / 2);
+    // Turtle data
+    const ruleset: Rule[] = [];
+    ruleset.push(new Rule('F', 'F&F+[+F/-F-F]-[-F+F+F]'));
+    const lsys: LSystem = new LSystem('F', ruleset);
+    for (let i = 0; i < 3; i++) lsys.generate();
 
     function onSelect() {
-        const material = new THREE.MeshPhongMaterial({ color: 0xffffff * Math.random() });
-        const mesh = new THREE.Mesh(geometry, material);
-        mesh.position.set(0, 0, -0.3).applyMatrix4(controller.matrixWorld);
-        mesh.quaternion.setFromRotationMatrix(controller.matrixWorld);
-        scene.add(mesh);
+        const turtle: Turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(30));
+        const turtleMesh = turtle.generateMeshObject();
+        turtleMesh.position.set(0, 0, -0.8).applyMatrix4(controller.matrixWorld);
+        turtleMesh.scale.set(1, 1, 1);
+        turtleMesh.quaternion.setFromRotationMatrix(controller.matrixWorld);
+        scene.add(turtleMesh);
     }
 
     const controller = renderer.xr.getController(0);
