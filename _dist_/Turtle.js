@@ -9,7 +9,6 @@ export default class Turtle {
     this.currentPosition = new Vector3(0, -5, 0);
     this.positionSaveStateArray = [];
     this.newColors = [0.7, 0.3, 0.1];
-    this.colorSaveStateArray = [];
     this.branchingIds = new Set();
     this.instructionString = instructionString;
     this.stepLength = stepLength;
