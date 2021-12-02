@@ -1,4 +1,4 @@
-import {Turtle3D} from "./Turtles/Turtle3D.js";
+import Turtle from "./Turtle.js";
 import {Rule} from "./Rule.js";
 import {LSystem} from "./LSystem.js";
 import {Utils} from "./Utils.js";
@@ -134,7 +134,7 @@ export class LindenmayerFormular {
     for (let i = 0; i < iterations; i++)
       lsys.generate();
     console.timeEnd("L System generation");
-    const turtle = new Turtle3D(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees));
+    const turtle = new Turtle(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees));
     return turtle;
   }
   addListenerToOBJDownloadButton() {

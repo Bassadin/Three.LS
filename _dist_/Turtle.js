@@ -1,12 +1,31 @@
-import {Vector3, Quaternion, Mesh, BoxGeometry, ShaderMaterial, DoubleSide, Color} from "../../web_modules/three.js";
-import {BaseTurtle} from "./BaseTurtle.js";
-import * as FragmentData from "../shaders/testShader/fragment.js";
-import * as VertexData from "../shaders/testShader/vertex.js";
-import {Utils} from "../Utils.js";
-export class Turtle3D extends BaseTurtle {
-  constructor() {
-    super(...arguments);
+import {BoxGeometry, Color, DoubleSide, Mesh, Quaternion, ShaderMaterial, Vector3} from "../web_modules/three.js";
+import * as FragmentData from "./shaders/testShader/fragment.js";
+import * as VertexData from "./shaders/testShader/vertex.js";
+import {Utils} from "./Utils.js";
+export default class Turtle {
+  constructor(instructionString, stepLength, rotationStepSize) {
+    this.currentRotation = new Quaternion();
+    this.rotationSaveStateArray = [];
+    this.meshToAddToSaveStateArray = [];
+    this.currentPosition = new Vector3(0, -5, 0);
+    this.positionSaveStateArray = [];
+    this.newColors = [0.7, 0.3, 0.1];
+    this.colorSaveStateArray = [];
     this.branchingIds = new Set();
+    this.instructionString = instructionString;
+    this.stepLength = stepLength;
+    this.rotationStepSize = rotationStepSize;
+  }
+  saveState() {
+    this.positionSaveStateArray.push(this.currentPosition.clone());
+    this.rotationSaveStateArray.push(this.currentRotation.clone());
+  }
+  loadState() {
+    if (this.positionSaveStateArray.length == 0) {
+      throw new Error("Cannot load state before it has been written at least once");
+    }
+    this.currentPosition = this.positionSaveStateArray.pop();
+    this.currentRotation = this.rotationSaveStateArray.pop();
   }
   addGeometryToScene(scene) {
     console.time("Geometry creation");
@@ -98,4 +117,4 @@ export class Turtle3D extends BaseTurtle {
     this.currentPosition.add(absoluteMovement);
   }
 }
-//# sourceMappingURL=Turtle3D.js.map
+//# sourceMappingURL=Turtle.js.map
