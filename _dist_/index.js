@@ -4,6 +4,7 @@ import {TrackballControls} from "../web_modules/three/examples/jsm/controls/Trac
 import {LindenmayerFormular} from "./LindenmayerFormular.js";
 import PerformanceStats from "./PerformanceStats.js";
 import {ARButton} from "../web_modules/three/examples/jsm/webxr/ARButton.js";
+import {Utils} from "./Utils.js";
 export let scene;
 let camera;
 let renderer;
@@ -59,6 +60,7 @@ function initTestingScene(turtle) {
   controls.update();
   scene = new THREE.Scene();
   scene.add(turtle.generateMeshObject());
+  scene.add(Utils.createPlane());
   console.log(scene);
   sceneClock.start();
   renderer.render(scene, camera);

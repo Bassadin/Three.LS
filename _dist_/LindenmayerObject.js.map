@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["/home/runner/work/Three.LS/Three.LS/src/LindenmayerObject.ts"],
-  "sourcesContent": ["import { Mesh } from 'three';\nimport { LSystem } from './LSystem';\n\nexport class Turtle extends Mesh {\n    private lsystem: LSystem;\n    private turtle: Turtle;\n\n    constructor(lsystem: LSystem, turtle: Turtle) {\n        super();\n    }\n}\n"],
-  "mappings": "AAAA;AAGO,4BAAqB,KAAK;AAAA,EAI7B,YAAY,SAAkB,QAAgB;AAC1C;AAAA;AAAA;",
-  "names": []
-}
