@@ -74,7 +74,6 @@ function initTestingScene(turtle: Turtle) {
 
     scene.add(turtle.generateMeshObject());
 
-    branchingIds = turtle.branchingIds;
     console.log(scene);
 
     sceneClock.start();
@@ -137,7 +136,6 @@ function repaint(turtle: Turtle) {
         scene.remove(obj);
     }
     scene.add(turtle.generateMeshObject());
-    branchingIds = turtle.branchingIds;
 }
 
 function animate() {
@@ -150,21 +148,21 @@ function render() {
     controls?.update(); // Only update controls if present
     PerformanceStats.instance?.update(); // Only update stats if present
 
-    branchingIds.forEach((eachId) => {
-        const obj: THREE.Mesh = scene.getObjectById(eachId) as THREE.Mesh;
-        if (obj) {
-            const shaderMaterial: ShaderMaterial = obj.material as ShaderMaterial;
-            shaderMaterial.uniforms.time.value += 0.01;
-            obj.rotation.copy(
-                new Euler(
-                    Math.sin(sceneClock.getElapsedTime() * 2) * 0.002 - 0.001,
-                    Math.sin(sceneClock.getElapsedTime() * 1) * 0.02 - 0.01,
-                    Math.cos(sceneClock.getElapsedTime() * 1.3) * 0.003 - 0.0015,
-                    'XYZ',
-                ),
-            );
-        }
-    });
+    // branchingIds.forEach((eachId) => {
+    //     const obj: THREE.Mesh = scene.getObjectById(eachId) as THREE.Mesh;
+    //     if (obj) {
+    //         const shaderMaterial: ShaderMaterial = obj.material as ShaderMaterial;
+    //         shaderMaterial.uniforms.time.value += 0.01;
+    //         obj.rotation.copy(
+    //             new Euler(
+    //                 Math.sin(sceneClock.getElapsedTime() * 2) * 0.002 - 0.001,
+    //                 Math.sin(sceneClock.getElapsedTime() * 1) * 0.02 - 0.01,
+    //                 Math.cos(sceneClock.getElapsedTime() * 1.3) * 0.003 - 0.0015,
+    //                 'XYZ',
+    //             ),
+    //         );
+    //     }
+    // });
 }
 
 function onWindowResize() {

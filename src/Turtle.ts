@@ -1,8 +1,6 @@
-import * as THREE from 'three';
 import { BoxGeometry, Color, DoubleSide, Mesh, Quaternion, ShaderMaterial, Vector3 } from 'three';
 import * as FragmentData from './shaders/testShader/fragment';
 import * as VertexData from './shaders/testShader/vertex';
-import { Utils } from './Utils';
 
 export default class Turtle {
     //
@@ -23,7 +21,6 @@ export default class Turtle {
 
     //Color
     private newColors = [0.7, 0.3, 0.1];
-    private colorSaveStateArray: number[] = [];
 
     constructor(instructionString: string, stepLength: number, rotationStepSize: number) {
         this.instructionString = instructionString;
@@ -44,6 +41,7 @@ export default class Turtle {
         this.currentRotation = this.rotationSaveStateArray.pop();
     }
 
+    //Indices of the objects that define a point where a savestate was made, e.g. a 'branching point'
     public branchingIds: Set<number> = new Set();
 
     public generateMeshObject(): Mesh {
@@ -173,7 +171,7 @@ export default class Turtle {
         return generatedMesh;
     }
 
-    move(): void {
+    private move(): void {
         const absoluteMovement: Vector3 = new Vector3(0, 1, 0)
             .applyQuaternion(this.currentRotation.clone())
             .multiplyScalar(this.stepLength);
