@@ -1,16 +1,18 @@
 import * as THREE from "../web_modules/three.js";
 import {Clock} from "../web_modules/three.js";
 import {TrackballControls} from "../web_modules/three/examples/jsm/controls/TrackballControls.js";
+import Turtle from "./Turtle.js";
 import {LindenmayerFormular} from "./LindenmayerFormular.js";
 import PerformanceStats from "./PerformanceStats.js";
 import {ARButton} from "../web_modules/three/examples/jsm/webxr/ARButton.js";
 import {Utils} from "./Utils.js";
+import {LSystem} from "./LSystem.js";
+import {Rule} from "./Rule.js";
 export let scene;
 let camera;
 let renderer;
 let controls;
 const sceneClock = new Clock();
-let branchingIds = new Set();
 const windowLocationHref = window.location.href;
 const windowFileLocationName = windowLocationHref.substring(windowLocationHref.lastIndexOf("/"));
 switch (windowFileLocationName) {
@@ -81,13 +83,18 @@ function initArTestingScene() {
   const light = new THREE.HemisphereLight(16777215, 12303359, 1);
   light.position.set(0.5, 1, 0.25);
   scene.add(light);
-  const geometry = new THREE.CylinderGeometry(0, 0.05, 0.2, 32).rotateX(Math.PI / 2);
+  const ruleset = [];
+  ruleset.push(new Rule("F", "F&F+[+F/-F-F]-[-F+F+F]"));
+  const lsys = new LSystem("F", ruleset);
+  for (let i = 0; i < 3; i++)
+    lsys.generate();
   function onSelect() {
-    const material = new THREE.MeshPhongMaterial({color: 16777215 * Math.random()});
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(0, 0, -0.3).applyMatrix4(controller.matrixWorld);
-    mesh.quaternion.setFromRotationMatrix(controller.matrixWorld);
-    scene.add(mesh);
+    const turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(30));
+    const turtleMesh = turtle.generateMeshObject();
+    turtleMesh.position.set(0, 0, -0.8).applyMatrix4(controller.matrixWorld);
+    turtleMesh.scale.set(1, 1, 1);
+    turtleMesh.quaternion.setFromRotationMatrix(controller.matrixWorld);
+    scene.add(turtleMesh);
   }
   const controller = renderer.xr.getController(0);
   controller.addEventListener("select", onSelect);
