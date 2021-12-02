@@ -5,6 +5,7 @@ import Turtle from './Turtle';
 import { LindenmayerFormular } from './LindenmayerFormular';
 import PerformanceStats from './PerformanceStats';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
+import { Utils } from './Utils';
 
 export let scene: Scene;
 let camera: THREE.PerspectiveCamera;
@@ -73,6 +74,7 @@ function initTestingScene(turtle: Turtle) {
     scene = new THREE.Scene();
 
     scene.add(turtle.generateMeshObject());
+    scene.add(Utils.createPlane());
 
     console.log(scene);
 
