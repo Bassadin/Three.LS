@@ -8,6 +8,7 @@ import {ARButton} from "../web_modules/three/examples/jsm/webxr/ARButton.js";
 import {Utils} from "./Utils.js";
 import {LSystem} from "./LSystem.js";
 import {Rule} from "./Rule.js";
+import "./styles/styles.css.proxy.js";
 export let scene;
 let camera;
 let renderer;
