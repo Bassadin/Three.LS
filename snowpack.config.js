@@ -6,7 +6,7 @@ module.exports = {
     buildOptions: {
         sourceMaps: true,
     },
-    plugins: ['@snowpack/plugin-typescript'],
+    plugins: ['@snowpack/plugin-typescript', '@snowpack/plugin-sass'],
     installOptions: {
         installTypes: true,
     },
