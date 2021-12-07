@@ -9,6 +9,8 @@ import { Utils } from './Utils';
 import { LSystem } from './LSystem';
 import { Rule } from './Rule';
 
+import './styles/styles.scss';
+
 export let scene: Scene;
 let camera: THREE.PerspectiveCamera;
 let renderer: THREE.WebGLRenderer;
