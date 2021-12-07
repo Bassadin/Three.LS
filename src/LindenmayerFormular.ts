@@ -3,7 +3,7 @@ import { Rule } from './Rule';
 import { LSystem } from './LSystem';
 import { Utils } from './Utils';
 import { OBJExporter } from 'three/examples/jsm/exporters/OBJExporter.js';
-import { scene, generateAndRepaintLindenmayerMesh } from './index';
+import { scene, generateAndRepaintLindenmayerMesh } from './indexNormal';
 
 export class LindenmayerFormular {
     private static instance: LindenmayerFormular;
