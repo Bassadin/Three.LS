@@ -3,7 +3,7 @@ import { Mesh, Scene, XRFrame, XRHitTestSource } from 'three';
 import Turtle from './Turtle';
 import PerformanceStats from './PerformanceStats';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
-import { Utils } from './Utils';
+import Utils from './Utils';
 import { LSystem } from './LSystem';
 import { Rule } from './Rule';
 
@@ -47,13 +47,20 @@ function main() {
     for (let i = 0; i < 3; i++) lsys.generate();
 
     function onSelect() {
-        const turtle: Turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(30), 1);
+        const turtle: Turtle = new Turtle(
+            lsys.getSentence(),
+            1,
+            Utils.DegreesToRadians(30),
+            Utils.RandomRange(0.8, 1.2),
+        );
         const turtleMesh = turtle.generateMeshObject();
         // turtleMesh.position.set(0, 0, -0.8).applyMatrix4(controller.matrixWorld);
         turtleMesh.position.setFromMatrixPosition(reticle.matrix);
-        const scale = Utils.RandomNumber(0.01, 0.05);
-        turtleMesh.scale.set(scale, scale, scale);
-        turtleMesh.quaternion.setFromRotationMatrix(controller.matrixWorld);
+
+        const randomizedScale = Utils.RandomRange(0.02, 0.035);
+
+        turtleMesh.scale.set(randomizedScale, randomizedScale, randomizedScale);
+        turtleMesh.rotateY(Utils.RandomRange(0.0, Math.PI * 2));
         scene.add(turtleMesh);
     }
 

@@ -1,16 +1,16 @@
 import { BufferGeometry, Float32BufferAttribute, Mesh, MeshBasicMaterial } from 'three';
 
-export class Utils {
-    static DegreesToRadians(degrees: number): number {
+export default class Utils {
+    public static DegreesToRadians(degrees: number): number {
         const pi: number = Math.PI;
         return degrees * (pi / 180);
     }
 
-    static RandomNumber(min: number, max: number): number {
-        return Math.random() * (+max - +min) + +min;
+    public static RandomRange(min: number, max: number): number {
+        return Math.random() * (max - min) + min;
     }
 
-    static createPlane(): THREE.Mesh {
+    public static createPlane(): THREE.Mesh {
         const bufferGeometry: THREE.BufferGeometry = new BufferGeometry();
         const newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];
         const vertices: any[] = [];

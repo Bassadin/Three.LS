@@ -4,7 +4,7 @@ import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls
 import Turtle from './Turtle';
 import { LindenmayerFormular } from './LindenmayerFormular';
 import PerformanceStats from './PerformanceStats';
-import { Utils } from './Utils';
+import Utils from './Utils';
 
 export let scene: Scene;
 let camera: THREE.PerspectiveCamera;
