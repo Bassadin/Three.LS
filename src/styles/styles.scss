@@ -1,3 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@300;700&display=swap');
+
 body {
     background-color: pink;
+    font-family: 'Hind', sans-serif;
+}
+
+h2 {
+    margin: 5px;
+}
+
+.burgermenu {
+    position: relative;
+    padding:10px;
+    height: 30px;
+    width: 30px;
+    top: 15px;
+    left: 20px;
+    background: none;
+    transform: translate(-20px);
+    transition: all ease 0.3s;
+
+    &::before, &::after {
+        content: "";
+        position: absolute;
+        background: #000;
+        height: 3px;
+    }
+
+    &::before {
+        left: 0px;
+        width: 25px;
+        top: 7px;
+        transform: rotate(-45deg);
+        transition: all ease 0.3s;
+    }
+
+    &::after {
+        left: 0px;
+        width: 25px;
+        top: 7px;
+        transform: rotate(45deg);
+        transition: all ease 0.3s;
+    }
+
+    &:hover:after, &:before:hover {
+        background: red;
+    }
+
+}
+
+.interface__wrapper.shrink {
+    .burgermenu {
+        &::before {
+            left: 0px;
+            width: 25px;
+            top: 7px;
+            transform: rotate(180deg);
+            transition: all ease 0.3s;
+        }
+
+        &::after {
+            left: 0px;
+            width: 25px;
+            top: 7px;
+            transform: rotate(-90deg);
+            transition: all ease 0.3s;
+        }
+    
+    }
+}
+
+.interface__header {
+    display: flex;
+    justify-content: space-between;
+    background: burlywood;
+    padding: 5px 30px;
+    border-radius: 10px;
+}
+
+.interface__box {
+    background: #f1f1f1;
+    border-radius: 10px; 
+    padding: 10px;
+    margin-bottom: 10px;
 }

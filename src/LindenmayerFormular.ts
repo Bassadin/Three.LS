@@ -14,6 +14,7 @@ export class LindenmayerFormular {
     private btnDownload: HTMLInputElement;
     private objDownloadButton: HTMLInputElement;
     private fileUpload: HTMLInputElement;
+    private makeSmallButton: HTMLInputElement;
 
     private rulesWrapper: HTMLDivElement;
 
@@ -27,6 +28,7 @@ export class LindenmayerFormular {
         this.rulesWrapper = document.querySelector('#rulesWrapper');
         this.objDownloadButton = document.querySelector('#btnDownloadOBJ');
         this.fileUpload = document.querySelector('#jsonUpload');
+        this.makeSmallButton = document.querySelector('#makesmall');
 
         this.countAllRules = 1;
 
@@ -35,6 +37,7 @@ export class LindenmayerFormular {
         this.addListenerToDownloadButton();
         this.addListenerToUploadButton();
         this.addListenerToOBJDownloadButton();
+        this.makeSmall();
     }
 
     public static getInstance(): LindenmayerFormular {
@@ -205,4 +208,13 @@ export class LindenmayerFormular {
             link.click();
         });
     }
+
+    private makeSmall(): void {
+        this.makeSmallButton.addEventListener('click', () => {
+            console.log("makesmall")
+
+            document.querySelector('.interface__wrapper').classList.toggle("shrink");
+        });
+    }
+
 }

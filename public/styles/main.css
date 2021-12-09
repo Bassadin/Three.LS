@@ -17,17 +17,29 @@ hr {
     background-color: white;
     top: 10px;
     left: 10px;
-    padding: 1.5rem 1.75rem;
     width: 420px;
     border: 1px solid black;
+    border-radius: 10px;
 }
 
-@media screen and (max-width: 512px) {
+.interface__wrapper-inner {
+    padding: 10px 20px;
+}
+
+.interface__wrapper.shrink .interface__wrapper-inner {
+    display: none;
+}
+
+.interface__wrapper.shrink {
+
+}
+
+/* @media screen and (max-width: 512px) {
     .interface__wrapper {
         position: unset;
         max-width: 100%;
     }
-}
+} */
 
 .interface__sub-heading {
     margin: 0 0 1rem 0;
@@ -78,9 +90,10 @@ hr {
 }
 
 .interface__input-inner-wrapper {
-    flex: 0 0 190px;
+    flex: 0 0 50%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .interface__input-field {
@@ -108,6 +121,7 @@ hr {
 .interface__generate-btn {
     align-self: flex-end;
     margin: 0 !important;
+    background: red;
 }
 
 .interface__upload-wrapper {
@@ -118,4 +132,19 @@ hr {
 
 .interface__upload-wrapper--right {
     justify-content: flex-end;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #999;
+    border-radius: 5px;
+}
+
+button {
+    background: darkgray;
+    border: 0px;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: 700;
+    color: white;
 }
