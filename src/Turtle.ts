@@ -22,10 +22,13 @@ export default class Turtle {
     //Color
     private newColors = [0.7, 0.3, 0.1];
 
-    constructor(instructionString: string, stepLength: number, rotationStepSize: number) {
+    private scale: number;
+
+    constructor(instructionString: string, stepLength: number, rotationStepSize: number, scale = 0.2) {
         this.instructionString = instructionString;
         this.stepLength = stepLength;
         this.rotationStepSize = rotationStepSize;
+        this.scale = scale;
     }
 
     private saveState(): void {
@@ -50,8 +53,8 @@ export default class Turtle {
         const leafCenterPositions: Vector3[] = [];
 
         // const material: Material = new MeshBasicMaterial();
-        const boxScale = 0.2;
-        const geometry: BoxGeometry = new BoxGeometry(boxScale, boxScale, boxScale);
+        // const boxScale = 0.2;
+        const geometry: BoxGeometry = new BoxGeometry(this.scale, this.scale, this.scale);
 
         let meshToAddTo: Mesh = null;
 
