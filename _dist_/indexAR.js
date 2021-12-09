@@ -2,7 +2,7 @@ import * as THREE from "../web_modules/three.js";
 import Turtle from "./Turtle.js";
 import PerformanceStats from "./PerformanceStats.js";
 import {ARButton} from "../web_modules/three/examples/jsm/webxr/ARButton.js";
-import {Utils} from "./Utils.js";
+import Utils from "./Utils.js";
 import {LSystem} from "./LSystem.js";
 import {Rule} from "./Rule.js";
 let hitTestSource = null;
@@ -29,11 +29,12 @@ function main() {
   for (let i = 0; i < 3; i++)
     lsys.generate();
   function onSelect() {
-    const turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(30), Utils.RandomNumber(0.8, 1.2));
+    const turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(30), Utils.RandomRange(0.8, 1.2));
     const turtleMesh = turtle.generateMeshObject();
     turtleMesh.position.setFromMatrixPosition(reticle.matrix);
-    turtleMesh.scale.set(0.03, 0.03, 0.03);
-    turtleMesh.quaternion.setFromRotationMatrix(controller.matrixWorld);
+    const randomizedScale = Utils.RandomRange(0.02, 0.035);
+    turtleMesh.scale.set(randomizedScale, randomizedScale, randomizedScale);
+    turtleMesh.rotateY(Utils.RandomRange(0, Math.PI * 2));
     scene.add(turtleMesh);
   }
   const controller = renderer.xr.getController(0);

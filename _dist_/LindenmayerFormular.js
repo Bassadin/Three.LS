@@ -1,7 +1,7 @@
 import Turtle from "./Turtle.js";
 import {Rule} from "./Rule.js";
 import {LSystem} from "./LSystem.js";
-import {Utils} from "./Utils.js";
+import Utils from "./Utils.js";
 import {OBJExporter} from "../web_modules/three/examples/jsm/exporters/OBJExporter.js";
 import {scene, generateAndRepaintLindenmayerMesh} from "./indexNormal.js";
 export class LindenmayerFormular {

@@ -1,11 +1,11 @@
 import {BufferGeometry, Float32BufferAttribute, Mesh, MeshBasicMaterial} from "../web_modules/three.js";
-export class Utils {
+export default class Utils {
   static DegreesToRadians(degrees) {
     const pi = Math.PI;
     return degrees * (pi / 180);
   }
-  static RandomNumber(min, max) {
-    return Math.random() * (+max - +min) + +min;
+  static RandomRange(min, max) {
+    return Math.random() * (max - min) + min;
   }
   static createPlane() {
     const bufferGeometry = new BufferGeometry();

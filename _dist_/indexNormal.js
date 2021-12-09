@@ -3,7 +3,7 @@ import {Clock} from "../web_modules/three.js";
 import {TrackballControls} from "../web_modules/three/examples/jsm/controls/TrackballControls.js";
 import {LindenmayerFormular} from "./LindenmayerFormular.js";
 import PerformanceStats from "./PerformanceStats.js";
-import {Utils} from "./Utils.js";
+import Utils from "./Utils.js";
 export let scene;
 let camera;
 let renderer;
