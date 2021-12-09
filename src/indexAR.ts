@@ -52,6 +52,7 @@ function main() {
             1,
             Utils.DegreesToRadians(30),
             Utils.RandomRange(0.8, 1.2),
+            true,
         );
         const turtleMesh = turtle.generateMeshObject();
         // turtleMesh.position.set(0, 0, -0.8).applyMatrix4(controller.matrixWorld);
