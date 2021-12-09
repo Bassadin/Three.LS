@@ -1,19 +1,23 @@
 import {BoxGeometry, Color, DoubleSide, Mesh, Quaternion, ShaderMaterial, Vector3} from "../web_modules/three.js";
 import * as FragmentData from "./shaders/testShader/fragment.js";
 import * as VertexData from "./shaders/testShader/vertex.js";
+import Utils from "./Utils.js";
 export default class Turtle {
-  constructor(instructionString, stepLength, rotationStepSize, boxScale = 0.2) {
+  constructor(instructionString, stepLength, rotationStepSize, boxScale = 0.2, useRandomization = false) {
     this.currentRotation = new Quaternion();
     this.rotationSaveStateArray = [];
     this.meshToAddToSaveStateArray = [];
     this.currentPosition = new Vector3(0, -5, 0);
     this.positionSaveStateArray = [];
     this.newColors = [0.7, 0.3, 0.1];
+    this.useRandomization = false;
+    this.randomizationDeviation = 0.25;
     this.branchingIds = new Set();
     this.instructionString = instructionString;
     this.stepLength = stepLength;
     this.rotationStepSize = rotationStepSize;
     this.boxScale = boxScale;
+    this.useRandomization = useRandomization;
   }
   saveState() {
     this.positionSaveStateArray.push(this.currentPosition.clone());
@@ -78,22 +82,22 @@ export default class Turtle {
           meshToAddTo = this.meshToAddToSaveStateArray.pop();
           break;
         case "+":
-          this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), this.rotationStepSize));
+          this.rotateByAxisVectorWithRotationStepSize(new Vector3(0, 0, 1));
           break;
         case "-":
-          this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 0, -1), this.rotationStepSize));
+          this.rotateByAxisVectorWithRotationStepSize(new Vector3(0, 0, -1));
           break;
         case "&":
-          this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), this.rotationStepSize));
+          this.rotateByAxisVectorWithRotationStepSize(new Vector3(0, 1, 0));
           break;
         case "\u2227":
-          this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, -1, 0), this.rotationStepSize));
+          this.rotateByAxisVectorWithRotationStepSize(new Vector3(0, -1, 0));
           break;
         case "\\":
-          this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), this.rotationStepSize));
+          this.rotateByAxisVectorWithRotationStepSize(new Vector3(1, 0, 0));
           break;
         case "/":
-          this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(-1, 0, 0), this.rotationStepSize));
+          this.rotateByAxisVectorWithRotationStepSize(new Vector3(-1, 0, 0));
           break;
         case "|":
           this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), Math.PI));
@@ -112,8 +116,13 @@ export default class Turtle {
     return generatedMesh;
   }
   move() {
-    const absoluteMovement = new Vector3(0, 1, 0).applyQuaternion(this.currentRotation.clone()).multiplyScalar(this.stepLength);
+    const randomizationFactor = this.useRandomization ? Utils.RandomRange(1 - this.randomizationDeviation, 1 + this.randomizationDeviation) : 1;
+    const absoluteMovement = new Vector3(0, 1, 0).applyQuaternion(this.currentRotation.clone()).multiplyScalar(this.stepLength * randomizationFactor);
     this.currentPosition.add(absoluteMovement);
+  }
+  rotateByAxisVectorWithRotationStepSize(rotationAxisVector) {
+    const randomizationFactor = this.useRandomization ? Utils.RandomRange(1 - this.randomizationDeviation, 1 + this.randomizationDeviation) : 1;
+    this.currentRotation.multiply(new Quaternion().setFromAxisAngle(rotationAxisVector, this.rotationStepSize * randomizationFactor));
   }
 }
 //# sourceMappingURL=Turtle.js.map
