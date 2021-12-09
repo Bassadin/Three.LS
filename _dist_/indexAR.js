@@ -32,7 +32,7 @@ function main() {
     const turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(30), Utils.RandomNumber(0.8, 1.2));
     const turtleMesh = turtle.generateMeshObject();
     turtleMesh.position.setFromMatrixPosition(reticle.matrix);
-    turtleMesh.scale.set(0.05, 0.05, 0.05);
+    turtleMesh.scale.set(0.03, 0.03, 0.03);
     turtleMesh.quaternion.setFromRotationMatrix(controller.matrixWorld);
     scene.add(turtleMesh);
   }
