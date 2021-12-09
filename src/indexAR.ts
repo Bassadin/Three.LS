@@ -56,7 +56,7 @@ function main() {
         const turtleMesh = turtle.generateMeshObject();
         // turtleMesh.position.set(0, 0, -0.8).applyMatrix4(controller.matrixWorld);
         turtleMesh.position.setFromMatrixPosition(reticle.matrix);
-        turtleMesh.scale.set(0.05, 0.05, 0.05);
+        turtleMesh.scale.set(0.03, 0.03, 0.03);
         turtleMesh.quaternion.setFromRotationMatrix(controller.matrixWorld);
         scene.add(turtleMesh);
     }
