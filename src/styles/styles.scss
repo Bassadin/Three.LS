@@ -84,3 +84,24 @@ h2 {
     padding: 10px;
     margin-bottom: 10px;
 }
+
+button:hover {
+    opacity: 0.7;
+}
+
+.interface__box.interface__box--ar {
+    background: lightgray;
+    display: flex;
+    justify-content: center;
+
+    a {
+        color: red;
+        font-weight: 700;
+        text-align: center;
+        text-decoration: none;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+}
