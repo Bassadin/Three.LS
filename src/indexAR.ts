@@ -47,16 +47,12 @@ function main() {
     for (let i = 0; i < 3; i++) lsys.generate();
 
     function onSelect() {
-        const turtle: Turtle = new Turtle(
-            lsys.getSentence(),
-            1,
-            Utils.DegreesToRadians(30),
-            Utils.RandomNumber(0.8, 1.2),
-        );
+        const turtle: Turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(30), 1);
         const turtleMesh = turtle.generateMeshObject();
         // turtleMesh.position.set(0, 0, -0.8).applyMatrix4(controller.matrixWorld);
         turtleMesh.position.setFromMatrixPosition(reticle.matrix);
-        turtleMesh.scale.set(0.03, 0.03, 0.03);
+        const scale = Utils.RandomNumber(0.01, 0.05);
+        turtleMesh.scale.set(scale, scale, scale);
         turtleMesh.quaternion.setFromRotationMatrix(controller.matrixWorld);
         scene.add(turtleMesh);
     }
