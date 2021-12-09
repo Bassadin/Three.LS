@@ -47,11 +47,11 @@ function main() {
     for (let i = 0; i < 3; i++) lsys.generate();
 
     function onSelect() {
-        const turtle: Turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(30), 0.4);
+        const turtle: Turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(30), 1);
         const turtleMesh = turtle.generateMeshObject();
         // turtleMesh.position.set(0, 0, -0.8).applyMatrix4(controller.matrixWorld);
         turtleMesh.position.setFromMatrixPosition(reticle.matrix);
-        turtleMesh.scale.set(0.01, 0.01, 0.01);
+        turtleMesh.scale.set(0.05, 0.05, 0.05);
         turtleMesh.quaternion.setFromRotationMatrix(controller.matrixWorld);
         scene.add(turtleMesh);
     }
