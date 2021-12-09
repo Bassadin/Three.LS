@@ -3,7 +3,7 @@ import {Rule} from "./Rule.js";
 import {LSystem} from "./LSystem.js";
 import {Utils} from "./Utils.js";
 import {OBJExporter} from "../web_modules/three/examples/jsm/exporters/OBJExporter.js";
-import {scene, generateAndRepaintLindenmayerMesh} from "./index.js";
+import {scene, generateAndRepaintLindenmayerMesh} from "./indexNormal.js";
 export class LindenmayerFormular {
   constructor() {
     this.btnAdd = document.querySelector("#btnAddRule");
