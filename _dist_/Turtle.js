@@ -2,7 +2,7 @@ import {BoxGeometry, Color, DoubleSide, Mesh, Quaternion, ShaderMaterial, Vector
 import * as FragmentData from "./shaders/testShader/fragment.js";
 import * as VertexData from "./shaders/testShader/vertex.js";
 export default class Turtle {
-  constructor(instructionString, stepLength, rotationStepSize) {
+  constructor(instructionString, stepLength, rotationStepSize, scale = 0.2) {
     this.currentRotation = new Quaternion();
     this.rotationSaveStateArray = [];
     this.meshToAddToSaveStateArray = [];
@@ -13,6 +13,7 @@ export default class Turtle {
     this.instructionString = instructionString;
     this.stepLength = stepLength;
     this.rotationStepSize = rotationStepSize;
+    this.scale = scale;
   }
   saveState() {
     this.positionSaveStateArray.push(this.currentPosition.clone());
@@ -28,8 +29,7 @@ export default class Turtle {
   generateMeshObject() {
     console.time("Geometry creation");
     const leafCenterPositions = [];
-    const boxScale = 0.2;
-    const geometry = new BoxGeometry(boxScale, boxScale, boxScale);
+    const geometry = new BoxGeometry(this.scale, this.scale, this.scale);
     let meshToAddTo = null;
     const generatedMesh = new Mesh();
     for (let i = 0; i < this.instructionString.length; i++) {
