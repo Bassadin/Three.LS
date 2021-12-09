@@ -1,7 +1,7 @@
 import { BoxGeometry, Color, DoubleSide, Mesh, Quaternion, ShaderMaterial, Vector3 } from 'three';
 import * as FragmentData from './shaders/testShader/fragment';
 import * as VertexData from './shaders/testShader/vertex';
-
+import Utils from './Utils';
 export default class Turtle {
     //
     private instructionString: string;
@@ -101,6 +101,7 @@ export default class Turtle {
                     );
 
                     const boxMesh = new Mesh(geometry, material);
+
                     // boxMesh.lookAt(currentPositionAfterMove);
                     if (meshToAddTo) {
                         // meshToAddTo.lookAt(currentPositionAfterMove);
