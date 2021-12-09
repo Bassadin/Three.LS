@@ -29,7 +29,7 @@ function main() {
   for (let i = 0; i < 3; i++)
     lsys.generate();
   function onSelect() {
-    const turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(30), 1);
+    const turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(30), Utils.RandomNumber(0.8, 1.2));
     const turtleMesh = turtle.generateMeshObject();
     turtleMesh.position.setFromMatrixPosition(reticle.matrix);
     turtleMesh.scale.set(0.05, 0.05, 0.05);
