@@ -22,10 +22,15 @@ export default class Turtle {
     //Color
     private newColors = [0.7, 0.3, 0.1];
 
-    constructor(instructionString: string, stepLength: number, rotationStepSize: number) {
+    private colorOne: number[];
+    private colorTwo: number[];
+
+    constructor(instructionString: string, stepLength: number, rotationStepSize: number, colorOne: number[], colorTwo: number[]) {
         this.instructionString = instructionString;
         this.stepLength = stepLength;
         this.rotationStepSize = rotationStepSize;
+        this.colorOne = colorOne;
+        this.colorTwo = colorTwo;
     }
 
     private saveState(): void {
@@ -62,16 +67,18 @@ export default class Turtle {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove = this.currentPosition.clone();
 
+                    console.log(this.colorOne, this.colorTwo)
+
                     this.newColors = [
-                        0.45 +
-                            i * ((0.4 - 0.45) / this.instructionString.length) +
-                            (Math.random() * (0.1 - 0.05) + 0.05),
-                        0.29 +
-                            i * ((0.72 - 0.29) / this.instructionString.length) +
-                            (Math.random() * (0.2 - 0.05) + 0.05),
-                        0.13 +
-                            i * ((0.2 - 0.13) / this.instructionString.length) +
-                            (Math.random() * (0.1 - 0.05) + 0.05),
+                        this.colorOne[0] +
+                        i * ((this.colorTwo[0] - this.colorOne[0]) / this.instructionString.length) +
+                        (Math.random() * (0.1 - 0.05) + 0.05),
+                        this.colorOne[1] +
+                        i * ((this.colorTwo[1] - this.colorOne[1]) / this.instructionString.length) +
+                        (Math.random() * (0.2 - 0.05) + 0.05),
+                        this.colorOne[2] +
+                        i * ((this.colorTwo[2] - this.colorOne[2]) / this.instructionString.length) +
+                        (Math.random() * (0.1 - 0.05) + 0.05),
                     ];
 
                     const material: ShaderMaterial = new ShaderMaterial({

@@ -163,6 +163,10 @@ export class LindenmayerFormular {
         const axioms: string[] = [];
         const rules: string[] = [];
 
+        const colorOne: number[] = [];
+        const colorTwo: number[] = []
+
+
         document.querySelectorAll('.axioms').forEach((element) => {
             axioms.push((<HTMLInputElement>element).value.toUpperCase());
         });
@@ -177,6 +181,14 @@ export class LindenmayerFormular {
         const degrees: number = parseInt((<HTMLInputElement>document.querySelector('#degrees')).value);
         const steplength: number = parseInt((<HTMLInputElement>document.querySelector('#steplength')).value) / 10;
 
+        colorOne.push(parseInt((<HTMLInputElement>document.querySelector('#color-one-r')).value));
+        colorOne.push(parseInt((<HTMLInputElement>document.querySelector('#color-one-g')).value));
+        colorOne.push(parseInt((<HTMLInputElement>document.querySelector('#color-one-b')).value));
+
+        colorTwo.push(parseInt((<HTMLInputElement>document.querySelector('#color-two-r')).value));
+        colorTwo.push(parseInt((<HTMLInputElement>document.querySelector('#color-two-g')).value));
+        colorTwo.push(parseInt((<HTMLInputElement>document.querySelector('#color-two-b')).value));
+
         const ruleset: Rule[] = [];
 
         for (let i = 0; i < axioms.length; i++) {
@@ -190,7 +202,7 @@ export class LindenmayerFormular {
 
         console.timeEnd('L System generation');
 
-        const turtle: Turtle = new Turtle(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees));
+        const turtle: Turtle = new Turtle(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees), colorOne, colorTwo);
 
         return turtle;
     }

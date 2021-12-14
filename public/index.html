@@ -37,7 +37,6 @@
             </div>
 
             <div class="interface__box">
-
                 <div class="interface__input-wrapper">
 
                     <h3 class="interface__sub-heading mb-0">Regeln</h3>
@@ -45,7 +44,6 @@
                         <button type="button" class="interface__btn" id="btnAddRule">+</button>
                         <button type="button" class="interface__btn" id="btnRemoveRule" disabled>-</button>
                     </div>
-
                 </div>
 
                 <div class="interface__input-wrapper" id="rulesWrapper">
@@ -66,8 +64,6 @@
             </div>
 
             <div class="interface__box">
-
-
                 <h3 class="interface__sub-heading">Einstellungen</h3>
                 <div class="interface__input-wrapper">
                     <label>Anzahl der Iterationen</label>
@@ -84,7 +80,28 @@
                     <input value="2" class="interface__input-field" type="number" id="steplength" min="0"
                         placeholder="2" required />
                 </div>
+            </div>
 
+            <div class="interface__box">
+                <h3 class="interface__sub-heading">Farbeinstellung</h3>
+                <div class="interface__input-wrapper color">
+                    <label>Von</label>
+                    <input value="0" class="interface__input-field" type="number" id="color-one-r" min="0" max="1" step="0.1"
+                        placeholder="0" required />
+                    <input value="0" class="interface__input-field" type="number" id="color-one-g" min="0" max="1" step="0.1"
+                        placeholder="0" required />
+                    <input value="0" class="interface__input-field" type="number" id="color-one-b" min="0" max="1" step="0.1"
+                        placeholder="0" required />
+                </div>
+                <div class="interface__input-wrapper color">
+                    <label>Zu</label>
+                    <input value="0" class="interface__input-field" type="number" id="color-two-r" min="0" max="1" step="0.1"
+                        placeholder="0" required />
+                    <input value="0" class="interface__input-field" type="number" id="color-two-g" min="0" max="1" step="0.1"
+                        placeholder="0" required />
+                    <input value="0" class="interface__input-field" type="number" id="color-two-b" min="0" max="1" step="0.1"
+                        placeholder="0" required />
+                </div>
             </div>
 
             <div class="interface__box">

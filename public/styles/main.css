@@ -30,9 +30,6 @@ hr {
     display: none;
 }
 
-.interface__wrapper.shrink {
-
-}
 
 /* @media screen and (max-width: 512px) {
     .interface__wrapper {
@@ -72,6 +69,10 @@ hr {
     justify-content: space-between;
     flex-wrap: wrap;
     margin-bottom: 1rem;
+}
+
+.interface__input-wrapper.color input {
+    width: 50px;
 }
 
 .interface__input-wrapper--right {
