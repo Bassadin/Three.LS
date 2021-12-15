@@ -1,0 +1,10 @@
+// [snowpack] add styles to the page (skip if no document exists)
+if (typeof document !== 'undefined') {
+  const code = "@import url(\"https://fonts.googleapis.com/css2?family=Hind:wght@300;700&display=swap\");\nbody {\n  background-color: pink;\n  font-family: \"Hind\", sans-serif;\n}\n\nh2 {\n  margin: 5px;\n}\n\n.burgermenu {\n  position: relative;\n  padding: 10px;\n  height: 30px;\n  width: 30px;\n  top: 15px;\n  left: 20px;\n  background: none;\n  transform: translate(-20px);\n  transition: all ease 0.3s;\n}\n.burgermenu::before, .burgermenu::after {\n  content: \"\";\n  position: absolute;\n  background: #000;\n  height: 3px;\n}\n.burgermenu::before {\n  left: 0px;\n  width: 25px;\n  top: 7px;\n  transform: rotate(-45deg);\n  transition: all ease 0.3s;\n}\n.burgermenu::after {\n  left: 0px;\n  width: 25px;\n  top: 7px;\n  transform: rotate(45deg);\n  transition: all ease 0.3s;\n}\n.burgermenu:hover:after, .burgermenu:before:hover {\n  background: red;\n}\n\n.interface__wrapper.shrink .burgermenu::before {\n  left: 0px;\n  width: 25px;\n  top: 7px;\n  transform: rotate(180deg);\n  transition: all ease 0.3s;\n}\n.interface__wrapper.shrink .burgermenu::after {\n  left: 0px;\n  width: 25px;\n  top: 7px;\n  transform: rotate(-90deg);\n  transition: all ease 0.3s;\n}\n\n.interface__header {\n  display: flex;\n  justify-content: space-between;\n  background: burlywood;\n  padding: 5px 30px;\n  border-radius: 10px;\n}\n\n.interface__box {\n  background: #f1f1f1;\n  border-radius: 10px;\n  padding: 10px;\n  margin-bottom: 10px;\n}\n\n.interface__box.interface__box--ar {\n  background: red;\n  display: flex;\n  justify-content: center;\n}\n.interface__box.interface__box--ar a {\n  color: white;\n  font-weight: 700;\n  text-align: center;\n  text-decoration: none;\n}\n.interface__box.interface__box--ar a:hover {\n  opacity: 0.7;\n}\n\nbutton:hover {\n  opacity: 0.7;\n}";
+
+  const styleEl = document.createElement("style");
+  const codeEl = document.createTextNode(code);
+  styleEl.type = 'text/css';
+  styleEl.appendChild(codeEl);
+  document.head.appendChild(styleEl);
+}

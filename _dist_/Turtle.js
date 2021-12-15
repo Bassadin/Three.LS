@@ -16,8 +16,6 @@ export default class Turtle {
     this.instructionString = instructionString;
     this.stepLength = stepLength;
     this.rotationStepSize = rotationStepSize;
-    this.boxScale = boxScale;
-    this.useRandomization = useRandomization;
   }
   saveState() {
     this.positionSaveStateArray.push(this.currentPosition.clone());

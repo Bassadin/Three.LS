@@ -13,12 +13,14 @@ export class LindenmayerFormular {
     this.rulesWrapper = document.querySelector("#rulesWrapper");
     this.objDownloadButton = document.querySelector("#btnDownloadOBJ");
     this.fileUpload = document.querySelector("#jsonUpload");
+    this.makeSmallButton = document.querySelector("#makesmall");
     this.countAllRules = 1;
     this.addListenerToAddButton();
     this.addListenerToRemoveButton();
     this.addListenerToDownloadButton();
     this.addListenerToUploadButton();
     this.addListenerToOBJDownloadButton();
+    this.makeSmall();
   }
   static getInstance() {
     if (LindenmayerFormular.instance == void 0)
@@ -115,6 +117,8 @@ export class LindenmayerFormular {
   generateLSystemImage() {
     const axioms = [];
     const rules = [];
+    const colorOne = [];
+    const colorTwo = [];
     document.querySelectorAll(".axioms").forEach((element) => {
       axioms.push(element.value.toUpperCase());
     });
@@ -125,6 +129,12 @@ export class LindenmayerFormular {
     const iterations = parseInt(document.querySelector("#countIterations").value);
     const degrees = parseInt(document.querySelector("#degrees").value);
     const steplength = parseInt(document.querySelector("#steplength").value) / 10;
+    colorOne.push(parseInt(document.querySelector("#color-one-r").value));
+    colorOne.push(parseInt(document.querySelector("#color-one-g").value));
+    colorOne.push(parseInt(document.querySelector("#color-one-b").value));
+    colorTwo.push(parseInt(document.querySelector("#color-two-r").value));
+    colorTwo.push(parseInt(document.querySelector("#color-two-g").value));
+    colorTwo.push(parseInt(document.querySelector("#color-two-b").value));
     const ruleset = [];
     for (let i = 0; i < axioms.length; i++) {
       ruleset.push(new Rule(axioms[i], rules[i]));
@@ -146,6 +156,12 @@ export class LindenmayerFormular {
       const blob = new Blob([result], {type: "text/plain"});
       link.href = window.URL.createObjectURL(blob);
       link.click();
+    });
+  }
+  makeSmall() {
+    this.makeSmallButton.addEventListener("click", () => {
+      console.log("makesmall");
+      document.querySelector(".interface__wrapper").classList.toggle("shrink");
     });
   }
 }

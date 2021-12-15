@@ -4,6 +4,7 @@ import {TrackballControls} from "../web_modules/three/examples/jsm/controls/Trac
 import {LindenmayerFormular} from "./LindenmayerFormular.js";
 import PerformanceStats from "./PerformanceStats.js";
 import Utils from "./Utils.js";
+import "./styles/styles.css.proxy.js";
 export let scene;
 let camera;
 let renderer;
