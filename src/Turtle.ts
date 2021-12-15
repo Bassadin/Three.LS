@@ -73,7 +73,7 @@ export default class Turtle {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove = this.currentPosition.clone();
 
-                    console.log(this.colorOne, this.colorTwo)
+                    // console.log(this.colorOne, this.colorTwo)
 
                     this.newColors = [
                         0.45 +
