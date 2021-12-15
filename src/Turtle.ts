@@ -1,7 +1,7 @@
 import { BoxGeometry, Color, DoubleSide, Mesh, Quaternion, ShaderMaterial, Vector3 } from 'three';
 import * as FragmentData from './shaders/testShader/fragment';
 import * as VertexData from './shaders/testShader/vertex';
-
+import Utils from './Utils';
 export default class Turtle {
     //
     private instructionString: string;
@@ -22,15 +22,21 @@ export default class Turtle {
     //Color
     private newColors = [0.7, 0.3, 0.1];
 
-    private colorOne: number[];
-    private colorTwo: number[];
+    private boxScale: number;
 
-    constructor(instructionString: string, stepLength: number, rotationStepSize: number, colorOne: number[], colorTwo: number[]) {
+    private useRandomization = false;
+    private randomizationDeviation = 0.25;
+
+    constructor(
+        instructionString: string,
+        stepLength: number,
+        rotationStepSize: number,
+        boxScale = 0.2,
+        useRandomization = false,
+    ) {
         this.instructionString = instructionString;
         this.stepLength = stepLength;
         this.rotationStepSize = rotationStepSize;
-        this.colorOne = colorOne;
-        this.colorTwo = colorTwo;
     }
 
     private saveState(): void {
@@ -55,8 +61,8 @@ export default class Turtle {
         const leafCenterPositions: Vector3[] = [];
 
         // const material: Material = new MeshBasicMaterial();
-        const boxScale = 0.2;
-        const geometry: BoxGeometry = new BoxGeometry(boxScale, boxScale, boxScale);
+        // const boxScale = 0.2;
+        const geometry: BoxGeometry = new BoxGeometry(this.boxScale, this.boxScale, this.boxScale);
 
         let meshToAddTo: Mesh = null;
 
@@ -70,15 +76,15 @@ export default class Turtle {
                     console.log(this.colorOne, this.colorTwo)
 
                     this.newColors = [
-                        this.colorOne[0] +
-                        i * ((this.colorTwo[0] - this.colorOne[0]) / this.instructionString.length) +
-                        (Math.random() * (0.1 - 0.05) + 0.05),
-                        this.colorOne[1] +
-                        i * ((this.colorTwo[1] - this.colorOne[1]) / this.instructionString.length) +
-                        (Math.random() * (0.2 - 0.05) + 0.05),
-                        this.colorOne[2] +
-                        i * ((this.colorTwo[2] - this.colorOne[2]) / this.instructionString.length) +
-                        (Math.random() * (0.1 - 0.05) + 0.05),
+                        0.45 +
+                            i * ((0.4 - 0.45) / this.instructionString.length) +
+                            (Math.random() * (0.1 - 0.05) + 0.05),
+                        0.29 +
+                            i * ((0.72 - 0.29) / this.instructionString.length) +
+                            (Math.random() * (0.2 - 0.05) + 0.05),
+                        0.13 +
+                            i * ((0.2 - 0.13) / this.instructionString.length) +
+                            (Math.random() * (0.1 - 0.05) + 0.05),
                     ];
 
                     const material: ShaderMaterial = new ShaderMaterial({
@@ -105,6 +111,7 @@ export default class Turtle {
                     );
 
                     const boxMesh = new Mesh(geometry, material);
+
                     // boxMesh.lookAt(currentPositionAfterMove);
                     if (meshToAddTo) {
                         // meshToAddTo.lookAt(currentPositionAfterMove);
@@ -129,34 +136,22 @@ export default class Turtle {
                     meshToAddTo = this.meshToAddToSaveStateArray.pop();
                     break;
                 case '+':
-                    this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), this.rotationStepSize),
-                    );
+                    this.rotateByAxisVectorWithRotationStepSize(new Vector3(0, 0, 1));
                     break;
                 case '-':
-                    this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(new Vector3(0, 0, -1), this.rotationStepSize),
-                    );
+                    this.rotateByAxisVectorWithRotationStepSize(new Vector3(0, 0, -1));
                     break;
                 case '&':
-                    this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), this.rotationStepSize),
-                    );
+                    this.rotateByAxisVectorWithRotationStepSize(new Vector3(0, 1, 0));
                     break;
                 case '∧': //Achtung, ∧ (mathematisches UND) und nicht ^ :D
-                    this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(new Vector3(0, -1, 0), this.rotationStepSize),
-                    );
+                    this.rotateByAxisVectorWithRotationStepSize(new Vector3(0, -1, 0));
                     break;
                 case '\\':
-                    this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), this.rotationStepSize),
-                    );
+                    this.rotateByAxisVectorWithRotationStepSize(new Vector3(1, 0, 0));
                     break;
                 case '/':
-                    this.currentRotation.multiply(
-                        new Quaternion().setFromAxisAngle(new Vector3(-1, 0, 0), this.rotationStepSize),
-                    );
+                    this.rotateByAxisVectorWithRotationStepSize(new Vector3(-1, 0, 0));
                     break;
                 case '|':
                     this.currentRotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), Math.PI));
@@ -179,10 +174,24 @@ export default class Turtle {
     }
 
     private move(): void {
+        const randomizationFactor = this.useRandomization
+            ? Utils.RandomRange(1 - this.randomizationDeviation, 1 + this.randomizationDeviation)
+            : 1;
+
         const absoluteMovement: Vector3 = new Vector3(0, 1, 0)
             .applyQuaternion(this.currentRotation.clone())
-            .multiplyScalar(this.stepLength);
+            .multiplyScalar(this.stepLength * randomizationFactor);
 
         this.currentPosition.add(absoluteMovement);
+    }
+
+    private rotateByAxisVectorWithRotationStepSize(rotationAxisVector: Vector3): void {
+        const randomizationFactor = this.useRandomization
+            ? Utils.RandomRange(1 - this.randomizationDeviation, 1 + this.randomizationDeviation)
+            : 1;
+
+        this.currentRotation.multiply(
+            new Quaternion().setFromAxisAngle(rotationAxisVector, this.rotationStepSize * randomizationFactor),
+        );
     }
 }

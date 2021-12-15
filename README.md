@@ -26,7 +26,9 @@ We used Three.js to create trees and other plant-like structures using Lindenmay
 
 ## AR version
 
-Web XR supported AR version coming soon! (Hopefully.)
+Web XR supported AR version: https://bassadin.github.io/Three.LS/ar.html
+
+Currently only supported on iOS via: https://apps.apple.com/de/app/webxr-viewer/id1295998056
 
 ## GitHub Pages Version
 

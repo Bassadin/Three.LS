@@ -1,9 +1,9 @@
 import Turtle from './Turtle';
 import { Rule } from './Rule';
 import { LSystem } from './LSystem';
-import { Utils } from './Utils';
+import Utils from './Utils';
 import { OBJExporter } from 'three/examples/jsm/exporters/OBJExporter.js';
-import { scene, generateAndRepaintLindenmayerMesh } from './index';
+import { scene, generateAndRepaintLindenmayerMesh } from './indexNormal';
 
 export class LindenmayerFormular {
     private static instance: LindenmayerFormular;
@@ -202,7 +202,7 @@ export class LindenmayerFormular {
 
         console.timeEnd('L System generation');
 
-        const turtle: Turtle = new Turtle(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees), colorOne, colorTwo);
+        const turtle: Turtle = new Turtle(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees));
 
         return turtle;
     }
