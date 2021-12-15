@@ -14,6 +14,7 @@ export class LindenmayerFormular {
     private btnDownload: HTMLInputElement;
     private objDownloadButton: HTMLInputElement;
     private fileUpload: HTMLInputElement;
+    private makeSmallButton: HTMLInputElement;
 
     private rulesWrapper: HTMLDivElement;
 
@@ -27,6 +28,7 @@ export class LindenmayerFormular {
         this.rulesWrapper = document.querySelector('#rulesWrapper');
         this.objDownloadButton = document.querySelector('#btnDownloadOBJ');
         this.fileUpload = document.querySelector('#jsonUpload');
+        this.makeSmallButton = document.querySelector('#makesmall');
 
         this.countAllRules = 1;
 
@@ -35,6 +37,7 @@ export class LindenmayerFormular {
         this.addListenerToDownloadButton();
         this.addListenerToUploadButton();
         this.addListenerToOBJDownloadButton();
+        this.makeSmall();
     }
 
     public static getInstance(): LindenmayerFormular {
@@ -160,6 +163,10 @@ export class LindenmayerFormular {
         const axioms: string[] = [];
         const rules: string[] = [];
 
+        const colorOne: number[] = [];
+        const colorTwo: number[] = []
+
+
         document.querySelectorAll('.axioms').forEach((element) => {
             axioms.push((<HTMLInputElement>element).value.toUpperCase());
         });
@@ -173,6 +180,14 @@ export class LindenmayerFormular {
         const iterations: number = parseInt((<HTMLInputElement>document.querySelector('#countIterations')).value);
         const degrees: number = parseInt((<HTMLInputElement>document.querySelector('#degrees')).value);
         const steplength: number = parseInt((<HTMLInputElement>document.querySelector('#steplength')).value) / 10;
+
+        colorOne.push(parseInt((<HTMLInputElement>document.querySelector('#color-one-r')).value));
+        colorOne.push(parseInt((<HTMLInputElement>document.querySelector('#color-one-g')).value));
+        colorOne.push(parseInt((<HTMLInputElement>document.querySelector('#color-one-b')).value));
+
+        colorTwo.push(parseInt((<HTMLInputElement>document.querySelector('#color-two-r')).value));
+        colorTwo.push(parseInt((<HTMLInputElement>document.querySelector('#color-two-g')).value));
+        colorTwo.push(parseInt((<HTMLInputElement>document.querySelector('#color-two-b')).value));
 
         const ruleset: Rule[] = [];
 
@@ -205,4 +220,13 @@ export class LindenmayerFormular {
             link.click();
         });
     }
+
+    private makeSmall(): void {
+        this.makeSmallButton.addEventListener('click', () => {
+            console.log("makesmall")
+
+            document.querySelector('.interface__wrapper').classList.toggle("shrink");
+        });
+    }
+
 }

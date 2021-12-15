@@ -37,8 +37,6 @@ export default class Turtle {
         this.instructionString = instructionString;
         this.stepLength = stepLength;
         this.rotationStepSize = rotationStepSize;
-        this.boxScale = boxScale;
-        this.useRandomization = useRandomization;
     }
 
     private saveState(): void {
@@ -74,6 +72,8 @@ export default class Turtle {
             switch (this.instructionString.charAt(i)) {
                 case 'F': //Move and draw line in current direction
                     const currentPositionBeforeMove = this.currentPosition.clone();
+
+                    console.log(this.colorOne, this.colorTwo)
 
                     this.newColors = [
                         0.45 +

@@ -6,6 +6,8 @@ import { LindenmayerFormular } from './LindenmayerFormular';
 import PerformanceStats from './PerformanceStats';
 import Utils from './Utils';
 
+import './styles/styles.scss';
+
 export let scene: Scene;
 let camera: THREE.PerspectiveCamera;
 let renderer: THREE.WebGLRenderer;
