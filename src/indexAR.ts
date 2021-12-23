@@ -1,14 +1,17 @@
 import * as THREE from 'three';
-import { Mesh, Scene, XRFrame, XRHitTestSource } from 'three';
+import { Clock, Mesh, Scene, XRFrame, XRHitTestSource } from 'three';
 import Turtle from './Turtle';
 import PerformanceStats from './PerformanceStats';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
 import Utils from './Utils';
 import { LSystem } from './LSystem';
 import { Rule } from './Rule';
+import LindenmayerTree from './LindenmayerTree';
 
 let hitTestSource: XRHitTestSource = null;
 let hitTestSourceRequested = false;
+
+const sceneClock: Clock = new Clock();
 
 export const scene: Scene = new THREE.Scene();
 const camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
@@ -18,6 +21,8 @@ const camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
     20,
 );
 const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+const treeObjects: LindenmayerTree[] = [];
 
 // Add AR target reticle
 const reticle: Mesh = new THREE.Mesh(
@@ -60,14 +65,18 @@ function main() {
 
         const randomizedScale = Utils.RandomRange(0.02, 0.035);
 
-        turtleMesh.scale.set(randomizedScale, randomizedScale, randomizedScale);
+        // turtleMesh.scale.set(randomizedScale, randomizedScale, randomizedScale);
         turtleMesh.rotateY(Utils.RandomRange(0.0, Math.PI * 2));
-        scene.add(turtleMesh);
+        const newTreeObject = new LindenmayerTree(turtleMesh, randomizedScale);
+        treeObjects.push(newTreeObject);
+        scene.add(newTreeObject);
     }
 
     const controller = renderer.xr.getController(0);
     controller.addEventListener('select', onSelect);
     scene.add(controller);
+
+    sceneClock.start();
 
     window.addEventListener('resize', onWindowResize, false);
 
@@ -75,6 +84,12 @@ function main() {
 }
 
 function render(timestamp: number, frame: XRFrame) {
+    // Tree Rotation
+    treeObjects.forEach((eachTreeObject) => {
+        eachTreeObject.render();
+    });
+
+    //XR Stuff
     if (frame) {
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
@@ -111,22 +126,6 @@ function render(timestamp: number, frame: XRFrame) {
     renderer.render(scene, camera);
 
     PerformanceStats.instance?.update(); // Only update stats if present
-
-    // branchingIds.forEach((eachId) => {
-    //     const obj: THREE.Mesh = scene.getObjectById(eachId) as THREE.Mesh;
-    //     if (obj) {
-    //         const shaderMaterial: ShaderMaterial = obj.material as ShaderMaterial;
-    //         shaderMaterial.uniforms.time.value += 0.01;
-    //         obj.rotation.copy(
-    //             new Euler(
-    //                 Math.sin(sceneClock.getElapsedTime() * 2) * 0.002 - 0.001,
-    //                 Math.sin(sceneClock.getElapsedTime() * 1) * 0.02 - 0.01,
-    //                 Math.cos(sceneClock.getElapsedTime() * 1.3) * 0.003 - 0.0015,
-    //                 'XYZ',
-    //             ),
-    //         );
-    //     }
-    // });
 }
 
 function onWindowResize() {
