@@ -146,6 +146,14 @@ export class LindenmayerFormular {
                 (<HTMLInputElement>document.getElementById('steplength')).value = obj.stepLength;
                 (<HTMLInputElement>document.getElementById('sentence')).value = obj.baseAxiom;
 
+                (<HTMLInputElement>document.getElementById('color-one-r')).value = obj.colorOne[0];
+                (<HTMLInputElement>document.getElementById('color-one-g')).value = obj.colorOne[1];
+                (<HTMLInputElement>document.getElementById('color-one-b')).value = obj.colorOne[2];
+
+                (<HTMLInputElement>document.getElementById('color-two-r')).value = obj.colorTwo[0];
+                (<HTMLInputElement>document.getElementById('color-two-g')).value = obj.colorTwo[1];
+                (<HTMLInputElement>document.getElementById('color-two-b')).value = obj.colorTwo[2];
+
                 generateAndRepaintLindenmayerMesh();
             };
             //Reduzierung von rule Feldern
@@ -164,7 +172,7 @@ export class LindenmayerFormular {
         const rules: string[] = [];
 
         const colorOne: number[] = [];
-        const colorTwo: number[] = []
+        const colorTwo: number[] = [];
 
 
         document.querySelectorAll('.axioms').forEach((element) => {
@@ -181,13 +189,13 @@ export class LindenmayerFormular {
         const degrees: number = parseInt((<HTMLInputElement>document.querySelector('#degrees')).value);
         const steplength: number = parseInt((<HTMLInputElement>document.querySelector('#steplength')).value) / 10;
 
-        colorOne.push(parseInt((<HTMLInputElement>document.querySelector('#color-one-r')).value));
-        colorOne.push(parseInt((<HTMLInputElement>document.querySelector('#color-one-g')).value));
-        colorOne.push(parseInt((<HTMLInputElement>document.querySelector('#color-one-b')).value));
+        colorOne.push(parseFloat((<HTMLInputElement>document.querySelector('#color-one-r')).value));
+        colorOne.push(parseFloat((<HTMLInputElement>document.querySelector('#color-one-g')).value));
+        colorOne.push(parseFloat((<HTMLInputElement>document.querySelector('#color-one-b')).value));
 
-        colorTwo.push(parseInt((<HTMLInputElement>document.querySelector('#color-two-r')).value));
-        colorTwo.push(parseInt((<HTMLInputElement>document.querySelector('#color-two-g')).value));
-        colorTwo.push(parseInt((<HTMLInputElement>document.querySelector('#color-two-b')).value));
+        colorTwo.push(parseFloat((<HTMLInputElement>document.querySelector('#color-two-r')).value));
+        colorTwo.push(parseFloat((<HTMLInputElement>document.querySelector('#color-two-g')).value));
+        colorTwo.push(parseFloat((<HTMLInputElement>document.querySelector('#color-two-b')).value));
 
         const ruleset: Rule[] = [];
 
@@ -202,7 +210,7 @@ export class LindenmayerFormular {
 
         console.timeEnd('L System generation');
 
-        const turtle: Turtle = new Turtle(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees));
+        const turtle: Turtle = new Turtle(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees), colorOne, colorTwo);
 
         return turtle;
     }

@@ -51,6 +51,8 @@ function main() {
             lsys.getSentence(),
             1,
             Utils.DegreesToRadians(30),
+            [0.1,0.1,0.1],
+            [0.2,0.2,0.2],
             Utils.RandomRange(0.8, 1.2),
             true,
         );
