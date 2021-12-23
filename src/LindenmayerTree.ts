@@ -1,10 +1,10 @@
-import { Mesh, Object3D, Vector3 } from 'three';
+import { Mesh, Object3D } from 'three';
 import Utils from './Utils';
 
 export default class LindenmayerTree extends Object3D {
     private mesh: Mesh;
     private finalScale: number;
-    private scaleSpeed: Vector3;
+    private scaleSpeed: number;
 
     constructor(treeMesh: Mesh, finalScale: number) {
         super();
@@ -14,13 +14,14 @@ export default class LindenmayerTree extends Object3D {
 
         this.mesh.scale.set(0, 0, 0);
 
-        const uniformScaleSpeed = Utils.RandomRange(0.0001, 0.0004);
-        this.scaleSpeed = new Vector3(uniformScaleSpeed, uniformScaleSpeed, uniformScaleSpeed);
+        this.scaleSpeed = this.finalScale * Utils.RandomRange(0.2, 0.7);
     }
 
-    public render(): void {
+    public render(deltaTime: number): void {
         if (this.mesh.scale.x < this.finalScale) {
-            this.mesh.scale.add(this.scaleSpeed);
+            this.mesh.scale.addScalar(this.scaleSpeed * deltaTime);
+        } else {
+            this.mesh.scale.set(this.finalScale, this.finalScale, this.finalScale);
         }
     }
 }

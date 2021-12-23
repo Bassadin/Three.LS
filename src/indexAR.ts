@@ -63,11 +63,8 @@ function main() {
         // turtleMesh.position.set(0, 0, -0.8).applyMatrix4(controller.matrixWorld);
         turtleMesh.position.setFromMatrixPosition(reticle.matrix);
 
-        const randomizedScale = Utils.RandomRange(0.02, 0.035);
-
-        // turtleMesh.scale.set(randomizedScale, randomizedScale, randomizedScale);
         turtleMesh.rotateY(Utils.RandomRange(0.0, Math.PI * 2));
-        const newTreeObject = new LindenmayerTree(turtleMesh, randomizedScale);
+        const newTreeObject = new LindenmayerTree(turtleMesh, Utils.RandomRange(0.02, 0.035));
         treeObjects.push(newTreeObject);
         scene.add(newTreeObject);
     }
@@ -76,17 +73,16 @@ function main() {
     controller.addEventListener('select', onSelect);
     scene.add(controller);
 
-    sceneClock.start();
-
     window.addEventListener('resize', onWindowResize, false);
 
     renderer.setAnimationLoop(render);
 }
 
 function render(timestamp: number, frame: XRFrame) {
+    const deltaTime: number = sceneClock.getDelta();
     // Tree Rotation
     treeObjects.forEach((eachTreeObject) => {
-        eachTreeObject.render();
+        eachTreeObject.render(deltaTime);
     });
 
     //XR Stuff
