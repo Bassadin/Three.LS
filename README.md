@@ -1,5 +1,7 @@
 # Three.LS
 
+Lindenmayer-System based object generation with WebGL
+
 ![image](https://user-images.githubusercontent.com/1810902/141849317-4e6547c1-4afa-4e9b-bcd8-71d5707f18a2.png)
 
 IT even (kinda) runs on an Apple Watch :)
