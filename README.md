@@ -4,7 +4,7 @@ Lindenmayer-System based object generation with WebGL
 
 ![image](https://user-images.githubusercontent.com/1810902/141849317-4e6547c1-4afa-4e9b-bcd8-71d5707f18a2.png)
 
-IT even (kinda) runs on an Apple Watch :)
+It even (kinda) runs on an Apple Watch :)
 
 ![141848972-b3483d27-ca3e-46b6-af02-9a5c83efec1b](https://user-images.githubusercontent.com/1810902/141849203-d0e1b49c-2bf9-4c97-87d8-3478a84b783b.jpg)
 
