@@ -92,6 +92,8 @@ export class LindenmayerFormular {
             const baseAxiom = (document.getElementById('sentence') as HTMLInputElement).value;
             const ruleString = [];
             const axiomString = [];
+            const colorOne = [];
+            const colorTwo = [];
             //test
             for (let j = 1; j <= this.countAllRules; j++) {
                 const value: string = j.toString();
@@ -104,6 +106,17 @@ export class LindenmayerFormular {
             const turningAngle = (document.getElementById('degrees') as HTMLInputElement).value;
             const stepLength = (document.getElementById('steplength') as HTMLInputElement).value;
 
+
+            colorOne[0] = (document.getElementById('color-one-r') as HTMLInputElement).value;
+            colorOne[1] = (document.getElementById('color-one-g') as HTMLInputElement).value;
+            colorOne[2] = (document.getElementById('color-one-b') as HTMLInputElement).value;
+
+            
+            colorTwo[0] = (document.getElementById('color-two-r') as HTMLInputElement).value;
+            colorTwo[1] = (document.getElementById('color-two-g') as HTMLInputElement).value;
+            colorTwo[2] = (document.getElementById('color-two-b') as HTMLInputElement).value;
+
+
             const newObject = {
                 baseAxiom: baseAxiom,
                 replaceFrom: axiomString,
@@ -111,6 +124,8 @@ export class LindenmayerFormular {
                 iterationsCount: iterationsCount,
                 turningAngle: turningAngle,
                 stepLength: stepLength,
+                colorOne: colorOne,
+                colorTwo: colorTwo
             };
             const json_string = JSON.stringify(newObject, undefined, 2);
             const link = document.createElement('a');
