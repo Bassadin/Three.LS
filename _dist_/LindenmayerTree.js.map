@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["/home/runner/work/Three.LS/Three.LS/src/LindenmayerTree.ts"],
+  "sourcesContent": ["import { Mesh, Object3D } from 'three';\nimport Utils from './Utils';\n\nexport default class LindenmayerTree extends Object3D {\n    private mesh: Mesh;\n    private finalScale: number;\n    private scaleSpeed: number;\n\n    constructor(treeMesh: Mesh, finalScale: number) {\n        super();\n        this.mesh = treeMesh;\n        this.add(treeMesh);\n        this.finalScale = finalScale;\n\n        this.mesh.scale.set(0, 0, 0);\n\n        this.scaleSpeed = this.finalScale * Utils.RandomRange(0.2, 0.7);\n    }\n\n    public render(deltaTime: number): void {\n        if (this.mesh.scale.x < this.finalScale) {\n            this.mesh.scale.addScalar(this.scaleSpeed * deltaTime);\n        } else {\n            this.mesh.scale.set(this.finalScale, this.finalScale, this.finalScale);\n        }\n    }\n}\n"],
+  "mappings": "AAAA;AACA;AAEA,6CAA6C,SAAS;AAAA,EAKlD,YAAY,UAAgB,YAAoB;AAC5C;AACA,SAAK,OAAO;AACZ,SAAK,IAAI;AACT,SAAK,aAAa;AAElB,SAAK,KAAK,MAAM,IAAI,GAAG,GAAG;AAE1B,SAAK,aAAa,KAAK,aAAa,MAAM,YAAY,KAAK;AAAA;AAAA,EAGxD,OAAO,WAAyB;AACnC,QAAI,KAAK,KAAK,MAAM,IAAI,KAAK,YAAY;AACrC,WAAK,KAAK,MAAM,UAAU,KAAK,aAAa;AAAA,WACzC;AACH,WAAK,KAAK,MAAM,IAAI,KAAK,YAAY,KAAK,YAAY,KAAK;AAAA;AAAA;AAAA;",
+  "names": []
+}

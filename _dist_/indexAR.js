@@ -1,15 +1,19 @@
 import * as THREE from "../web_modules/three.js";
+import {Clock} from "../web_modules/three.js";
 import Turtle from "./Turtle.js";
 import PerformanceStats from "./PerformanceStats.js";
 import {ARButton} from "../web_modules/three/examples/jsm/webxr/ARButton.js";
 import Utils from "./Utils.js";
 import {LSystem} from "./LSystem.js";
 import {Rule} from "./Rule.js";
+import LindenmayerTree from "./LindenmayerTree.js";
 let hitTestSource = null;
 let hitTestSourceRequested = false;
+const sceneClock = new Clock();
 export const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 20);
 const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
+const treeObjects = [];
 const reticle = new THREE.Mesh(new THREE.RingGeometry(0.15, 0.2, 32).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial());
 reticle.matrixAutoUpdate = false;
 reticle.visible = false;
@@ -32,10 +36,10 @@ function main() {
     const turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(30), Utils.RandomRange(0.8, 1.2), true);
     const turtleMesh = turtle.generateMeshObject();
     turtleMesh.position.setFromMatrixPosition(reticle.matrix);
-    const randomizedScale = Utils.RandomRange(0.02, 0.035);
-    turtleMesh.scale.set(randomizedScale, randomizedScale, randomizedScale);
     turtleMesh.rotateY(Utils.RandomRange(0, Math.PI * 2));
-    scene.add(turtleMesh);
+    const newTreeObject = new LindenmayerTree(turtleMesh, Utils.RandomRange(0.02, 0.035));
+    treeObjects.push(newTreeObject);
+    scene.add(newTreeObject);
   }
   const controller = renderer.xr.getController(0);
   controller.addEventListener("select", onSelect);
@@ -44,6 +48,10 @@ function main() {
   renderer.setAnimationLoop(render);
 }
 function render(timestamp, frame) {
+  const deltaTime = sceneClock.getDelta();
+  treeObjects.forEach((eachTreeObject) => {
+    eachTreeObject.render(deltaTime);
+  });
   if (frame) {
     const referenceSpace = renderer.xr.getReferenceSpace();
     const session = renderer.xr.getSession();
