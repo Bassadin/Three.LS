@@ -37,6 +37,8 @@ export default class Turtle {
         this.instructionString = instructionString;
         this.stepLength = stepLength;
         this.rotationStepSize = rotationStepSize;
+        this.boxScale = boxScale;
+        this.useRandomization = useRandomization;
     }
 
     private saveState(): void {
