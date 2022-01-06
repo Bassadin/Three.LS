@@ -1,4 +1,5 @@
-import { BoxGeometry, Color, DoubleSide, Mesh, Quaternion, ShaderMaterial, Vector3 } from 'three';
+import { BoxGeometry, BufferGeometry, Color, DoubleSide, Mesh, Quaternion, ShaderMaterial, Vector3 } from 'three';
+import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import * as FragmentData from './shaders/testShader/fragment';
 import * as VertexData from './shaders/testShader/vertex';
 import Utils from './Utils';
@@ -31,7 +32,7 @@ export default class Turtle {
         instructionString: string,
         stepLength: number,
         rotationStepSize: number,
-        boxScale = 0.2,
+        boxScale = 1,
         useRandomization = false,
     ) {
         this.instructionString = instructionString;
@@ -65,7 +66,7 @@ export default class Turtle {
         // const material: Material = new MeshBasicMaterial();
         // const boxScale = 0.2;
         const geometry: BoxGeometry = new BoxGeometry(this.boxScale, this.boxScale, this.boxScale);
-
+        // const mergedGeometry = new THREE.Geometry();
         let meshToAddTo: Mesh = null;
 
         const generatedMesh: Mesh = new Mesh();
@@ -111,17 +112,36 @@ export default class Turtle {
                     leafCenterPositions.push(
                         currentPositionAfterMove.clone().sub(currentPositionBeforeMove.clone()).divideScalar(2),
                     );
-
+                    // const geom = new2
                     const boxMesh = new Mesh(geometry, material);
-
+                    // boxMesh.updateMatrix();
+                    // if(meshToAddTo)
+                    // const
                     // boxMesh.lookAt(currentPositionAfterMove);
                     if (meshToAddTo) {
                         // meshToAddTo.lookAt(currentPositionAfterMove);
                         boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
-                        meshToAddTo.attach(boxMesh);
-                    } else {
-                        generatedMesh.add(boxMesh);
+                        // boxMesh.geometry.merge()
+                        // meshToAddTo.geometry.merge(boxMesh.geometry);
+                        // boxMesh.updateMatrix();
+                        // const n = new BoxGeometry();
+                        // n.merge(meshToAddTo.geometry, boxMesh.matrix);
+                        // meshToAddTo.attach(boxMesh);
+
+                        // boxMesh.updateMatrix();
+                        meshToAddTo.geometry = mergeBufferGeometries([meshToAddTo.geometry, boxMesh.geometry]);
+                        // meshToAddTo.updateMatrix();
+                        // BufferGeometryUtils
+                        // boxMesh.geometry.merge(meshToAddTo.geometry);
+                        // boxMesh.updateMatrix();
+                        // meshToAddTo.geometry.merge(boxMesh.geometry)
+                        // const mTAT: BufferGeometry = meshToAddTo as BufferGeometry;
+
+                        // meshToAddTo
                     }
+                    // else {
+                    // generatedMesh.add(boxMesh);
+                    // }
                     meshToAddTo = boxMesh;
 
                     break;
@@ -130,6 +150,11 @@ export default class Turtle {
                     break;
                 case '[':
                     this.saveState();
+                    // console.log(meshToAddTo);
+                    // if (meshToAddTo) {
+                    // generatedMesh.add(boxMesh);
+                    generatedMesh.add(meshToAddTo);
+                    // }
                     this.meshToAddToSaveStateArray.push(meshToAddTo);
                     this.branchingIds.add(meshToAddTo.id);
                     break;
@@ -171,7 +196,8 @@ export default class Turtle {
         globalCenterPoint = globalCenterPoint.divideScalar(leafCenterPositions.length);
 
         console.timeEnd('Geometry creation');
-
+        // console.log(this.meshToAddToSaveStateArray);
+        // console.log(generatedMesh);
         return generatedMesh;
     }
 
