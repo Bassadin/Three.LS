@@ -1,12 +1,12 @@
 import * as THREE from "../web_modules/three.js";
 import {Clock} from "../web_modules/three.js";
 import Turtle from "./Turtle.js";
-import PerformanceStats from "./PerformanceStats.js";
 import {ARButton} from "../web_modules/three/examples/jsm/webxr/ARButton.js";
 import Utils from "./Utils.js";
 import {LSystem} from "./LSystem.js";
 import {Rule} from "./Rule.js";
 import LindenmayerTree from "./LindenmayerTree.js";
+import "./styles/ar.css.proxy.js";
 let hitTestSource = null;
 let hitTestSourceRequested = false;
 const sceneClock = new Clock();
@@ -79,7 +79,6 @@ function render(timestamp, frame) {
     }
   }
   renderer.render(scene, camera);
-  PerformanceStats.instance?.update();
 }
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
