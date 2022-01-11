@@ -2,8 +2,7 @@
 
 Lindenmayer-System based object generation with WebGL
 
-![image](![FireShot Capture 006 - Three LS - bassadin github io](https://user-images.githubusercontent.com/56677688/148928253-1ef62fe2-5a3f-4abf-90ac-3e2714b591d4.png)
-)
+![image](![FireShot Capture 006 - Three LS - bassadin github io](https://user-images.githubusercontent.com/56677688/148928253-1ef62fe2-5a3f-4abf-90ac-3e2714b591d4.png))
 
 It even (kinda) runs on an Apple Watch :)
 
