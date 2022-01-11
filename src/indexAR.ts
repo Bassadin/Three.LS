@@ -8,6 +8,8 @@ import { LSystem } from './LSystem';
 import { Rule } from './Rule';
 import LindenmayerTree from './LindenmayerTree';
 
+import './styles/ar.scss';
+
 let hitTestSource: XRHitTestSource = null;
 let hitTestSourceRequested = false;
 
