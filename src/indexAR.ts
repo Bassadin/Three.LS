@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { Clock, Mesh, Scene, XRFrame, XRHitTestSource } from 'three';
 import Turtle from './Turtle';
-import PerformanceStats from './PerformanceStats';
+// import PerformanceStats from './PerformanceStats';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
 import Utils from './Utils';
 import { LSystem } from './LSystem';
@@ -121,7 +121,7 @@ function render(timestamp: number, frame: XRFrame) {
 
     renderer.render(scene, camera);
 
-    PerformanceStats.instance?.update(); // Only update stats if present
+    // PerformanceStats.instance?.update(); // Only update stats if present
 }
 
 function onWindowResize() {
