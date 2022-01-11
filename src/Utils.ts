@@ -39,5 +39,4 @@ export default class Utils {
         const mesh = new Mesh(bufferGeometry, material);
         return mesh;
     }
-
 }

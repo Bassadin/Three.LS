@@ -1,8 +1,10 @@
 # Three.LS
 
-![image](https://user-images.githubusercontent.com/1810902/141849317-4e6547c1-4afa-4e9b-bcd8-71d5707f18a2.png)
+Lindenmayer-System based object generation with WebGL
 
-IT even (kinda) runs on an Apple Watch :)
+![image](https://user-images.githubusercontent.com/56677688/148928514-ee1c5a2e-b6f3-4d17-ba2e-39acd0e312ab.png)
+
+It even (kinda) runs on an Apple Watch :)
 
 ![141848972-b3483d27-ca3e-46b6-af02-9a5c83efec1b](https://user-images.githubusercontent.com/1810902/141849203-d0e1b49c-2bf9-4c97-87d8-3478a84b783b.jpg)
 
@@ -27,6 +29,9 @@ We used Three.js to create trees and other plant-like structures using Lindenmay
 ## AR version
 
 Web XR supported AR version: https://bassadin.github.io/Three.LS/ar.html
+
+![image](https://user-images.githubusercontent.com/1810902/146235247-077c2a68-217c-46f4-8360-207a4e69db09.png)
+
 
 Currently only supported on iOS via: https://apps.apple.com/de/app/webxr-viewer/id1295998056
 
