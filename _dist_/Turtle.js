@@ -1,6 +1,4 @@
-import {BoxGeometry, Color, DoubleSide, Mesh, Quaternion, ShaderMaterial, Vector3} from "../web_modules/three.js";
-import * as FragmentData from "./shaders/testShader/fragment.js";
-import * as VertexData from "./shaders/testShader/vertex.js";
+import {BoxGeometry, Color, Mesh, MeshLambertMaterial, Quaternion, Vector3} from "../web_modules/three.js";
 import Utils from "./Utils.js";
 export default class Turtle {
   constructor(instructionString, stepLength, rotationStepSize, boxScale = 0.2, useRandomization = false) {
@@ -9,7 +7,6 @@ export default class Turtle {
     this.meshToAddToSaveStateArray = [];
     this.currentPosition = new Vector3(0, -5, 0);
     this.positionSaveStateArray = [];
-    this.newColors = [0.7, 0.3, 0.1];
     this.useRandomization = false;
     this.randomizationDeviation = 0.25;
     this.branchingIds = new Set();
@@ -36,31 +33,21 @@ export default class Turtle {
     const geometry = new BoxGeometry(this.boxScale, this.boxScale, this.boxScale);
     let meshToAddTo = null;
     const generatedMesh = new Mesh();
+    generatedMesh.castShadow = true;
+    generatedMesh.receiveShadow = true;
     for (let i = 0; i < this.instructionString.length; i++) {
       switch (this.instructionString.charAt(i)) {
         case "F":
           const currentPositionBeforeMove = this.currentPosition.clone();
-          this.newColors = [
-            0.45 + i * ((0.4 - 0.45) / this.instructionString.length) + (Math.random() * (0.1 - 0.05) + 0.05),
-            0.29 + i * ((0.72 - 0.29) / this.instructionString.length) + (Math.random() * (0.2 - 0.05) + 0.05),
-            0.13 + i * ((0.2 - 0.13) / this.instructionString.length) + (Math.random() * (0.1 - 0.05) + 0.05)
-          ];
-          const material = new ShaderMaterial({
-            uniforms: {
-              thickness: {value: 1},
-              color: {value: new Color(...this.newColors)},
-              time: {value: 0}
-            },
-            vertexShader: VertexData.data,
-            fragmentShader: FragmentData.data,
-            side: DoubleSide,
-            alphaToCoverage: true
-          });
+          const leafColor = new Color(0.45 + i * ((0.4 - 0.45) / this.instructionString.length) + (Math.random() * (0.1 - 0.05) + 0.05), 0.29 + i * ((0.72 - 0.29) / this.instructionString.length) + (Math.random() * (0.2 - 0.05) + 0.05), 0.13 + i * ((0.2 - 0.13) / this.instructionString.length) + (Math.random() * (0.1 - 0.05) + 0.05));
+          const material = new MeshLambertMaterial({color: leafColor});
           this.move();
           const currentPositionAfterMove = this.currentPosition.clone();
           const centerPositionBetweenMovePoints = currentPositionAfterMove.clone().lerp(currentPositionBeforeMove.clone(), 2);
           leafCenterPositions.push(currentPositionAfterMove.clone().sub(currentPositionBeforeMove.clone()).divideScalar(2));
           const boxMesh = new Mesh(geometry, material);
+          boxMesh.castShadow = true;
+          boxMesh.receiveShadow = true;
           if (meshToAddTo) {
             boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
             meshToAddTo.attach(boxMesh);

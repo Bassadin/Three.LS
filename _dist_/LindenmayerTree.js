@@ -4,6 +4,8 @@ export default class LindenmayerTree extends Object3D {
   constructor(treeMesh, finalScale) {
     super();
     this.mesh = treeMesh;
+    this.mesh.castShadow = true;
+    this.mesh.receiveShadow = true;
     this.add(treeMesh);
     this.finalScale = finalScale;
     this.mesh.scale.set(0, 0, 0);
