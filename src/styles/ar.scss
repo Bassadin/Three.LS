@@ -5,3 +5,54 @@ body {
 button {
     z-index:9999;
 }
+
+#overlay {
+    display: none;
+}
+
+#tutorial {
+    width: 80%;
+    background: #f1f1f1;
+    border-radius: 10px; 
+    padding: 10px;
+    margin: 10px;
+}
+
+/* Show the DOM Overlay element while active (:xr-overlay pseudoclass) */
+body:xr-overlay {
+   
+    #overlay {
+        display: initial;
+        width: 80%;
+        background: #f1f1f1;
+        border-radius: 10px; 
+        padding: 10px;
+        margin: 10px;
+
+        h1 {
+            margin-top:0;
+            padding-top: 0;
+        }
+
+        .interface__buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .interface__ar-btn {
+
+            &.active {
+                background: red;
+            }
+
+        }
+
+        .interface__preset {
+            margin: 10px 0 0;
+        }
+    }
+    #tutorial {
+        display: none;
+    }
+
+}
