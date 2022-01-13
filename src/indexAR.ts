@@ -7,8 +7,15 @@ import Utils from './Utils';
 import { LSystem } from './LSystem';
 import { Rule } from './Rule';
 import LindenmayerTree from './LindenmayerTree';
+import { LindenmayerFormularAR } from './LindenmayerFormularAR';
+// import { GUI } from 'dat.gui';
+
+
 
 import './styles/ar.scss';
+
+const lindenmayerSettingsForm: LindenmayerFormularAR = LindenmayerFormularAR.getInstance();
+
 
 let hitTestSource: XRHitTestSource = null;
 let hitTestSourceRequested = false;
@@ -33,6 +40,9 @@ const reticle: Mesh = new THREE.Mesh(
 );
 reticle.matrixAutoUpdate = false;
 reticle.visible = false;
+
+
+
 scene.add(reticle);
 
 function main() {
@@ -41,28 +51,35 @@ function main() {
     renderer.xr.enabled = true;
     document.body.appendChild(renderer.domElement);
 
-    document.body.appendChild(ARButton.createButton(renderer, { requiredFeatures: ['hit-test'] }));
+    document.body.appendChild(ARButton.createButton(renderer, { 
+        requiredFeatures: ['hit-test'], 
+        optionalFeatures: [ 'dom-overlay', 'dom-overlay-for-handheld-ar' ],
+	    domOverlay: { root: document.body } 
+    }));
 
     const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
     light.position.set(0.5, 1, 0.25);
     scene.add(light);
 
-    // Turtle data
-    const ruleset: Rule[] = [];
-    ruleset.push(new Rule('F', 'F&F+[+F/-F-F]-[-F+F+F]'));
-    const lsys: LSystem = new LSystem('F', ruleset);
-    for (let i = 0; i < 3; i++) lsys.generate();
+    //  setupGui();
+
 
     function onSelect() {
-        const turtle: Turtle = new Turtle(
-            lsys.getSentence(),
-            1,
-            Utils.DegreesToRadians(30),
-            [0.1,0.1,0.1],
-            [0.2,0.2,0.2],
-            Utils.RandomRange(0.8, 1.2),
-            true,
-        );
+
+        const turtle: Turtle = lindenmayerSettingsForm.generateLSystemImage();
+
+        // const turtle: Turtle = new Turtle(
+        //     lsys.getSentence(),
+        //     1,
+        //     Utils.DegreesToRadians(30),
+        //     [0.1,0.1,0.1],
+        //     [0.2,0.2,0.2],
+        //     Utils.RandomRange(0.8, 1.2),
+        //     true,
+        // );
+
+        // const turtle: Turtle = choosePreset();
+
         const turtleMesh = turtle.generateMeshObject();
         // turtleMesh.position.set(0, 0, -0.8).applyMatrix4(controller.matrixWorld);
         turtleMesh.position.setFromMatrixPosition(reticle.matrix);
@@ -134,6 +151,60 @@ function onWindowResize() {
 
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
+
+
+
+
+// function setupGui() {
+// var settings = {
+//     preset: 0,
+// }
+// var gui = new GUI();
+
+
+// const folder = gui.addFolder('Three.LS')
+
+// folder.add(settings, 'preset', { 1: 0, 2: 1 } );
+
+// }
+
+// function choosePreset(): Turtle {
+//         var axiom: string;
+//         var rule: string;
+//         var iterations: number;
+//         var colorOne: number[] = [];
+//         var colorTwo: number[] = [];
+
+//         switch () {
+//             case 0:
+//                 axiom = "F";
+//                 rule = "F&F+[+F/-F-F]-[-F+F+F]";
+//                 iterations = 3
+//                 colorOne = [0.1, 0.9, 0.1];
+//                 colorTwo = [0.9, 0.9, 0.9];
+//                 break;
+//             case 1:
+//                 axiom = "F";
+//                 rule = "F&F+[+F/-F-F]-[-F+F+F]";
+//                 iterations = 3
+//                 colorOne = [0.9, 0.1, 0.1];
+//                 colorTwo = [0.1, 0.1, 0.9];
+//                 break;
+//         }
+    
+//         // Turtle data
+//         const ruleset: Rule[] = [];
+//         ruleset.push(new Rule(axiom, rule));
+//         const lsys: LSystem = new LSystem('F', ruleset);
+//         for (let i = 0; i < iterations; i++) lsys.generate();
+
+
+//         const turtle: Turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(30), colorOne, colorTwo, Utils.RandomRange(0.8, 1.2), true);
+
+//         return turtle;
+// }
+
+
 
 //Start main loop
 main();
