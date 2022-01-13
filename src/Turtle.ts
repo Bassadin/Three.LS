@@ -1,6 +1,4 @@
-import { BoxGeometry, Color, DoubleSide, Mesh, Quaternion, ShaderMaterial, Vector3 } from 'three';
-import * as FragmentData from './shaders/testShader/fragment';
-import * as VertexData from './shaders/testShader/vertex';
+import { BoxGeometry, Color, Mesh, MeshLambertMaterial, Quaternion, Vector3 } from 'three';
 import Utils from './Utils';
 export default class Turtle {
     //
@@ -18,9 +16,6 @@ export default class Turtle {
     //Position
     private currentPosition: Vector3 = new Vector3(0, -5, 0);
     private positionSaveStateArray: Vector3[] = [];
-
-    //Color
-    private newColors = [0.7, 0.3, 0.1];
 
     private boxScale: number;
 
@@ -77,7 +72,7 @@ export default class Turtle {
 
                     // console.log(this.colorOne, this.colorTwo)
 
-                    this.newColors = [
+                    const leafColor: Color = new Color(
                         0.45 +
                             i * ((0.4 - 0.45) / this.instructionString.length) +
                             (Math.random() * (0.1 - 0.05) + 0.05),
@@ -87,19 +82,9 @@ export default class Turtle {
                         0.13 +
                             i * ((0.2 - 0.13) / this.instructionString.length) +
                             (Math.random() * (0.1 - 0.05) + 0.05),
-                    ];
+                    );
 
-                    const material: ShaderMaterial = new ShaderMaterial({
-                        uniforms: {
-                            thickness: { value: 1 },
-                            color: { value: new Color(...this.newColors) },
-                            time: { value: 0 },
-                        },
-                        vertexShader: VertexData.data,
-                        fragmentShader: FragmentData.data,
-                        side: DoubleSide,
-                        alphaToCoverage: true,
-                    });
+                    const material: MeshLambertMaterial = new MeshLambertMaterial({ color: leafColor });
 
                     this.move();
                     const currentPositionAfterMove = this.currentPosition.clone();
