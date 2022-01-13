@@ -64,6 +64,8 @@ export default class Turtle {
         let meshToAddTo: Mesh = null;
 
         const generatedMesh: Mesh = new Mesh();
+        generatedMesh.castShadow = true;
+        generatedMesh.receiveShadow = true;
 
         for (let i = 0; i < this.instructionString.length; i++) {
             switch (this.instructionString.charAt(i)) {
@@ -98,6 +100,8 @@ export default class Turtle {
                     );
 
                     const boxMesh = new Mesh(geometry, material);
+                    boxMesh.castShadow = true;
+                    boxMesh.receiveShadow = true;
 
                     // boxMesh.lookAt(currentPositionAfterMove);
                     if (meshToAddTo) {
