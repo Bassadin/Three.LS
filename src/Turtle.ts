@@ -112,36 +112,15 @@ export default class Turtle {
                     leafCenterPositions.push(
                         currentPositionAfterMove.clone().sub(currentPositionBeforeMove.clone()).divideScalar(2),
                     );
-                    // const geom = new2
+
                     const boxMesh = new Mesh(geometry, material);
-                    // boxMesh.updateMatrix();
-                    // if(meshToAddTo)
-                    // const
-                    // boxMesh.lookAt(currentPositionAfterMove);
+
                     if (meshToAddTo) {
-                        // meshToAddTo.lookAt(currentPositionAfterMove);
                         boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
-                        // boxMesh.geometry.merge()
-                        // meshToAddTo.geometry.merge(boxMesh.geometry);
-                        // boxMesh.updateMatrix();
-                        // const n = new BoxGeometry();
-                        // n.merge(meshToAddTo.geometry, boxMesh.matrix);
-                        // meshToAddTo.attach(boxMesh);
 
-                        // boxMesh.updateMatrix();
                         meshToAddTo.geometry = mergeBufferGeometries([meshToAddTo.geometry, boxMesh.geometry]);
-                        // meshToAddTo.updateMatrix();
-                        // BufferGeometryUtils
-                        // boxMesh.geometry.merge(meshToAddTo.geometry);
-                        // boxMesh.updateMatrix();
-                        // meshToAddTo.geometry.merge(boxMesh.geometry)
-                        // const mTAT: BufferGeometry = meshToAddTo as BufferGeometry;
-
-                        // meshToAddTo
                     }
-                    // else {
-                    // generatedMesh.add(boxMesh);
-                    // }
+
                     meshToAddTo = boxMesh;
 
                     break;
@@ -150,11 +129,7 @@ export default class Turtle {
                     break;
                 case '[':
                     this.saveState();
-                    // console.log(meshToAddTo);
-                    // if (meshToAddTo) {
-                    // generatedMesh.add(boxMesh);
                     generatedMesh.add(meshToAddTo);
-                    // }
                     this.meshToAddToSaveStateArray.push(meshToAddTo);
                     this.branchingIds.add(meshToAddTo.id);
                     break;
