@@ -111,7 +111,8 @@ export default class Turtle {
                     if (meshToAddTo) {
                         boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
 
-                        meshToAddTo.geometry = mergeBufferGeometries([meshToAddTo.geometry, boxMesh.geometry]);
+                        meshToAddTo.attach(boxMesh);
+                        // meshToAddTo.geometry = mergeBufferGeometries([meshToAddTo.geometry, boxMesh.geometry]);
                     }
 
                     meshToAddTo = boxMesh;

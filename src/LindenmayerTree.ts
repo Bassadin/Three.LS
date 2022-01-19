@@ -6,6 +6,7 @@ export default class LindenmayerTree extends Object3D {
     private finalScale: number;
     private scaleSpeed: number;
     private branchUUIDs: Set<string>;
+    private randomAnimationPeriodOffsets: number[];
 
     constructor(treeMesh: Mesh, finalScale: number, branchUUIDs: Set<string> = new Set<string>()) {
         super();
@@ -20,6 +21,12 @@ export default class LindenmayerTree extends Object3D {
         this.scaleSpeed = this.finalScale * Utils.RandomRange(0.2, 0.7);
 
         this.branchUUIDs = branchUUIDs;
+
+        this.randomAnimationPeriodOffsets = [
+            Utils.RandomRange(-10, 10),
+            Utils.RandomRange(-10, 10),
+            Utils.RandomRange(-10, 10),
+        ];
     }
 
     public render(deltaTime: number, sceneClock: Clock): void {
@@ -36,9 +43,9 @@ export default class LindenmayerTree extends Object3D {
             if (obj) {
                 obj.rotation.copy(
                     new Euler(
-                        Math.sin(elapsedSceneTime * 2),
-                        Math.sin(elapsedSceneTime * 1),
-                        Math.cos(elapsedSceneTime * 1.3),
+                        Math.sin(elapsedSceneTime * 2 + this.randomAnimationPeriodOffsets[0]) * 0.02 - 0.01,
+                        Math.sin(elapsedSceneTime * 1 + this.randomAnimationPeriodOffsets[1]) * 0.12 - 0.06,
+                        Math.cos(elapsedSceneTime * 1.3 + this.randomAnimationPeriodOffsets[2]) * 0.02 - 0.01,
                         'XYZ',
                     ),
                 );
