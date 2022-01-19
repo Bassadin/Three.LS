@@ -126,7 +126,7 @@ function render(timestamp: number, frame: XRFrame) {
     const deltaTime: number = sceneClock.getDelta();
     // Tree Rotation
     treeObjects.forEach((eachTreeObject) => {
-        eachTreeObject.render(deltaTime, scene, sceneClock);
+        eachTreeObject.render(deltaTime, sceneClock);
     });
 
     //XR Stuff

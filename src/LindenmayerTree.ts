@@ -22,24 +22,28 @@ export default class LindenmayerTree extends Object3D {
         this.branchUUIDs = branchUUIDs;
     }
 
-    public render(deltaTime: number, sceneReference: Scene, sceneClock: Clock): void {
+    public render(deltaTime: number, sceneClock: Clock): void {
         if (this.mesh.scale.x < this.finalScale) {
             this.mesh.scale.addScalar(this.scaleSpeed * deltaTime);
         } else {
             this.mesh.scale.set(this.finalScale, this.finalScale, this.finalScale);
         }
 
+        const elapsedSceneTime = sceneClock.getElapsedTime();
+
         this.branchUUIDs.forEach((element) => {
-            const obj: THREE.Object3D = sceneReference.getObjectByProperty('uuid', element);
+            const obj: THREE.Object3D = this.mesh.getObjectByProperty('uuid', element);
             if (obj) {
                 obj.rotation.copy(
                     new Euler(
-                        Math.sin(sceneClock.getElapsedTime() * 2) * 0.002 - 0.001,
-                        Math.sin(sceneClock.getElapsedTime() * 1) * 0.02 - 0.01,
-                        Math.cos(sceneClock.getElapsedTime() * 1.3) * 0.003 - 0.0015,
+                        Math.sin(elapsedSceneTime * 2),
+                        Math.sin(elapsedSceneTime * 1),
+                        Math.cos(elapsedSceneTime * 1.3),
                         'XYZ',
                     ),
                 );
+            } else {
+                console.log(`object with uuid ${element} not found`);
             }
         });
     }
