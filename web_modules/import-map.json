@@ -4,6 +4,7 @@
     "three": "./three.js",
     "three/examples/jsm/controls/TrackballControls.js": "./three/examples/jsm/controls/TrackballControls.js",
     "three/examples/jsm/exporters/OBJExporter.js": "./three/examples/jsm/exporters/OBJExporter.js",
+    "three/examples/jsm/utils/BufferGeometryUtils.js": "./three/examples/jsm/utils/BufferGeometryUtils.js",
     "three/examples/jsm/webxr/ARButton.js": "./three/examples/jsm/webxr/ARButton.js",
     "three/examples/jsm/webxr/XREstimatedLight.js": "./three/examples/jsm/webxr/XREstimatedLight.js"
   }

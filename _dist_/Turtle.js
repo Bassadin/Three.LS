@@ -1,7 +1,8 @@
+import {mergeBufferGeometries} from "../web_modules/three/examples/jsm/utils/BufferGeometryUtils.js";
 import {BoxGeometry, Color, Mesh, MeshLambertMaterial, Quaternion, Vector3} from "../web_modules/three.js";
 import Utils from "./Utils.js";
 export default class Turtle {
-  constructor(instructionString, stepLength, rotationStepSize, boxScale = 0.2, useRandomization = false) {
+  constructor(instructionString, stepLength, rotationStepSize, boxScale = 1, useRandomization = false) {
     this.currentRotation = new Quaternion();
     this.rotationSaveStateArray = [];
     this.meshToAddToSaveStateArray = [];
@@ -50,9 +51,7 @@ export default class Turtle {
           boxMesh.receiveShadow = true;
           if (meshToAddTo) {
             boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
-            meshToAddTo.attach(boxMesh);
-          } else {
-            generatedMesh.add(boxMesh);
+            meshToAddTo.geometry = mergeBufferGeometries([meshToAddTo.geometry, boxMesh.geometry]);
           }
           meshToAddTo = boxMesh;
           break;
@@ -61,6 +60,7 @@ export default class Turtle {
           break;
         case "[":
           this.saveState();
+          generatedMesh.add(meshToAddTo);
           this.meshToAddToSaveStateArray.push(meshToAddTo);
           this.branchingIds.add(meshToAddTo.id);
           break;
