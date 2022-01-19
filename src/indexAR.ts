@@ -1,15 +1,21 @@
 import * as THREE from 'three';
-import { Clock, Mesh, Scene, XRFrame, XRHitTestSource } from 'three';
+import { Clock, Mesh, PlaneGeometry, Scene, ShadowMaterial, XRFrame, XRHitTestSource } from 'three';
 import Turtle from './Turtle';
-import PerformanceStats from './PerformanceStats';
+// import PerformanceStats from './PerformanceStats';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
+import { XREstimatedLight } from 'three/examples/jsm/webxr/XREstimatedLight.js';
 import Utils from './Utils';
 import { LSystem } from './LSystem';
 import { Rule } from './Rule';
 import LindenmayerTree from './LindenmayerTree';
 
+import './styles/ar.scss';
+
 let hitTestSource: XRHitTestSource = null;
 let hitTestSourceRequested = false;
+
+let shadowPlane: Mesh;
+let shadowPlaneCreated: boolean;
 
 const sceneClock: Clock = new Clock();
 
@@ -20,7 +26,10 @@ const camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
     0.01,
     20,
 );
-const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
+    alpha: true,
+    powerPreference: 'high-performance',
+});
 
 const treeObjects: LindenmayerTree[] = [];
 
@@ -37,13 +46,15 @@ function main() {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.xr.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.enabled = true;
+
     document.body.appendChild(renderer.domElement);
 
-    document.body.appendChild(ARButton.createButton(renderer, { requiredFeatures: ['hit-test'] }));
+    document.body.appendChild(ARButton.createButton(renderer, { requiredFeatures: ['hit-test', 'light-estimation'] }));
 
-    const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
-    light.position.set(0.5, 1, 0.25);
-    scene.add(light);
+    const defaultLight = new THREE.AmbientLight(0xffffff);
+    scene.add(defaultLight);
 
     // Turtle data
     const ruleset: Rule[] = [];
@@ -73,9 +84,41 @@ function main() {
     controller.addEventListener('select', onSelect);
     scene.add(controller);
 
-    window.addEventListener('resize', onWindowResize, false);
+    //XR Light
+    const xrLight = new XREstimatedLight(renderer);
+    xrLight.directionalLight.castShadow = true;
 
+    xrLight.addEventListener('estimationstart', () => {
+        // Swap the default light out for the estimated one one we start getting some estimated values.
+        scene.add(xrLight);
+        scene.remove(defaultLight);
+    });
+
+    xrLight.addEventListener('estimationend', () => {
+        // Swap the lights back when we stop receiving estimated values.
+        scene.add(defaultLight);
+        scene.remove(xrLight);
+    });
+
+    //Shadow plane
+    addShadowPlaneToScene();
+
+    window.addEventListener('resize', onWindowResize, false);
     renderer.setAnimationLoop(render);
+}
+
+function addShadowPlaneToScene() {
+    const geometry = new PlaneGeometry(2000, 2000);
+    geometry.rotateX(-Math.PI / 2);
+
+    const material = new ShadowMaterial();
+    material.opacity = 0.5;
+
+    shadowPlane = new Mesh(geometry, material);
+    shadowPlane.receiveShadow = true;
+    shadowPlane.visible = false;
+    shadowPlane.matrixAutoUpdate = false;
+    scene.add(shadowPlane);
 }
 
 function render(timestamp: number, frame: XRFrame) {
@@ -96,7 +139,6 @@ function render(timestamp: number, frame: XRFrame) {
                     hitTestSource = source;
                 });
             });
-
             session.addEventListener('end', function () {
                 hitTestSourceRequested = false;
                 hitTestSource = null;
@@ -112,7 +154,15 @@ function render(timestamp: number, frame: XRFrame) {
                 const hit = hitTestResults[0];
 
                 reticle.visible = true;
-                reticle.matrix.fromArray(hit.getPose(referenceSpace).transform.matrix);
+                const pose = hit.getPose(referenceSpace);
+                const poseTransformMatrix = pose.transform.matrix;
+                reticle.matrix.fromArray(poseTransformMatrix);
+
+                shadowPlane.visible = true;
+                if (!shadowPlaneCreated) {
+                    shadowPlane.matrix.fromArray(poseTransformMatrix);
+                    shadowPlaneCreated = true;
+                }
             } else {
                 reticle.visible = false;
             }
@@ -121,7 +171,7 @@ function render(timestamp: number, frame: XRFrame) {
 
     renderer.render(scene, camera);
 
-    PerformanceStats.instance?.update(); // Only update stats if present
+    // PerformanceStats.instance?.update(); // Only update stats if present
 }
 
 function onWindowResize() {
