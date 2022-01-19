@@ -1,5 +1,5 @@
 import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import { BoxGeometry,BufferGeometry,DoubleSide,ShaderMaterial, Color, Mesh, MeshLambertMaterial, Quaternion, Vector3 } from 'three';
+import { BoxGeometry, Color, Mesh, MeshLambertMaterial, Quaternion, Vector3 } from 'three';
 import Utils from './Utils';
 export default class Turtle {
     //
@@ -22,6 +22,9 @@ export default class Turtle {
 
     private useRandomization = false;
     private randomizationDeviation = 0.25;
+
+    //Indices of the objects that define a point where a savestate was made, e.g. a 'branching point'
+    public branchingIds: Set<string> = new Set();
 
     constructor(
         instructionString: string,
@@ -50,8 +53,9 @@ export default class Turtle {
         this.currentRotation = this.rotationSaveStateArray.pop();
     }
 
-    //Indices of the objects that define a point where a savestate was made, e.g. a 'branching point'
-    public branchingIds: Set<number> = new Set();
+    public getBranchUUIDs(): Set<string> {
+        return this.branchingIds;
+    }
 
     public generateMeshObject(): Mesh {
         console.time('Geometry creation');
@@ -120,7 +124,7 @@ export default class Turtle {
                     this.saveState();
                     generatedMesh.add(meshToAddTo);
                     this.meshToAddToSaveStateArray.push(meshToAddTo);
-                    this.branchingIds.add(meshToAddTo.id);
+                    this.branchingIds.add(meshToAddTo.uuid);
                     break;
                 case ']':
                     this.loadState();
