@@ -1,4 +1,5 @@
-import { BoxGeometry, Color, Mesh, MeshLambertMaterial, Quaternion, Vector3 } from 'three';
+import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { BoxGeometry,BufferGeometry,DoubleSide,ShaderMaterial, Color, Mesh, MeshLambertMaterial, Quaternion, Vector3 } from 'three';
 import Utils from './Utils';
 export default class Turtle {
     //
@@ -26,7 +27,7 @@ export default class Turtle {
         instructionString: string,
         stepLength: number,
         rotationStepSize: number,
-        boxScale = 0.2,
+        boxScale = 1,
         useRandomization = false,
     ) {
         this.instructionString = instructionString;
@@ -60,7 +61,7 @@ export default class Turtle {
         // const material: Material = new MeshBasicMaterial();
         // const boxScale = 0.2;
         const geometry: BoxGeometry = new BoxGeometry(this.boxScale, this.boxScale, this.boxScale);
-
+        // const mergedGeometry = new THREE.Geometry();
         let meshToAddTo: Mesh = null;
 
         const generatedMesh: Mesh = new Mesh();
@@ -103,14 +104,12 @@ export default class Turtle {
                     boxMesh.castShadow = true;
                     boxMesh.receiveShadow = true;
 
-                    // boxMesh.lookAt(currentPositionAfterMove);
                     if (meshToAddTo) {
-                        // meshToAddTo.lookAt(currentPositionAfterMove);
                         boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
-                        meshToAddTo.attach(boxMesh);
-                    } else {
-                        generatedMesh.add(boxMesh);
+
+                        meshToAddTo.geometry = mergeBufferGeometries([meshToAddTo.geometry, boxMesh.geometry]);
                     }
+
                     meshToAddTo = boxMesh;
 
                     break;
@@ -119,6 +118,7 @@ export default class Turtle {
                     break;
                 case '[':
                     this.saveState();
+                    generatedMesh.add(meshToAddTo);
                     this.meshToAddToSaveStateArray.push(meshToAddTo);
                     this.branchingIds.add(meshToAddTo.id);
                     break;
@@ -160,7 +160,8 @@ export default class Turtle {
         globalCenterPoint = globalCenterPoint.divideScalar(leafCenterPositions.length);
 
         console.timeEnd('Geometry creation');
-
+        // console.log(this.meshToAddToSaveStateArray);
+        // console.log(generatedMesh);
         return generatedMesh;
     }
 
