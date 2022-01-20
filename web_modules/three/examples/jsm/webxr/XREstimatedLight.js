@@ -1,4 +1,4 @@
-import { bm as Group, c0 as LightProbe, aG as DirectionalLight, fO as WebGLCubeRenderTarget } from '../../../../common/three.module-30a43c9e.js';
+import { bm as Group, c0 as LightProbe, aH as DirectionalLight, fO as WebGLCubeRenderTarget } from '../../../../common/three.module-cf10caf0.js';
 
 class SessionLightProbe {
 

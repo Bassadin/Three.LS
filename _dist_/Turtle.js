@@ -1,4 +1,3 @@
-import {mergeBufferGeometries} from "../web_modules/three/examples/jsm/utils/BufferGeometryUtils.js";
 import {BoxGeometry, Color, Mesh, MeshLambertMaterial, Quaternion, Vector3} from "../web_modules/three.js";
 import Utils from "./Utils.js";
 export default class Turtle {
@@ -28,6 +27,9 @@ export default class Turtle {
     this.currentPosition = this.positionSaveStateArray.pop();
     this.currentRotation = this.rotationSaveStateArray.pop();
   }
+  getBranchUUIDs() {
+    return this.branchingIds;
+  }
   generateMeshObject() {
     console.time("Geometry creation");
     const leafCenterPositions = [];
@@ -51,7 +53,7 @@ export default class Turtle {
           boxMesh.receiveShadow = true;
           if (meshToAddTo) {
             boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
-            meshToAddTo.geometry = mergeBufferGeometries([meshToAddTo.geometry, boxMesh.geometry]);
+            meshToAddTo.attach(boxMesh);
           }
           meshToAddTo = boxMesh;
           break;
@@ -62,7 +64,7 @@ export default class Turtle {
           this.saveState();
           generatedMesh.add(meshToAddTo);
           this.meshToAddToSaveStateArray.push(meshToAddTo);
-          this.branchingIds.add(meshToAddTo.id);
+          this.branchingIds.add(meshToAddTo.uuid);
           break;
         case "]":
           this.loadState();

@@ -42,9 +42,10 @@ function main() {
   function onSelect() {
     const turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(30), Utils.RandomRange(0.8, 1.2), true);
     const turtleMesh = turtle.generateMeshObject();
+    const currentTurtleBranchUUIDs = turtle.getBranchUUIDs();
     turtleMesh.position.setFromMatrixPosition(reticle.matrix);
     turtleMesh.rotateY(Utils.RandomRange(0, Math.PI * 2));
-    const newTreeObject = new LindenmayerTree(turtleMesh, Utils.RandomRange(0.02, 0.035));
+    const newTreeObject = new LindenmayerTree(turtleMesh, Utils.RandomRange(0.02, 0.035), currentTurtleBranchUUIDs);
     treeObjects.push(newTreeObject);
     scene.add(newTreeObject);
   }
@@ -79,7 +80,7 @@ function addShadowPlaneToScene() {
 function render(timestamp, frame) {
   const deltaTime = sceneClock.getDelta();
   treeObjects.forEach((eachTreeObject) => {
-    eachTreeObject.render(deltaTime);
+    eachTreeObject.render(deltaTime, sceneClock);
   });
   if (frame) {
     const referenceSpace = renderer.xr.getReferenceSpace();

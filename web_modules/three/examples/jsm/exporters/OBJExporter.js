@@ -1,4 +1,4 @@
-import { V as Vector3, C as Color, fH as Vector2, cw as Matrix3 } from '../../../../common/three.module-30a43c9e.js';
+import { V as Vector3, C as Color, fH as Vector2, cw as Matrix3 } from '../../../../common/three.module-cf10caf0.js';
 
 class OBJExporter {
 

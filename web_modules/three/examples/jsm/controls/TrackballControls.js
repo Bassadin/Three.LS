@@ -1,4 +1,4 @@
-import { aZ as EventDispatcher, cs as MOUSE, V as Vector3, fH as Vector2, Q as Quaternion } from '../../../../common/three.module-30a43c9e.js';
+import { aZ as EventDispatcher, cs as MOUSE, V as Vector3, fH as Vector2, Q as Quaternion } from '../../../../common/three.module-cf10caf0.js';
 
 const _changeEvent = { type: 'change' };
 const _startEvent = { type: 'start' };
