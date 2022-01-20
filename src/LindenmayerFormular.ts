@@ -106,16 +106,13 @@ export class LindenmayerFormular {
             const turningAngle = (document.getElementById('degrees') as HTMLInputElement).value;
             const stepLength = (document.getElementById('steplength') as HTMLInputElement).value;
 
-
             colorOne[0] = (document.getElementById('color-one-r') as HTMLInputElement).value;
             colorOne[1] = (document.getElementById('color-one-g') as HTMLInputElement).value;
             colorOne[2] = (document.getElementById('color-one-b') as HTMLInputElement).value;
 
-            
             colorTwo[0] = (document.getElementById('color-two-r') as HTMLInputElement).value;
             colorTwo[1] = (document.getElementById('color-two-g') as HTMLInputElement).value;
             colorTwo[2] = (document.getElementById('color-two-b') as HTMLInputElement).value;
-
 
             const newObject = {
                 baseAxiom: baseAxiom,
@@ -125,7 +122,7 @@ export class LindenmayerFormular {
                 turningAngle: turningAngle,
                 stepLength: stepLength,
                 colorOne: colorOne,
-                colorTwo: colorTwo
+                colorTwo: colorTwo,
             };
             const json_string = JSON.stringify(newObject, undefined, 2);
             const link = document.createElement('a');
@@ -189,7 +186,6 @@ export class LindenmayerFormular {
         const colorOne: number[] = [];
         const colorTwo: number[] = [];
 
-
         document.querySelectorAll('.axioms').forEach((element) => {
             axioms.push((<HTMLInputElement>element).value.toUpperCase());
         });
@@ -225,7 +221,13 @@ export class LindenmayerFormular {
 
         console.timeEnd('L System generation');
 
-        const turtle: Turtle = new Turtle(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees), colorOne, colorTwo);
+        const turtle: Turtle = new Turtle(
+            lsys.getSentence(),
+            steplength,
+            Utils.DegreesToRadians(degrees),
+            colorOne,
+            colorTwo,
+        );
 
         return turtle;
     }
@@ -246,10 +248,9 @@ export class LindenmayerFormular {
 
     private makeSmall(): void {
         this.makeSmallButton.addEventListener('click', () => {
-            console.log("makesmall")
+            console.log('makesmall');
 
-            document.querySelector('.interface__wrapper').classList.toggle("shrink");
+            document.querySelector('.interface__wrapper').classList.toggle('shrink');
         });
     }
-
 }

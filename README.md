@@ -11,27 +11,25 @@ It even (kinda) runs on an Apple Watch :)
 On smartphones:
 ![image](https://user-images.githubusercontent.com/1810902/141849847-e466adab-5a88-4975-ab94-3974326f5334.png)
 
-
 ## Info
 
 3D L-Systems with Three.js
 
-We used Three.js to create trees and other plant-like structures using Lindenmayer Systems. A code of rulesets can be used and iterated upon to create all kinds of "growing" structures. 
+We used Three.js to create trees and other plant-like structures using Lindenmayer Systems. A code of rulesets can be used and iterated upon to create all kinds of "growing" structures.
 
 ## Contributors
 
-- [Nick Häcker](https://github.com/NickHaecker)
-- [Marc Eberhard](https://github.com/bymarcx)
-- [Bastian Hodapp](https://github.com/Bassadin)
-- [Lukas Brausch](https://github.com/LukasBrauschHFU)
-- [Manuel Proß](https://github.com/manuel-pross)
+-   [Nick Häcker](https://github.com/NickHaecker)
+-   [Marc Eberhard](https://github.com/bymarcx)
+-   [Bastian Hodapp](https://github.com/Bassadin)
+-   [Lukas Brausch](https://github.com/LukasBrauschHFU)
+-   [Manuel Proß](https://github.com/manuel-pross)
 
 ## AR version
 
 Web XR supported AR version: https://bassadin.github.io/Three.LS/ar.html
 
 ![image](https://user-images.githubusercontent.com/1810902/146235247-077c2a68-217c-46f4-8360-207a4e69db09.png)
-
 
 Currently only supported on iOS via: https://apps.apple.com/de/app/webxr-viewer/id1295998056
 

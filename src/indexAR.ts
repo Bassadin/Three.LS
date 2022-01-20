@@ -5,16 +5,12 @@ import Turtle from './Turtle';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
 import { XREstimatedLight } from 'three/examples/jsm/webxr/XREstimatedLight.js';
 import Utils from './Utils';
-import { LSystem } from './LSystem';
-import { Rule } from './Rule';
 import LindenmayerTree from './LindenmayerTree';
 import { LindenmayerFormularAR } from './LindenmayerFormularAR';
-
 
 import './styles/ar.scss';
 
 const lindenmayerSettingsForm: LindenmayerFormularAR = LindenmayerFormularAR.getInstance();
-
 
 let hitTestSource: XRHitTestSource = null;
 let hitTestSourceRequested = false;
@@ -57,19 +53,18 @@ function main() {
 
     document.body.appendChild(renderer.domElement);
 
-    document.body.appendChild(ARButton.createButton(renderer, { 
-        requiredFeatures: ['hit-test'], 
-        optionalFeatures: [ 'dom-overlay', 'dom-overlay-for-handheld-ar' ],
-	    domOverlay: { root: document.body } 
-    }));
+    document.body.appendChild(
+        ARButton.createButton(renderer, {
+            requiredFeatures: ['hit-test'],
+            optionalFeatures: ['dom-overlay', 'dom-overlay-for-handheld-ar'],
+            domOverlay: { root: document.body },
+        }),
+    );
 
     const defaultLight = new THREE.AmbientLight(0xffffff);
     scene.add(defaultLight);
 
-
-
     function onSelect() {
-
         const turtle: Turtle = lindenmayerSettingsForm.generateLSystemImage();
 
         const turtleMesh = turtle.generateMeshObject();
@@ -166,15 +161,15 @@ function render(timestamp: number, frame: XRFrame) {
                     shadowPlaneCreated = true;
                 }
 
-                document.querySelector(".interface__search").classList.remove("active");
-                document.querySelector(".interface__buttons").classList.add("active");
+                document.querySelector('.interface__search').classList.remove('active');
+                document.querySelector('.interface__buttons').classList.add('active');
 
                 reticle.matrix.fromArray(hit.getPose(referenceSpace).transform.matrix);
             } else {
                 reticle.visible = false;
 
-                document.querySelector(".interface__search").classList.add("active");
-                document.querySelector(".interface__buttons").classList.remove("active");
+                document.querySelector('.interface__search').classList.add('active');
+                document.querySelector('.interface__buttons').classList.remove('active');
             }
         }
     }
@@ -190,7 +185,6 @@ function onWindowResize() {
 
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
-
 
 //Start main loop
 main();

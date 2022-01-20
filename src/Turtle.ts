@@ -1,5 +1,5 @@
 import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import { BoxGeometry,BufferGeometry,DoubleSide,ShaderMaterial, Color, Mesh, MeshLambertMaterial, Quaternion, Vector3 } from 'three';
+import { BoxGeometry, Color, Mesh, MeshLambertMaterial, Quaternion, Vector3 } from 'three';
 import Utils from './Utils';
 export default class Turtle {
     //
@@ -19,8 +19,6 @@ export default class Turtle {
     private positionSaveStateArray: Vector3[] = [];
 
     //Color
-    private newColors = [0.7, 0.3, 0.1];
-
     private colorOne: number[];
     private colorTwo: number[];
 
@@ -85,14 +83,14 @@ export default class Turtle {
 
                     // console.log(this.colorOne, this.colorTwo)
 
-                    this.newColors = [
+                    const leafColor: Color = new Color(
                         this.colorOne[0] +
                             i * ((this.colorTwo[0] - this.colorOne[0]) / this.instructionString.length) +
                             (Math.random() * (0.1 - 0.05) + 0.05),
-                            this.colorOne[1] +
+                        this.colorOne[1] +
                             i * ((this.colorTwo[1] - this.colorOne[1]) / this.instructionString.length) +
                             (Math.random() * (0.2 - 0.05) + 0.05),
-                            this.colorOne[2] +
+                        this.colorOne[2] +
                             i * ((this.colorTwo[2] - this.colorOne[2]) / this.instructionString.length) +
                             (Math.random() * (0.1 - 0.05) + 0.05),
                     );
