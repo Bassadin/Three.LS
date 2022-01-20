@@ -37,7 +37,7 @@ export class LindenmayerFormularAR {
 
 
     private addListenerToBtn(): void {
-        //Download rules presets
+
         this.btnOne.addEventListener('click', (e) => {
             e.stopPropagation();
             this.presetNumber = 0;
@@ -62,18 +62,8 @@ export class LindenmayerFormularAR {
             document.getElementById("actPreset").innerHTML = this.presetNumber.toString();
         });
 
-        // this.presetSelect.addEventListener('change',  this.updateVal);
 
     }
-
-    public updateVal(e: any): void {
-        e.preventDefault();
-        this.presetNumber = e.target.value;
-        document.getElementById("actPreset").innerHTML = this.presetNumber.toString();
-        console.log(e.target.value);
-        console.log(this.presetNumber);
-    }
-
 
     public generateLSystemImage(): Turtle {
         let axiom: string;
@@ -87,9 +77,9 @@ export class LindenmayerFormularAR {
             axiom = "F";
             rule = "F&F+[+F/-F-F]-[-F+F+F]";
             iterations = 3;
-            degree = 30;
-            colorOne = [0.9, 0.0, 0.0];
-            colorTwo = [0.9, 0.0, 0.0];
+            degree = 50;
+            colorOne = [0.45, 0.29, 0.13];
+            colorTwo = [0.4, 0.72, 0.02];
         }
         else if(this.presetNumber === 1){
             axiom = "F";
@@ -101,15 +91,15 @@ export class LindenmayerFormularAR {
         }
         else if(this.presetNumber === 2){
             axiom = "F";
-            rule = "FF+[+F-∧∧∧F-F]-[-F+&&F+F]";
-            iterations = 3;
+            rule = "F[+F/F]∧";
+            iterations = 7;
             degree = 25;
-            colorOne = [0.0, 0.0, 0.9];
-            colorTwo = [0.0, 0.9, 0.0];
+            colorOne = [0.9, 0.0, 0.0];
+            colorTwo = [0.45, 0.29, 0.13];
         }
         else if(this.presetNumber === 3){
             axiom = "F";
-            rule = "FF+[+F-∧∧∧F-F]-[-F+&&F+F]";
+            rule = "FF+[+F-/F-F]-[-F+&&F+F]";
             iterations = 3;
             degree = 25;
             colorOne = [0.9, 0.0, 0.0];

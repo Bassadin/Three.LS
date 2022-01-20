@@ -116,9 +116,16 @@ function render(timestamp: number, frame: XRFrame) {
                 const hit = hitTestResults[0];
 
                 reticle.visible = true;
+
+                document.querySelector(".interface__search").classList.remove("active");
+                document.querySelector(".interface__buttons").classList.add("active");
+
                 reticle.matrix.fromArray(hit.getPose(referenceSpace).transform.matrix);
             } else {
                 reticle.visible = false;
+
+                document.querySelector(".interface__search").classList.add("active");
+                document.querySelector(".interface__buttons").classList.remove("active");
             }
         }
     }

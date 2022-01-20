@@ -1,58 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=Hind:wght@300;700&display=swap");
+
 body {
     background-color: rgb(68, 68, 68);
+    font-family: "Hind", sans-serif;
 }
 
 button {
-    z-index:9999;
+    z-index: 9999;
 }
 
 #overlay {
     display: none;
 }
 
-#tutorial {
-    width: 80%;
+#tutorial,
+#overlay {
+    width: calc(100% - 20px);
     background: #f1f1f1;
-    border-radius: 10px; 
-    padding: 10px;
+    border-radius: 10px;
     margin: 10px;
+    position: absolute;
+
+    .interface__header {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        background: burlywood;
+        padding: 0px 10px;
+        border-radius: 10px;
+    }
+
+    .interface__box {
+        padding: 10px;
+        margin: 10px;
+        background: #ccc;
+        border-radius: 10px;
+
+        &.iphone {
+            padding: 5px 10px;
+            background-color: brown;
+            color: white;
+        }
+    }
+
+    .iphone-disclamer {
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .logo {
+        width: auto;
+        height: 70px;
+        margin-right: 40px;
+    }
+
+    h1 {
+        text-align: center;
+    }
 }
 
 /* Show the DOM Overlay element while active (:xr-overlay pseudoclass) */
 body:xr-overlay {
-   
     #overlay {
         display: initial;
-        width: 80%;
-        background: #f1f1f1;
-        border-radius: 10px; 
-        padding: 10px;
-        margin: 10px;
+        padding: 0;
+        margin: 0;
 
         h1 {
-            margin-top:0;
-            padding-top: 0;
+            margin: 0;
+            padding: 0;
         }
 
         .interface__buttons {
-            display: flex;
-            justify-content: space-between;
+            display: none;
+
+            padding: 10px;
+            margin: 10px;
+            background: #ccc;
+            border-radius: 10px;
+
+            &.active {
+                display: block;
+
+                .grid-buttons {
+                    display: flex;
+                    justify-content: space-between;
+                }
+            }
+        }
+
+        .interface__search {
+            display: none;
+
+            padding: 10px;
+            margin: 10px;
+            background: #ccc;
+            border-radius: 10px;
+
+            &.active {
+                display: block;
+            }
         }
 
         .interface__ar-btn {
-
             &.active {
                 background: red;
             }
-
         }
 
         .interface__preset {
             margin: 10px 0 0;
         }
     }
+
     #tutorial {
         display: none;
     }
-
 }
