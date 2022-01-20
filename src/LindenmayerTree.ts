@@ -1,4 +1,4 @@
-import { Euler, Mesh, Object3D, Scene, Clock } from 'three';
+import { Euler, Mesh, Object3D, Scene, Clock, Vector3 } from 'three';
 import Utils from './Utils';
 
 export default class LindenmayerTree extends Object3D {
@@ -6,7 +6,8 @@ export default class LindenmayerTree extends Object3D {
     private finalScale: number;
     private scaleSpeed: number;
     private branchUUIDs: Set<string>;
-    private randomAnimationPeriodOffsets: number[];
+    private animationPeriodOffsets: Vector3;
+    private animationPeriodMultiplicators: Vector3;
 
     constructor(treeMesh: Mesh, finalScale: number, branchUUIDs: Set<string> = new Set<string>()) {
         super();
@@ -22,11 +23,17 @@ export default class LindenmayerTree extends Object3D {
 
         this.branchUUIDs = branchUUIDs;
 
-        this.randomAnimationPeriodOffsets = [
-            Utils.RandomRange(-10, 10),
-            Utils.RandomRange(-10, 10),
-            Utils.RandomRange(-10, 10),
-        ];
+        this.animationPeriodOffsets = new Vector3(
+            Utils.RandomRange(-Math.PI, Math.PI),
+            Utils.RandomRange(-Math.PI, Math.PI),
+            Utils.RandomRange(-Math.PI, Math.PI),
+        );
+
+        this.animationPeriodOffsets = new Vector3(
+            Utils.RandomRange(0.8, 1.2),
+            Utils.RandomRange(0.4, 0.7),
+            Utils.RandomRange(0.5, 1),
+        );
     }
 
     public render(deltaTime: number, sceneClock: Clock): void {
@@ -41,17 +48,19 @@ export default class LindenmayerTree extends Object3D {
         this.branchUUIDs.forEach((element) => {
             const obj: THREE.Object3D = this.mesh.getObjectByProperty('uuid', element);
             if (obj) {
-                obj.rotation.copy(
-                    new Euler(
-                        Math.sin(elapsedSceneTime * 2 + this.randomAnimationPeriodOffsets[0]) * 0.02 - 0.01,
-                        Math.sin(elapsedSceneTime * 1 + this.randomAnimationPeriodOffsets[1]) * 0.12 - 0.06,
-                        Math.cos(elapsedSceneTime * 1.3 + this.randomAnimationPeriodOffsets[2]) * 0.02 - 0.01,
-                        'XYZ',
-                    ),
-                );
+                obj.rotation.copy(this.getEulerRotationForElapsedTime(elapsedSceneTime));
             } else {
                 console.log(`object with uuid ${element} not found`);
             }
         });
+    }
+
+    private getEulerRotationForElapsedTime(elapsedTime: number) {
+        return new Euler(
+            Math.sin(elapsedTime * this.animationPeriodOffsets.x + this.animationPeriodOffsets.x) * 0.02 - 0.01,
+            Math.sin(elapsedTime * this.animationPeriodOffsets.y + this.animationPeriodOffsets.y) * 0.12 - 0.06,
+            Math.sin(elapsedTime * this.animationPeriodOffsets.z + this.animationPeriodOffsets.z) * 0.02 - 0.01,
+            'XYZ',
+        );
     }
 }
