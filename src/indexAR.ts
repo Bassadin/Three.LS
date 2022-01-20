@@ -73,12 +73,12 @@ function main() {
             true,
         );
         const turtleMesh = turtle.generateMeshObject();
-        const currentTurleBranchUUIDs = turtle.getBranchUUIDs();
+        const currentTurtleBranchUUIDs = turtle.getBranchUUIDs();
         // turtleMesh.position.set(0, 0, -0.8).applyMatrix4(controller.matrixWorld);
         turtleMesh.position.setFromMatrixPosition(reticle.matrix);
 
         turtleMesh.rotateY(Utils.RandomRange(0.0, Math.PI * 2));
-        const newTreeObject = new LindenmayerTree(turtleMesh, Utils.RandomRange(0.02, 0.035), currentTurleBranchUUIDs);
+        const newTreeObject = new LindenmayerTree(turtleMesh, Utils.RandomRange(0.02, 0.035), currentTurtleBranchUUIDs);
         treeObjects.push(newTreeObject);
         scene.add(newTreeObject);
     }
