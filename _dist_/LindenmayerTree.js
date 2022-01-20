@@ -12,7 +12,7 @@ export default class LindenmayerTree extends Object3D {
     this.scaleSpeed = this.finalScale * Utils.RandomRange(0.2, 0.7);
     this.branchUUIDs = branchUUIDs;
     this.animationPeriodOffsets = new Vector3(Utils.RandomRange(-Math.PI, Math.PI), Utils.RandomRange(-Math.PI, Math.PI), Utils.RandomRange(-Math.PI, Math.PI));
-    this.animationPeriodOffsets = new Vector3(Utils.RandomRange(0.8, 1.2), Utils.RandomRange(0.4, 0.7), Utils.RandomRange(0.5, 1));
+    this.animationPeriodMultiplicators = new Vector3(Utils.RandomRange(0.8, 1.2), Utils.RandomRange(0.4, 0.7), Utils.RandomRange(0.5, 1));
   }
   render(deltaTime, sceneClock) {
     if (this.mesh.scale.x < this.finalScale) {
@@ -31,7 +31,7 @@ export default class LindenmayerTree extends Object3D {
     });
   }
   getEulerRotationForElapsedTime(elapsedTime) {
-    return new Euler(Math.sin(elapsedTime * this.animationPeriodOffsets.x + this.animationPeriodOffsets.x) * 0.02 - 0.01, Math.sin(elapsedTime * this.animationPeriodOffsets.y + this.animationPeriodOffsets.y) * 0.12 - 0.06, Math.sin(elapsedTime * this.animationPeriodOffsets.z + this.animationPeriodOffsets.z) * 0.02 - 0.01, "XYZ");
+    return new Euler(Math.sin(elapsedTime * this.animationPeriodMultiplicators.x + this.animationPeriodOffsets.x) * 0.02 - 0.01, Math.sin(elapsedTime * this.animationPeriodMultiplicators.y + this.animationPeriodOffsets.y) * 0.12 - 0.06, Math.sin(elapsedTime * this.animationPeriodMultiplicators.z + this.animationPeriodOffsets.z) * 0.02 - 0.01, "XYZ");
   }
 }
 //# sourceMappingURL=LindenmayerTree.js.map
