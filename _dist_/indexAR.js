@@ -31,7 +31,7 @@ function main() {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.shadowMap.enabled = true;
   document.body.appendChild(renderer.domElement);
-  document.body.appendChild(ARButton.createButton(renderer, {requiredFeatures: ["hit-test", "light-estimation"]}));
+  document.body.appendChild(ARButton.createButton(renderer, {requiredFeatures: ["hit-test"], optionalFeatures: ["light-estimation"]}));
   const defaultLight = new THREE.AmbientLight(16777215);
   scene.add(defaultLight);
   const ruleset = [];
