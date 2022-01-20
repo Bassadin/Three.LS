@@ -1,4 +1,3 @@
-import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { BoxGeometry, Color, Mesh, MeshLambertMaterial, Quaternion, Vector3 } from 'three';
 import Utils from './Utils';
 export default class Turtle {
@@ -110,9 +109,7 @@ export default class Turtle {
 
                     if (meshToAddTo) {
                         boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
-
                         meshToAddTo.attach(boxMesh);
-                        // meshToAddTo.geometry = mergeBufferGeometries([meshToAddTo.geometry, boxMesh.geometry]);
                     }
 
                     meshToAddTo = boxMesh;
@@ -165,8 +162,7 @@ export default class Turtle {
         globalCenterPoint = globalCenterPoint.divideScalar(leafCenterPositions.length);
 
         console.timeEnd('Geometry creation');
-        // console.log(this.meshToAddToSaveStateArray);
-        // console.log(generatedMesh);
+
         return generatedMesh;
     }
 
