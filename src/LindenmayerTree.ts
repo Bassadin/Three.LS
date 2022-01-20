@@ -29,7 +29,7 @@ export default class LindenmayerTree extends Object3D {
             Utils.RandomRange(-Math.PI, Math.PI),
         );
 
-        this.animationPeriodOffsets = new Vector3(
+        this.animationPeriodMultiplicators = new Vector3(
             Utils.RandomRange(0.8, 1.2),
             Utils.RandomRange(0.4, 0.7),
             Utils.RandomRange(0.5, 1),
@@ -57,9 +57,9 @@ export default class LindenmayerTree extends Object3D {
 
     private getEulerRotationForElapsedTime(elapsedTime: number) {
         return new Euler(
-            Math.sin(elapsedTime * this.animationPeriodOffsets.x + this.animationPeriodOffsets.x) * 0.02 - 0.01,
-            Math.sin(elapsedTime * this.animationPeriodOffsets.y + this.animationPeriodOffsets.y) * 0.12 - 0.06,
-            Math.sin(elapsedTime * this.animationPeriodOffsets.z + this.animationPeriodOffsets.z) * 0.02 - 0.01,
+            Math.sin(elapsedTime * this.animationPeriodMultiplicators.x + this.animationPeriodOffsets.x) * 0.02 - 0.01,
+            Math.sin(elapsedTime * this.animationPeriodMultiplicators.y + this.animationPeriodOffsets.y) * 0.12 - 0.06,
+            Math.sin(elapsedTime * this.animationPeriodMultiplicators.z + this.animationPeriodOffsets.z) * 0.02 - 0.01,
             'XYZ',
         );
     }
