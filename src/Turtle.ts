@@ -17,6 +17,10 @@ export default class Turtle {
     private currentPosition: Vector3 = new Vector3(0, -5, 0);
     private positionSaveStateArray: Vector3[] = [];
 
+    //Color
+    private colorOne: number[];
+    private colorTwo: number[];
+
     private boxScale: number;
 
     private useRandomization = false;
@@ -29,7 +33,9 @@ export default class Turtle {
         instructionString: string,
         stepLength: number,
         rotationStepSize: number,
-        boxScale = 1,
+        colorOne: number[],
+        colorTwo: number[],
+        boxScale = 0.2,
         useRandomization = false,
     ) {
         this.instructionString = instructionString;
@@ -37,6 +43,8 @@ export default class Turtle {
         this.rotationStepSize = rotationStepSize;
         this.boxScale = boxScale;
         this.useRandomization = useRandomization;
+        this.colorOne = colorOne;
+        this.colorTwo = colorTwo;
     }
 
     private saveState(): void {
@@ -79,14 +87,14 @@ export default class Turtle {
                     // console.log(this.colorOne, this.colorTwo)
 
                     const leafColor: Color = new Color(
-                        0.45 +
-                            i * ((0.4 - 0.45) / this.instructionString.length) +
+                        this.colorOne[0] +
+                            i * ((this.colorTwo[0] - this.colorOne[0]) / this.instructionString.length) +
                             (Math.random() * (0.1 - 0.05) + 0.05),
-                        0.29 +
-                            i * ((0.72 - 0.29) / this.instructionString.length) +
+                        this.colorOne[1] +
+                            i * ((this.colorTwo[1] - this.colorOne[1]) / this.instructionString.length) +
                             (Math.random() * (0.2 - 0.05) + 0.05),
-                        0.13 +
-                            i * ((0.2 - 0.13) / this.instructionString.length) +
+                        this.colorOne[2] +
+                            i * ((this.colorTwo[2] - this.colorOne[2]) / this.instructionString.length) +
                             (Math.random() * (0.1 - 0.05) + 0.05),
                     );
 

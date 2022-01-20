@@ -1,4 +1,4 @@
-import { Euler, Mesh, Object3D, Scene, Clock, Vector3 } from 'three';
+import { Euler, Mesh, Object3D, Clock, Vector3 } from 'three';
 import Utils from './Utils';
 
 export default class LindenmayerTree extends Object3D {

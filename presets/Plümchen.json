@@ -4,5 +4,7 @@
     "replaceTo": ["F[+F/F]∧"],
     "iterationsCount": "7",
     "turningAngle": "25",
-    "stepLength": "2"
+    "stepLength": "2",
+    "colorOne": ["0.5", "0.2", "0.2"],
+    "colorTwo": ["0.1", "0.8", "0.3"]
 }

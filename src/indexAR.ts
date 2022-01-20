@@ -5,11 +5,12 @@ import Turtle from './Turtle';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
 import { XREstimatedLight } from 'three/examples/jsm/webxr/XREstimatedLight.js';
 import Utils from './Utils';
-import { LSystem } from './LSystem';
-import { Rule } from './Rule';
 import LindenmayerTree from './LindenmayerTree';
+import { LindenmayerFormularAR } from './LindenmayerFormularAR';
 
 import './styles/ar.scss';
+
+const lindenmayerSettingsForm: LindenmayerFormularAR = LindenmayerFormularAR.getInstance();
 
 let hitTestSource: XRHitTestSource = null;
 let hitTestSourceRequested = false;
@@ -40,6 +41,7 @@ const reticle: Mesh = new THREE.Mesh(
 );
 reticle.matrixAutoUpdate = false;
 reticle.visible = false;
+
 scene.add(reticle);
 
 function main() {
@@ -52,26 +54,19 @@ function main() {
     document.body.appendChild(renderer.domElement);
 
     document.body.appendChild(
-        ARButton.createButton(renderer, { requiredFeatures: ['hit-test'], optionalFeatures: ['light-estimation'] }),
+        ARButton.createButton(renderer, {
+            requiredFeatures: ['hit-test'],
+            optionalFeatures: ['light-estimation'],
+            domOverlay: { root: document.body },
+        }),
     );
 
     const defaultLight = new THREE.AmbientLight(0xffffff);
     scene.add(defaultLight);
 
-    // Turtle data
-    const ruleset: Rule[] = [];
-    ruleset.push(new Rule('F', 'F&F+[+F/-F-F]-[-F+F+F]'));
-    const lsys: LSystem = new LSystem('F', ruleset);
-    for (let i = 0; i < 3; i++) lsys.generate();
-
     function onSelect() {
-        const turtle: Turtle = new Turtle(
-            lsys.getSentence(),
-            1,
-            Utils.DegreesToRadians(30),
-            Utils.RandomRange(0.8, 1.2),
-            true,
-        );
+        const turtle: Turtle = lindenmayerSettingsForm.generateLSystemImage();
+
         const turtleMesh = turtle.generateMeshObject();
         const currentTurtleBranchUUIDs = turtle.getBranchUUIDs();
         // turtleMesh.position.set(0, 0, -0.8).applyMatrix4(controller.matrixWorld);
@@ -166,8 +161,16 @@ function render(timestamp: number, frame: XRFrame) {
                     shadowPlane.matrix.fromArray(poseTransformMatrix);
                     shadowPlaneCreated = true;
                 }
+
+                document.querySelector('.interface__search').classList.remove('active');
+                document.querySelector('.interface__buttons').classList.add('active');
+
+                reticle.matrix.fromArray(hit.getPose(referenceSpace).transform.matrix);
             } else {
                 reticle.visible = false;
+
+                document.querySelector('.interface__search').classList.add('active');
+                document.querySelector('.interface__buttons').classList.remove('active');
             }
         }
     }

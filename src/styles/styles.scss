@@ -11,7 +11,7 @@ h2 {
 
 .burgermenu {
     position: relative;
-    padding:10px;
+    padding: 10px;
     height: 30px;
     width: 30px;
     top: 15px;
@@ -20,8 +20,9 @@ h2 {
     transform: translate(-20px);
     transition: all ease 0.3s;
 
-    &::before, &::after {
-        content: "";
+    &::before,
+    &::after {
+        content: '';
         position: absolute;
         background: #000;
         height: 3px;
@@ -43,10 +44,10 @@ h2 {
         transition: all ease 0.3s;
     }
 
-    &:hover:after, &:before:hover {
+    &:hover:after,
+    &:before:hover {
         background: red;
     }
-
 }
 
 .interface__wrapper.shrink {
@@ -66,7 +67,6 @@ h2 {
             transform: rotate(-90deg);
             transition: all ease 0.3s;
         }
-    
     }
 }
 
@@ -80,7 +80,7 @@ h2 {
 
 .interface__box {
     background: #f1f1f1;
-    border-radius: 10px; 
+    border-radius: 10px;
     padding: 10px;
     margin-bottom: 10px;
 }
