@@ -51,7 +51,9 @@ function main() {
 
     document.body.appendChild(renderer.domElement);
 
-    document.body.appendChild(ARButton.createButton(renderer, { requiredFeatures: ['hit-test', 'light-estimation'] }));
+    document.body.appendChild(
+        ARButton.createButton(renderer, { requiredFeatures: ['hit-test'], optionalFeatures: ['light-estimation'] }),
+    );
 
     const defaultLight = new THREE.AmbientLight(0xffffff);
     scene.add(defaultLight);
