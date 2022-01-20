@@ -1,6 +1,5 @@
-import { BoxGeometry, Color, DoubleSide, Mesh, Quaternion, ShaderMaterial, Vector3 } from 'three';
-import * as FragmentData from './shaders/testShader/fragment';
-import * as VertexData from './shaders/testShader/vertex';
+import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { BoxGeometry,BufferGeometry,DoubleSide,ShaderMaterial, Color, Mesh, MeshLambertMaterial, Quaternion, Vector3 } from 'three';
 import Utils from './Utils';
 export default class Turtle {
     //
@@ -72,10 +71,12 @@ export default class Turtle {
         // const material: Material = new MeshBasicMaterial();
         // const boxScale = 0.2;
         const geometry: BoxGeometry = new BoxGeometry(this.boxScale, this.boxScale, this.boxScale);
-
+        // const mergedGeometry = new THREE.Geometry();
         let meshToAddTo: Mesh = null;
 
         const generatedMesh: Mesh = new Mesh();
+        generatedMesh.castShadow = true;
+        generatedMesh.receiveShadow = true;
 
         for (let i = 0; i < this.instructionString.length; i++) {
             switch (this.instructionString.charAt(i)) {
@@ -94,19 +95,9 @@ export default class Turtle {
                             this.colorOne[2] +
                             i * ((this.colorTwo[2] - this.colorOne[2]) / this.instructionString.length) +
                             (Math.random() * (0.1 - 0.05) + 0.05),
-                    ];
+                    );
 
-                    const material: ShaderMaterial = new ShaderMaterial({
-                        uniforms: {
-                            thickness: { value: 1 },
-                            color: { value: new Color(...this.newColors) },
-                            time: { value: 0 },
-                        },
-                        vertexShader: VertexData.data,
-                        fragmentShader: FragmentData.data,
-                        side: DoubleSide,
-                        alphaToCoverage: true,
-                    });
+                    const material: MeshLambertMaterial = new MeshLambertMaterial({ color: leafColor });
 
                     this.move();
                     const currentPositionAfterMove = this.currentPosition.clone();
@@ -120,15 +111,15 @@ export default class Turtle {
                     );
 
                     const boxMesh = new Mesh(geometry, material);
+                    boxMesh.castShadow = true;
+                    boxMesh.receiveShadow = true;
 
-                    // boxMesh.lookAt(currentPositionAfterMove);
                     if (meshToAddTo) {
-                        // meshToAddTo.lookAt(currentPositionAfterMove);
                         boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
-                        meshToAddTo.attach(boxMesh);
-                    } else {
-                        generatedMesh.add(boxMesh);
+
+                        meshToAddTo.geometry = mergeBufferGeometries([meshToAddTo.geometry, boxMesh.geometry]);
                     }
+
                     meshToAddTo = boxMesh;
 
                     break;
@@ -137,6 +128,7 @@ export default class Turtle {
                     break;
                 case '[':
                     this.saveState();
+                    generatedMesh.add(meshToAddTo);
                     this.meshToAddToSaveStateArray.push(meshToAddTo);
                     this.branchingIds.add(meshToAddTo.id);
                     break;
@@ -178,7 +170,8 @@ export default class Turtle {
         globalCenterPoint = globalCenterPoint.divideScalar(leafCenterPositions.length);
 
         console.timeEnd('Geometry creation');
-
+        // console.log(this.meshToAddToSaveStateArray);
+        // console.log(generatedMesh);
         return generatedMesh;
     }
 
