@@ -57,6 +57,8 @@ export class LindenmayerFormular {
       const baseAxiom = document.getElementById("sentence").value;
       const ruleString = [];
       const axiomString = [];
+      const colorOne = [];
+      const colorTwo = [];
       for (let j = 1; j <= this.countAllRules; j++) {
         const value = j.toString();
         ruleString[j - 1] = document.getElementById("rule" + value).value;
@@ -65,13 +67,21 @@ export class LindenmayerFormular {
       const iterationsCount = document.getElementById("countIterations").value;
       const turningAngle = document.getElementById("degrees").value;
       const stepLength = document.getElementById("steplength").value;
+      colorOne[0] = document.getElementById("color-one-r").value;
+      colorOne[1] = document.getElementById("color-one-g").value;
+      colorOne[2] = document.getElementById("color-one-b").value;
+      colorTwo[0] = document.getElementById("color-two-r").value;
+      colorTwo[1] = document.getElementById("color-two-g").value;
+      colorTwo[2] = document.getElementById("color-two-b").value;
       const newObject = {
         baseAxiom,
         replaceFrom: axiomString,
         replaceTo: ruleString,
         iterationsCount,
         turningAngle,
-        stepLength
+        stepLength,
+        colorOne,
+        colorTwo
       };
       const json_string = JSON.stringify(newObject, void 0, 2);
       const link = document.createElement("a");
@@ -102,6 +112,12 @@ export class LindenmayerFormular {
         document.getElementById("degrees").value = obj.turningAngle;
         document.getElementById("steplength").value = obj.stepLength;
         document.getElementById("sentence").value = obj.baseAxiom;
+        document.getElementById("color-one-r").value = obj.colorOne[0];
+        document.getElementById("color-one-g").value = obj.colorOne[1];
+        document.getElementById("color-one-b").value = obj.colorOne[2];
+        document.getElementById("color-two-r").value = obj.colorTwo[0];
+        document.getElementById("color-two-g").value = obj.colorTwo[1];
+        document.getElementById("color-two-b").value = obj.colorTwo[2];
         generateAndRepaintLindenmayerMesh();
       };
       const staticRuleCounter = this.countAllRules;
@@ -129,12 +145,12 @@ export class LindenmayerFormular {
     const iterations = parseInt(document.querySelector("#countIterations").value);
     const degrees = parseInt(document.querySelector("#degrees").value);
     const steplength = parseInt(document.querySelector("#steplength").value) / 10;
-    colorOne.push(parseInt(document.querySelector("#color-one-r").value));
-    colorOne.push(parseInt(document.querySelector("#color-one-g").value));
-    colorOne.push(parseInt(document.querySelector("#color-one-b").value));
-    colorTwo.push(parseInt(document.querySelector("#color-two-r").value));
-    colorTwo.push(parseInt(document.querySelector("#color-two-g").value));
-    colorTwo.push(parseInt(document.querySelector("#color-two-b").value));
+    colorOne.push(parseFloat(document.querySelector("#color-one-r").value));
+    colorOne.push(parseFloat(document.querySelector("#color-one-g").value));
+    colorOne.push(parseFloat(document.querySelector("#color-one-b").value));
+    colorTwo.push(parseFloat(document.querySelector("#color-two-r").value));
+    colorTwo.push(parseFloat(document.querySelector("#color-two-g").value));
+    colorTwo.push(parseFloat(document.querySelector("#color-two-b").value));
     const ruleset = [];
     for (let i = 0; i < axioms.length; i++) {
       ruleset.push(new Rule(axioms[i], rules[i]));
@@ -144,7 +160,7 @@ export class LindenmayerFormular {
     for (let i = 0; i < iterations; i++)
       lsys.generate();
     console.timeEnd("L System generation");
-    const turtle = new Turtle(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees));
+    const turtle = new Turtle(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees), colorOne, colorTwo);
     return turtle;
   }
   addListenerToOBJDownloadButton() {

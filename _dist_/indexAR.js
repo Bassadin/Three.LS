@@ -1,13 +1,12 @@
 import * as THREE from "../web_modules/three.js";
 import {Clock, Mesh, PlaneGeometry, ShadowMaterial} from "../web_modules/three.js";
-import Turtle from "./Turtle.js";
 import {ARButton} from "../web_modules/three/examples/jsm/webxr/ARButton.js";
 import {XREstimatedLight} from "../web_modules/three/examples/jsm/webxr/XREstimatedLight.js";
 import Utils from "./Utils.js";
-import {LSystem} from "./LSystem.js";
-import {Rule} from "./Rule.js";
 import LindenmayerTree from "./LindenmayerTree.js";
+import {LindenmayerFormularAR} from "./LindenmayerFormularAR.js";
 import "./styles/ar.css.proxy.js";
+const lindenmayerSettingsForm = LindenmayerFormularAR.getInstance();
 let hitTestSource = null;
 let hitTestSourceRequested = false;
 let shadowPlane;
@@ -31,16 +30,15 @@ function main() {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.shadowMap.enabled = true;
   document.body.appendChild(renderer.domElement);
-  document.body.appendChild(ARButton.createButton(renderer, {requiredFeatures: ["hit-test"], optionalFeatures: ["light-estimation"]}));
+  document.body.appendChild(ARButton.createButton(renderer, {
+    requiredFeatures: ["hit-test"],
+    optionalFeatures: ["light-estimation"],
+    domOverlay: {root: document.body}
+  }));
   const defaultLight = new THREE.AmbientLight(16777215);
   scene.add(defaultLight);
-  const ruleset = [];
-  ruleset.push(new Rule("F", "F&F+[+F/-F-F]-[-F+F+F]"));
-  const lsys = new LSystem("F", ruleset);
-  for (let i = 0; i < 3; i++)
-    lsys.generate();
   function onSelect() {
-    const turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(30), Utils.RandomRange(0.8, 1.2), true);
+    const turtle = lindenmayerSettingsForm.generateLSystemImage();
     const turtleMesh = turtle.generateMeshObject();
     const currentTurtleBranchUUIDs = turtle.getBranchUUIDs();
     turtleMesh.position.setFromMatrixPosition(reticle.matrix);
@@ -110,8 +108,13 @@ function render(timestamp, frame) {
           shadowPlane.matrix.fromArray(poseTransformMatrix);
           shadowPlaneCreated = true;
         }
+        document.querySelector(".interface__search").classList.remove("active");
+        document.querySelector(".interface__buttons").classList.add("active");
+        reticle.matrix.fromArray(hit.getPose(referenceSpace).transform.matrix);
       } else {
         reticle.visible = false;
+        document.querySelector(".interface__search").classList.add("active");
+        document.querySelector(".interface__buttons").classList.remove("active");
       }
     }
   }

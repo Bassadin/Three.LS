@@ -1,7 +1,7 @@
 import {BoxGeometry, Color, Mesh, MeshLambertMaterial, Quaternion, Vector3} from "../web_modules/three.js";
 import Utils from "./Utils.js";
 export default class Turtle {
-  constructor(instructionString, stepLength, rotationStepSize, boxScale = 1, useRandomization = false) {
+  constructor(instructionString, stepLength, rotationStepSize, colorOne, colorTwo, boxScale = 0.2, useRandomization = false) {
     this.currentRotation = new Quaternion();
     this.rotationSaveStateArray = [];
     this.meshToAddToSaveStateArray = [];
@@ -15,6 +15,8 @@ export default class Turtle {
     this.rotationStepSize = rotationStepSize;
     this.boxScale = boxScale;
     this.useRandomization = useRandomization;
+    this.colorOne = colorOne;
+    this.colorTwo = colorTwo;
   }
   saveState() {
     this.positionSaveStateArray.push(this.currentPosition.clone());
@@ -42,7 +44,7 @@ export default class Turtle {
       switch (this.instructionString.charAt(i)) {
         case "F":
           const currentPositionBeforeMove = this.currentPosition.clone();
-          const leafColor = new Color(0.45 + i * ((0.4 - 0.45) / this.instructionString.length) + (Math.random() * (0.1 - 0.05) + 0.05), 0.29 + i * ((0.72 - 0.29) / this.instructionString.length) + (Math.random() * (0.2 - 0.05) + 0.05), 0.13 + i * ((0.2 - 0.13) / this.instructionString.length) + (Math.random() * (0.1 - 0.05) + 0.05));
+          const leafColor = new Color(this.colorOne[0] + i * ((this.colorTwo[0] - this.colorOne[0]) / this.instructionString.length) + (Math.random() * (0.1 - 0.05) + 0.05), this.colorOne[1] + i * ((this.colorTwo[1] - this.colorOne[1]) / this.instructionString.length) + (Math.random() * (0.2 - 0.05) + 0.05), this.colorOne[2] + i * ((this.colorTwo[2] - this.colorOne[2]) / this.instructionString.length) + (Math.random() * (0.1 - 0.05) + 0.05));
           const material = new MeshLambertMaterial({color: leafColor});
           this.move();
           const currentPositionAfterMove = this.currentPosition.clone();
