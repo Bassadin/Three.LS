@@ -2,7 +2,7 @@
     "baseAxiom": "F",
     "replaceFrom": ["F"],
     "replaceTo": ["F+/F∧"],
-    "iterationsCount": "15",
+    "iterationsCount": "11",
     "turningAngle": "25",
     "stepLength": "2",
     "colorOne": ["0.5", "0.2", "0.2"],
