@@ -54,8 +54,10 @@ export default class Turtle {
           boxMesh.castShadow = true;
           boxMesh.receiveShadow = true;
           if (meshToAddTo) {
-            boxMesh.position.copy(boxMesh.worldToLocal(centerPositionBetweenMovePoints));
+            boxMesh.position.copy(centerPositionBetweenMovePoints);
             meshToAddTo.attach(boxMesh);
+          } else {
+            generatedMesh.attach(boxMesh);
           }
           meshToAddTo = boxMesh;
           break;
@@ -64,7 +66,7 @@ export default class Turtle {
           break;
         case "[":
           this.saveState();
-          generatedMesh.add(meshToAddTo);
+          generatedMesh.attach(meshToAddTo);
           this.meshToAddToSaveStateArray.push(meshToAddTo);
           this.branchingIds.add(meshToAddTo.uuid);
           break;
