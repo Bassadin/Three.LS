@@ -119,7 +119,7 @@ export default class Turtle {
                         boxMesh.position.copy(centerPositionBetweenMovePoints);
                         meshToAddTo.attach(boxMesh);
                     } else {
-                        generatedMesh.add(boxMesh);
+                        generatedMesh.attach(boxMesh);
                     }
 
                     meshToAddTo = boxMesh;
