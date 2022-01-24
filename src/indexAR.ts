@@ -56,7 +56,7 @@ function main() {
     document.body.appendChild(
         ARButton.createButton(renderer, {
             requiredFeatures: ['hit-test'],
-            optionalFeatures: ['light-estimation'],
+            optionalFeatures: ['light-estimation', 'dom-overlay', 'dom-overlay-for-handheld-ar'],
             domOverlay: { root: document.body },
         }),
     );
