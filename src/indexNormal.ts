@@ -58,7 +58,10 @@ function initTestingScene(turtle: Turtle) {
 
     scene = new THREE.Scene();
 
-    scene.add(turtle.generateMeshObject());
+    const generatedMeshObject = turtle.generateMeshObject();
+    generatedMeshObject.userData.isLSystemTree = true;
+
+    scene.add(generatedMeshObject);
     scene.add(Utils.createPlane());
 
     console.log(scene);
@@ -81,14 +84,16 @@ function initTestingScene(turtle: Turtle) {
 }
 
 function repaint(turtle: Turtle) {
+    console.log(scene.children);
     scene.children.forEach((eachSceneChild) => {
-        if (eachSceneChild.userData['isLSystemTree']) {
-            scene.remove(eachSceneChild);
+        console.log(eachSceneChild.userData);
+        if (eachSceneChild.userData.isLSystemTree) {
+            eachSceneChild.removeFromParent();
         }
     });
 
     const generatedMeshObject = turtle.generateMeshObject();
-    generatedMeshObject.userData['isLSystemTree'] = true;
+    generatedMeshObject.userData.isLSystemTree = true;
 
     scene.add(generatedMeshObject);
 }
