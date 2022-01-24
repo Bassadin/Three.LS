@@ -81,11 +81,16 @@ function initTestingScene(turtle: Turtle) {
 }
 
 function repaint(turtle: Turtle) {
-    for (let i = scene.children.length - 1; i >= 0; i--) {
-        const obj = scene.children[i];
-        scene.remove(obj);
-    }
-    scene.add(turtle.generateMeshObject());
+    scene.children.forEach((eachSceneChild) => {
+        if (eachSceneChild.userData['isLSystemTree']) {
+            scene.remove(eachSceneChild);
+        }
+    });
+
+    const generatedMeshObject = turtle.generateMeshObject();
+    generatedMeshObject.userData['isLSystemTree'] = true;
+
+    scene.add(generatedMeshObject);
 }
 
 function animate() {
