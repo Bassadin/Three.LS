@@ -41,6 +41,8 @@ Online auto-deploy version available here: <https://bassadin.github.io/Three.LS>
 
 Clone the project and install dependencies:
 
+Install latest node version here: https://nodejs.org/en/
+
 ```bash
 npm i  /  yarn 
 npm run start  /  yarn start
