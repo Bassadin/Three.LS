@@ -1,33 +1,34 @@
 import { BoxGeometry, Color, Mesh, MeshLambertMaterial, Quaternion, Vector3 } from 'three';
 import Utils from './Utils';
 export default class Turtle {
-    //
+    //Indices of the objects that define a point where a savestate was made, e.g. a 'branching point'
+    private branchingIds: Set<string> = new Set();
+
+    // L-System data
     private instructionString: string;
     private stepLength: number;
-    private rotationStepSize: number; //In radians
+    private rotationStepSize: number; // In radians
 
-    //Rotation
+    // Rotation
     private currentRotation: Quaternion = new Quaternion();
     private rotationSaveStateArray: Quaternion[] = [];
 
-    //MeshToAddTo
+    // MeshToAddTo
     private meshToAddToSaveStateArray: Mesh[] = [];
 
-    //Position
+    // Position
     private currentPosition: Vector3 = new Vector3(0, -5, 0);
     private positionSaveStateArray: Vector3[] = [];
 
-    //Color
+    // Color
     private colorOne: number[];
     private colorTwo: number[];
 
+    // Other
     private boxScale: number;
 
     private useRandomization = false;
     private randomizationDeviation = 0.25;
-
-    //Indices of the objects that define a point where a savestate was made, e.g. a 'branching point'
-    public branchingIds: Set<string> = new Set();
 
     constructor(
         instructionString: string,
@@ -47,23 +48,11 @@ export default class Turtle {
         this.colorTwo = colorTwo;
     }
 
-    private saveState(): void {
-        this.positionSaveStateArray.push(this.currentPosition.clone());
-        this.rotationSaveStateArray.push(this.currentRotation.clone());
-    }
-
-    private loadState(): void {
-        if (this.positionSaveStateArray.length == 0) {
-            throw new Error('Cannot load state before it has been written at least once');
-        }
-        this.currentPosition = this.positionSaveStateArray.pop();
-        this.currentRotation = this.rotationSaveStateArray.pop();
-    }
-
     public getBranchUUIDs(): Set<string> {
         return this.branchingIds;
     }
 
+    // Generate the tree mesh and return it
     public generateMeshObject(): Mesh {
         console.time('Geometry creation');
 
@@ -176,6 +165,22 @@ export default class Turtle {
         return generatedMesh;
     }
 
+    // Save the current Turtle state onto the stack
+    private saveState(): void {
+        this.positionSaveStateArray.push(this.currentPosition.clone());
+        this.rotationSaveStateArray.push(this.currentRotation.clone());
+    }
+
+    // Retrieve the current Turtle state from the stack
+    private loadState(): void {
+        if (this.positionSaveStateArray.length == 0) {
+            throw new Error('Cannot load state before it has been written at least once');
+        }
+        this.currentPosition = this.positionSaveStateArray.pop();
+        this.currentRotation = this.rotationSaveStateArray.pop();
+    }
+
+    // Move the turtle forward
     private move(): void {
         const randomizationFactor = this.useRandomization
             ? Utils.RandomRange(1 - this.randomizationDeviation, 1 + this.randomizationDeviation)
@@ -188,6 +193,7 @@ export default class Turtle {
         this.currentPosition.add(absoluteMovement);
     }
 
+    // Rotate the turtle
     private rotateByAxisVectorWithRotationStepSize(rotationAxisVector: Vector3): void {
         const randomizationFactor = this.useRandomization
             ? Utils.RandomRange(1 - this.randomizationDeviation, 1 + this.randomizationDeviation)

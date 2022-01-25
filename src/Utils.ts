@@ -1,15 +1,18 @@
 import { BufferGeometry, Float32BufferAttribute, Mesh, MeshBasicMaterial } from 'three';
 
 export default class Utils {
+    // Convert degrees to radians
     public static DegreesToRadians(degrees: number): number {
         const pi: number = Math.PI;
         return degrees * (pi / 180);
     }
 
+    // Random double between min and max
     public static RandomRange(min: number, max: number): number {
         return Math.random() * (max - min) + min;
     }
 
+    // Return a basic ground plane
     public static createPlane(): THREE.Mesh {
         const bufferGeometry: THREE.BufferGeometry = new BufferGeometry();
         const newColors = [Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3, Math.random() * 0.7 + 0.3];

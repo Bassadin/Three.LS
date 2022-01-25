@@ -45,6 +45,59 @@ export class LindenmayerFormular {
         return LindenmayerFormular.instance;
     }
 
+    public generateLSystemImage(): Turtle {
+        const axioms: string[] = [];
+        const rules: string[] = [];
+
+        const colorOne: number[] = [];
+        const colorTwo: number[] = [];
+
+        document.querySelectorAll('.axioms').forEach((element) => {
+            axioms.push((<HTMLInputElement>element).value.toUpperCase());
+        });
+
+        document.querySelectorAll('.rules').forEach((element) => {
+            rules.push((<HTMLInputElement>element).value.toUpperCase());
+        });
+
+        const sentence: string = (<HTMLInputElement>document.querySelector('#sentence')).value.toUpperCase();
+
+        const iterations: number = parseInt((<HTMLInputElement>document.querySelector('#countIterations')).value);
+        const degrees: number = parseInt((<HTMLInputElement>document.querySelector('#degrees')).value);
+        const steplength: number = parseInt((<HTMLInputElement>document.querySelector('#steplength')).value) / 10;
+
+        colorOne.push(parseFloat((<HTMLInputElement>document.querySelector('#color-one-r')).value));
+        colorOne.push(parseFloat((<HTMLInputElement>document.querySelector('#color-one-g')).value));
+        colorOne.push(parseFloat((<HTMLInputElement>document.querySelector('#color-one-b')).value));
+
+        colorTwo.push(parseFloat((<HTMLInputElement>document.querySelector('#color-two-r')).value));
+        colorTwo.push(parseFloat((<HTMLInputElement>document.querySelector('#color-two-g')).value));
+        colorTwo.push(parseFloat((<HTMLInputElement>document.querySelector('#color-two-b')).value));
+
+        const ruleset: Rule[] = [];
+
+        for (let i = 0; i < axioms.length; i++) {
+            ruleset.push(new Rule(axioms[i], rules[i]));
+        }
+
+        const lsys: LSystem = new LSystem(sentence, ruleset);
+
+        console.time('L System generation');
+        for (let i = 0; i < iterations; i++) lsys.generate();
+
+        console.timeEnd('L System generation');
+
+        const turtle: Turtle = new Turtle(
+            lsys.getSentence(),
+            steplength,
+            Utils.DegreesToRadians(degrees),
+            colorOne,
+            colorTwo,
+        );
+
+        return turtle;
+    }
+
     private addListenerToAddButton(): void {
         this.btnAdd.addEventListener('click', () => {
             this.addNewRuleField();
@@ -177,59 +230,6 @@ export class LindenmayerFormular {
             if (!this.fileUpload.files[0]) alert('Bitte Datei auswählen');
             else reader.readAsText(this.fileUpload.files[0]);
         });
-    }
-
-    public generateLSystemImage(): Turtle {
-        const axioms: string[] = [];
-        const rules: string[] = [];
-
-        const colorOne: number[] = [];
-        const colorTwo: number[] = [];
-
-        document.querySelectorAll('.axioms').forEach((element) => {
-            axioms.push((<HTMLInputElement>element).value.toUpperCase());
-        });
-
-        document.querySelectorAll('.rules').forEach((element) => {
-            rules.push((<HTMLInputElement>element).value.toUpperCase());
-        });
-
-        const sentence: string = (<HTMLInputElement>document.querySelector('#sentence')).value.toUpperCase();
-
-        const iterations: number = parseInt((<HTMLInputElement>document.querySelector('#countIterations')).value);
-        const degrees: number = parseInt((<HTMLInputElement>document.querySelector('#degrees')).value);
-        const steplength: number = parseInt((<HTMLInputElement>document.querySelector('#steplength')).value) / 10;
-
-        colorOne.push(parseFloat((<HTMLInputElement>document.querySelector('#color-one-r')).value));
-        colorOne.push(parseFloat((<HTMLInputElement>document.querySelector('#color-one-g')).value));
-        colorOne.push(parseFloat((<HTMLInputElement>document.querySelector('#color-one-b')).value));
-
-        colorTwo.push(parseFloat((<HTMLInputElement>document.querySelector('#color-two-r')).value));
-        colorTwo.push(parseFloat((<HTMLInputElement>document.querySelector('#color-two-g')).value));
-        colorTwo.push(parseFloat((<HTMLInputElement>document.querySelector('#color-two-b')).value));
-
-        const ruleset: Rule[] = [];
-
-        for (let i = 0; i < axioms.length; i++) {
-            ruleset.push(new Rule(axioms[i], rules[i]));
-        }
-
-        const lsys: LSystem = new LSystem(sentence, ruleset);
-
-        console.time('L System generation');
-        for (let i = 0; i < iterations; i++) lsys.generate();
-
-        console.timeEnd('L System generation');
-
-        const turtle: Turtle = new Turtle(
-            lsys.getSentence(),
-            steplength,
-            Utils.DegreesToRadians(degrees),
-            colorOne,
-            colorTwo,
-        );
-
-        return turtle;
     }
 
     private addListenerToOBJDownloadButton(): void {

@@ -1,21 +1,21 @@
 export class Rule {
-    private a: string;
-    private b: string;
+    private replaceFrom: string;
+    private replaceTo: string;
 
     constructor(a_: string, b_: string) {
         if (a_.length != 1) {
-            alert('Bitte alle Felder ausfüllen');
+            console.error('No left-hand empty rulesets supported');
         } else {
-            this.a = a_;
-            this.b = b_;
+            this.replaceFrom = a_;
+            this.replaceTo = b_;
         }
     }
 
-    getA(): string {
-        return this.a;
+    getReplaceFrom(): string {
+        return this.replaceFrom;
     }
 
-    getB(): string {
-        return this.b;
+    getReplaceTo(): string {
+        return this.replaceTo;
     }
 }

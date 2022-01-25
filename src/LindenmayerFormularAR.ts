@@ -5,14 +5,13 @@ import Utils from './Utils';
 
 export class LindenmayerFormularAR {
     private static instance: LindenmayerFormularAR;
+    public presetNumber = 0;
 
     // private btnOne: HTMLInputElement;
     private btnOne: HTMLInputElement;
     private btnTwo: HTMLInputElement;
     private btnThree: HTMLInputElement;
     private btnFour: HTMLInputElement;
-
-    public presetNumber = 0;
 
     private constructor() {
         this.btnOne = document.querySelector('#btnOne');
@@ -26,32 +25,6 @@ export class LindenmayerFormularAR {
     public static getInstance(): LindenmayerFormularAR {
         if (LindenmayerFormularAR.instance == undefined) LindenmayerFormularAR.instance = new LindenmayerFormularAR();
         return LindenmayerFormularAR.instance;
-    }
-
-    private addListenerToBtn(): void {
-        this.btnOne.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.presetNumber = 0;
-            document.getElementById('actPreset').innerHTML = this.presetNumber.toString();
-        });
-
-        this.btnTwo.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.presetNumber = 1;
-            document.getElementById('actPreset').innerHTML = this.presetNumber.toString();
-        });
-
-        this.btnThree.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.presetNumber = 2;
-            document.getElementById('actPreset').innerHTML = this.presetNumber.toString();
-        });
-
-        this.btnFour.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.presetNumber = 3;
-            document.getElementById('actPreset').innerHTML = this.presetNumber.toString();
-        });
     }
 
     public generateLSystemImage(): Turtle {
@@ -109,5 +82,31 @@ export class LindenmayerFormularAR {
         );
 
         return turtle;
+    }
+
+    private addListenerToBtn(): void {
+        this.btnOne.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.presetNumber = 0;
+            document.getElementById('actPreset').innerHTML = this.presetNumber.toString();
+        });
+
+        this.btnTwo.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.presetNumber = 1;
+            document.getElementById('actPreset').innerHTML = this.presetNumber.toString();
+        });
+
+        this.btnThree.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.presetNumber = 2;
+            document.getElementById('actPreset').innerHTML = this.presetNumber.toString();
+        });
+
+        this.btnFour.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.presetNumber = 3;
+            document.getElementById('actPreset').innerHTML = this.presetNumber.toString();
+        });
     }
 }

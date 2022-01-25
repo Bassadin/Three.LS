@@ -1,10 +1,12 @@
 import Stats from 'stats-js';
 
+// Performance Stats Singleton
 export default class PerformanceStats {
     private static _instance?: PerformanceStats;
     private statsReference: Stats = new Stats();
 
     private constructor() {
+        //Fallback if new keyword is used
         if (PerformanceStats._instance) {
             throw new Error('Use Singleton.instance instead of new.');
         }
@@ -17,10 +19,12 @@ export default class PerformanceStats {
         PerformanceStats._instance = this;
     }
 
+    // Generate a new instance if none is present, otherwise return the existing one
     static get instance() {
         return PerformanceStats._instance ?? (PerformanceStats._instance = new PerformanceStats());
     }
 
+    // Forward the update call to the stats object
     public update() {
         this.statsReference.update();
     }

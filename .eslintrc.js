@@ -16,5 +16,6 @@ module.exports = {
         quotes: ['warn', 'single'],
         semi: ['error', 'always'],
         '@typescript-eslint/no-explicit-any': 0,
+        '@typescript-eslint/member-ordering': 1,
     },
 };
