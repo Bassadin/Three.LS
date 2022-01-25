@@ -43,6 +43,9 @@ Clone the project and install dependencies:
 
 Install latest node version here: https://nodejs.org/en/
 
+No global dependency is needed other than node and npm. Local dependencies are installed into the repository via package.json. 
+The project works operating system independent. However, the AR application on IOS only works as described above.
+
 ```bash
 npm i  /  yarn 
 npm run start  /  yarn start
