@@ -36,7 +36,9 @@ export default class LindenmayerTree extends Object3D {
         );
     }
 
+    // method to handle animation while runtime
     public render(deltaTime: number, sceneClock: Clock): void {
+        // grow tree to final scale
         if (this.mesh.scale.x < this.finalScale) {
             this.mesh.scale.addScalar(this.scaleSpeed * deltaTime);
         } else {
@@ -45,6 +47,7 @@ export default class LindenmayerTree extends Object3D {
 
         const elapsedSceneTime = sceneClock.getElapsedTime();
 
+        // animate branching trees
         this.branchUUIDs.forEach((element) => {
             const obj: THREE.Object3D = this.mesh.getObjectByProperty('uuid', element);
             if (obj) {
@@ -54,7 +57,7 @@ export default class LindenmayerTree extends Object3D {
             }
         });
     }
-
+    // create Euler rotation
     private getEulerRotationForElapsedTime(elapsedTime: number) {
         return new Euler(
             Math.sin(elapsedTime * this.animationPeriodMultiplicators.x + this.animationPeriodOffsets.x) * 0.02 - 0.01,
