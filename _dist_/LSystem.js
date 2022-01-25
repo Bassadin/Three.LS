@@ -10,8 +10,8 @@ export class LSystem {
       const currentCharacter = this.sentence[i];
       let replace = currentCharacter;
       for (let j = 0; j < this.ruleset.length; j++) {
-        if (this.ruleset[j].getA() == currentCharacter) {
-          replace = this.ruleset[j].getB();
+        if (this.ruleset[j].getReplaceFrom() == currentCharacter) {
+          replace = this.ruleset[j].getReplaceTo();
           break;
         }
       }

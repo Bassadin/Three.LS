@@ -2,6 +2,7 @@ import {BoxGeometry, Color, Mesh, MeshLambertMaterial, Quaternion, Vector3} from
 import Utils from "./Utils.js";
 export default class Turtle {
   constructor(instructionString, stepLength, rotationStepSize, colorOne, colorTwo, boxScale = 0.2, useRandomization = false) {
+    this.branchingIds = new Set();
     this.currentRotation = new Quaternion();
     this.rotationSaveStateArray = [];
     this.meshToAddToSaveStateArray = [];
@@ -9,7 +10,6 @@ export default class Turtle {
     this.positionSaveStateArray = [];
     this.useRandomization = false;
     this.randomizationDeviation = 0.25;
-    this.branchingIds = new Set();
     this.instructionString = instructionString;
     this.stepLength = stepLength;
     this.rotationStepSize = rotationStepSize;
@@ -17,17 +17,6 @@ export default class Turtle {
     this.useRandomization = useRandomization;
     this.colorOne = colorOne;
     this.colorTwo = colorTwo;
-  }
-  saveState() {
-    this.positionSaveStateArray.push(this.currentPosition.clone());
-    this.rotationSaveStateArray.push(this.currentRotation.clone());
-  }
-  loadState() {
-    if (this.positionSaveStateArray.length == 0) {
-      throw new Error("Cannot load state before it has been written at least once");
-    }
-    this.currentPosition = this.positionSaveStateArray.pop();
-    this.currentRotation = this.rotationSaveStateArray.pop();
   }
   getBranchUUIDs() {
     return this.branchingIds;
@@ -107,6 +96,17 @@ export default class Turtle {
     globalCenterPoint = globalCenterPoint.divideScalar(leafCenterPositions.length);
     console.timeEnd("Geometry creation");
     return generatedMesh;
+  }
+  saveState() {
+    this.positionSaveStateArray.push(this.currentPosition.clone());
+    this.rotationSaveStateArray.push(this.currentRotation.clone());
+  }
+  loadState() {
+    if (this.positionSaveStateArray.length == 0) {
+      throw new Error("Cannot load state before it has been written at least once");
+    }
+    this.currentPosition = this.positionSaveStateArray.pop();
+    this.currentRotation = this.rotationSaveStateArray.pop();
   }
   move() {
     const randomizationFactor = this.useRandomization ? Utils.RandomRange(1 - this.randomizationDeviation, 1 + this.randomizationDeviation) : 1;

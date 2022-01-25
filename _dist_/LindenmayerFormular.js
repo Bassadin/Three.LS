@@ -27,6 +27,39 @@ export class LindenmayerFormular {
       LindenmayerFormular.instance = new LindenmayerFormular();
     return LindenmayerFormular.instance;
   }
+  generateLSystemImage() {
+    const axioms = [];
+    const rules = [];
+    const colorOne = [];
+    const colorTwo = [];
+    document.querySelectorAll(".axioms").forEach((element) => {
+      axioms.push(element.value.toUpperCase());
+    });
+    document.querySelectorAll(".rules").forEach((element) => {
+      rules.push(element.value.toUpperCase());
+    });
+    const sentence = document.querySelector("#sentence").value.toUpperCase();
+    const iterations = parseInt(document.querySelector("#countIterations").value);
+    const degrees = parseInt(document.querySelector("#degrees").value);
+    const steplength = parseInt(document.querySelector("#steplength").value) / 10;
+    colorOne.push(parseFloat(document.querySelector("#color-one-r").value));
+    colorOne.push(parseFloat(document.querySelector("#color-one-g").value));
+    colorOne.push(parseFloat(document.querySelector("#color-one-b").value));
+    colorTwo.push(parseFloat(document.querySelector("#color-two-r").value));
+    colorTwo.push(parseFloat(document.querySelector("#color-two-g").value));
+    colorTwo.push(parseFloat(document.querySelector("#color-two-b").value));
+    const ruleset = [];
+    for (let i = 0; i < axioms.length; i++) {
+      ruleset.push(new Rule(axioms[i], rules[i]));
+    }
+    const lsys = new LSystem(sentence, ruleset);
+    console.time("L System generation");
+    for (let i = 0; i < iterations; i++)
+      lsys.generate();
+    console.timeEnd("L System generation");
+    const turtle = new Turtle(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees), colorOne, colorTwo);
+    return turtle;
+  }
   addListenerToAddButton() {
     this.btnAdd.addEventListener("click", () => {
       this.addNewRuleField();
@@ -129,39 +162,6 @@ export class LindenmayerFormular {
       else
         reader.readAsText(this.fileUpload.files[0]);
     });
-  }
-  generateLSystemImage() {
-    const axioms = [];
-    const rules = [];
-    const colorOne = [];
-    const colorTwo = [];
-    document.querySelectorAll(".axioms").forEach((element) => {
-      axioms.push(element.value.toUpperCase());
-    });
-    document.querySelectorAll(".rules").forEach((element) => {
-      rules.push(element.value.toUpperCase());
-    });
-    const sentence = document.querySelector("#sentence").value.toUpperCase();
-    const iterations = parseInt(document.querySelector("#countIterations").value);
-    const degrees = parseInt(document.querySelector("#degrees").value);
-    const steplength = parseInt(document.querySelector("#steplength").value) / 10;
-    colorOne.push(parseFloat(document.querySelector("#color-one-r").value));
-    colorOne.push(parseFloat(document.querySelector("#color-one-g").value));
-    colorOne.push(parseFloat(document.querySelector("#color-one-b").value));
-    colorTwo.push(parseFloat(document.querySelector("#color-two-r").value));
-    colorTwo.push(parseFloat(document.querySelector("#color-two-g").value));
-    colorTwo.push(parseFloat(document.querySelector("#color-two-b").value));
-    const ruleset = [];
-    for (let i = 0; i < axioms.length; i++) {
-      ruleset.push(new Rule(axioms[i], rules[i]));
-    }
-    const lsys = new LSystem(sentence, ruleset);
-    console.time("L System generation");
-    for (let i = 0; i < iterations; i++)
-      lsys.generate();
-    console.timeEnd("L System generation");
-    const turtle = new Turtle(lsys.getSentence(), steplength, Utils.DegreesToRadians(degrees), colorOne, colorTwo);
-    return turtle;
   }
   addListenerToOBJDownloadButton() {
     this.objDownloadButton.addEventListener("click", () => {

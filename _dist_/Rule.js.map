@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["/home/runner/work/Three.LS/Three.LS/src/Rule.ts"],
-  "sourcesContent": ["export class Rule {\n    private a: string;\n    private b: string;\n\n    constructor(a_: string, b_: string) {\n        if (a_.length != 1) {\n            alert('Bitte alle Felder ausf\u00FCllen');\n        } else {\n            this.a = a_;\n            this.b = b_;\n        }\n    }\n\n    getA(): string {\n        return this.a;\n    }\n\n    getB(): string {\n        return this.b;\n    }\n}\n"],
-  "mappings": "AAAO,kBAAW;AAAA,EAId,YAAY,IAAY,IAAY;AAChC,QAAI,GAAG,UAAU,GAAG;AAChB,YAAM;AAAA,WACH;AACH,WAAK,IAAI;AACT,WAAK,IAAI;AAAA;AAAA;AAAA,EAIjB,OAAe;AACX,WAAO,KAAK;AAAA;AAAA,EAGhB,OAAe;AACX,WAAO,KAAK;AAAA;AAAA;",
+  "sourcesContent": ["export class Rule {\n    private replaceFrom: string;\n    private replaceTo: string;\n\n    constructor(a_: string, b_: string) {\n        if (a_.length != 1) {\n            console.error('No left-hand empty rulesets supported');\n        } else {\n            this.replaceFrom = a_;\n            this.replaceTo = b_;\n        }\n    }\n\n    getReplaceFrom(): string {\n        return this.replaceFrom;\n    }\n\n    getReplaceTo(): string {\n        return this.replaceTo;\n    }\n}\n"],
+  "mappings": "AAAO,kBAAW;AAAA,EAId,YAAY,IAAY,IAAY;AAChC,QAAI,GAAG,UAAU,GAAG;AAChB,cAAQ,MAAM;AAAA,WACX;AACH,WAAK,cAAc;AACnB,WAAK,YAAY;AAAA;AAAA;AAAA,EAIzB,iBAAyB;AACrB,WAAO,KAAK;AAAA;AAAA,EAGhB,eAAuB;AACnB,WAAO,KAAK;AAAA;AAAA;",
   "names": []
 }

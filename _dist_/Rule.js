@@ -1,17 +1,17 @@
 export class Rule {
   constructor(a_, b_) {
     if (a_.length != 1) {
-      alert("Bitte alle Felder ausf\xFCllen");
+      console.error("No left-hand empty rulesets supported");
     } else {
-      this.a = a_;
-      this.b = b_;
+      this.replaceFrom = a_;
+      this.replaceTo = b_;
     }
   }
-  getA() {
-    return this.a;
+  getReplaceFrom() {
+    return this.replaceFrom;
   }
-  getB() {
-    return this.b;
+  getReplaceTo() {
+    return this.replaceTo;
   }
 }
 //# sourceMappingURL=Rule.js.map

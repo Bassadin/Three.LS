@@ -16,28 +16,6 @@ export class LindenmayerFormularAR {
       LindenmayerFormularAR.instance = new LindenmayerFormularAR();
     return LindenmayerFormularAR.instance;
   }
-  addListenerToBtn() {
-    this.btnOne.addEventListener("click", (e) => {
-      e.stopPropagation();
-      this.presetNumber = 0;
-      document.getElementById("actPreset").innerHTML = this.presetNumber.toString();
-    });
-    this.btnTwo.addEventListener("click", (e) => {
-      e.stopPropagation();
-      this.presetNumber = 1;
-      document.getElementById("actPreset").innerHTML = this.presetNumber.toString();
-    });
-    this.btnThree.addEventListener("click", (e) => {
-      e.stopPropagation();
-      this.presetNumber = 2;
-      document.getElementById("actPreset").innerHTML = this.presetNumber.toString();
-    });
-    this.btnFour.addEventListener("click", (e) => {
-      e.stopPropagation();
-      this.presetNumber = 3;
-      document.getElementById("actPreset").innerHTML = this.presetNumber.toString();
-    });
-  }
   generateLSystemImage() {
     let axiom;
     let rule;
@@ -81,6 +59,28 @@ export class LindenmayerFormularAR {
       lsys.generate();
     const turtle = new Turtle(lsys.getSentence(), 1, Utils.DegreesToRadians(degree), colorOne, colorTwo, Utils.RandomRange(0.8, 1.2), true);
     return turtle;
+  }
+  addListenerToBtn() {
+    this.btnOne.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.presetNumber = 0;
+      document.getElementById("actPreset").innerHTML = this.presetNumber.toString();
+    });
+    this.btnTwo.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.presetNumber = 1;
+      document.getElementById("actPreset").innerHTML = this.presetNumber.toString();
+    });
+    this.btnThree.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.presetNumber = 2;
+      document.getElementById("actPreset").innerHTML = this.presetNumber.toString();
+    });
+    this.btnFour.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.presetNumber = 3;
+      document.getElementById("actPreset").innerHTML = this.presetNumber.toString();
+    });
   }
 }
 //# sourceMappingURL=LindenmayerFormularAR.js.map
