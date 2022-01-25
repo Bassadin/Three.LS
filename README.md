@@ -42,8 +42,8 @@ Online auto-deploy version available here: <https://bassadin.github.io/Three.LS>
 Clone the project and install dependencies:
 
 ```bash
-npm i
-npm run start
+npm i  /  yarn 
+npm run start  /  yarn start
 ```
 
 ## Local WebXR testing
