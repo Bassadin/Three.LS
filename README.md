@@ -43,7 +43,7 @@ Clone the project and install dependencies:
 
 ```bash
 npm i
-npm start
+npm run start
 ```
 
 ## Local WebXR testing
