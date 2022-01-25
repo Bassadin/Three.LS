@@ -17,13 +17,14 @@ const sceneClock: Clock = new Clock();
 const lindenmayerSettingsForm: LindenmayerFormular = LindenmayerFormular.getInstance();
 const newTurtle: Turtle = lindenmayerSettingsForm.generateLSystemImage();
 
+// check if system is undefined and init or repaint scene
 if (scene !== undefined) {
     repaint(newTurtle);
 } else {
     initTestingScene(newTurtle);
     animate();
 }
-
+// add event-listener to generate button
 function hookUpGenerateButtonEventListener() {
     const btnGenerate: HTMLInputElement = document.querySelector('#btnGenerate');
     btnGenerate.addEventListener('click', (e) => {
@@ -31,7 +32,7 @@ function hookUpGenerateButtonEventListener() {
         generateAndRepaintLindenmayerMesh();
     });
 }
-
+// repaint or generate scene with tree mesh
 export function generateAndRepaintLindenmayerMesh() {
     const form: LindenmayerFormular = LindenmayerFormular.getInstance();
     const newTurtle: Turtle = form.generateLSystemImage();
@@ -42,7 +43,7 @@ export function generateAndRepaintLindenmayerMesh() {
         animate();
     }
 }
-
+// init scene
 function initTestingScene(turtle: Turtle) {
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -70,11 +71,6 @@ function initTestingScene(turtle: Turtle) {
 
     renderer.render(scene, camera);
 
-    // const directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    // // directionalLight.target = mesh;
-    // directionalLight.position.set(0, -4, 10);
-    // scene.add(directionalLight);
-
     const light = new THREE.AmbientLight(0xffffff, 1); // soft white light
     scene.add(light);
 
@@ -82,7 +78,7 @@ function initTestingScene(turtle: Turtle) {
 
     hookUpGenerateButtonEventListener();
 }
-
+// repaint scene
 function repaint(turtle: Turtle) {
     console.log(scene.children);
     scene.children.forEach((eachSceneChild) => {
@@ -97,18 +93,18 @@ function repaint(turtle: Turtle) {
 
     scene.add(generatedMeshObject);
 }
-
+// animate
 function animate() {
     renderer.setAnimationLoop(render);
 }
-
+// renderer render
 function render() {
     renderer.render(scene, camera);
 
     controls?.update(); // Only update controls if present
     PerformanceStats.instance?.update(); // Only update stats if present
 }
-
+// resize to fullscreen
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();

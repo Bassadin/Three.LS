@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { Clock, Mesh, PlaneGeometry, Scene, ShadowMaterial, XRFrame, XRHitTestSource } from 'three';
 import Turtle from './Turtle';
-// import PerformanceStats from './PerformanceStats';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
 import { XREstimatedLight } from 'three/examples/jsm/webxr/XREstimatedLight.js';
 import Utils from './Utils';
@@ -44,6 +43,7 @@ reticle.visible = false;
 
 scene.add(reticle);
 
+// Main loop function
 function main() {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -64,12 +64,12 @@ function main() {
     const defaultLight = new THREE.AmbientLight(0xffffff);
     scene.add(defaultLight);
 
+    // Touch interaction with Screen
     function onSelect() {
         const turtle: Turtle = lindenmayerSettingsForm.generateLSystemImage();
 
         const turtleMesh = turtle.generateMeshObject();
         const currentTurtleBranchUUIDs = turtle.getBranchUUIDs();
-        // turtleMesh.position.set(0, 0, -0.8).applyMatrix4(controller.matrixWorld);
         turtleMesh.position.setFromMatrixPosition(reticle.matrix);
 
         turtleMesh.rotateY(Utils.RandomRange(0.0, Math.PI * 2));
@@ -131,6 +131,7 @@ function render(timestamp: number, frame: XRFrame) {
         const referenceSpace = renderer.xr.getReferenceSpace();
         const session = renderer.xr.getSession();
 
+        //check if system hit ground
         if (hitTestSourceRequested === false) {
             session.requestReferenceSpace('viewer').then(function (referenceSpace) {
                 session.requestHitTestSource({ space: referenceSpace }).then(function (source) {
@@ -144,7 +145,7 @@ function render(timestamp: number, frame: XRFrame) {
 
             hitTestSourceRequested = true;
         }
-
+        // reacting of hitting ground
         if (hitTestSource) {
             const hitTestResults = frame.getHitTestResults(hitTestSource);
 
@@ -176,10 +177,8 @@ function render(timestamp: number, frame: XRFrame) {
     }
 
     renderer.render(scene, camera);
-
-    // PerformanceStats.instance?.update(); // Only update stats if present
 }
-
+// resize to fullscreen
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
