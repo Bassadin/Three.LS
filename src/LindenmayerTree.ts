@@ -19,6 +19,7 @@ export default class LindenmayerTree extends Object3D {
 
         this.mesh.scale.set(0, 0, 0);
 
+        // Use some random scale and offset values for tree variation
         this.scaleSpeed = this.finalScale * Utils.RandomRange(0.2, 0.7);
 
         this.branchUUIDs = branchUUIDs;
