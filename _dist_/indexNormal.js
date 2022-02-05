@@ -50,7 +50,6 @@ function initTestingScene(turtle) {
   generatedMeshObject.userData.isLSystemTree = true;
   scene.add(generatedMeshObject);
   scene.add(Utils.createPlane());
-  console.log(scene);
   sceneClock.start();
   renderer.render(scene, camera);
   const light = new THREE.AmbientLight(16777215, 1);
