@@ -31,7 +31,11 @@ Web XR supported AR version: https://bassadin.github.io/Three.LS/ar.html
 
 ![image](https://user-images.githubusercontent.com/1810902/146235247-077c2a68-217c-46f4-8360-207a4e69db09.png)
 
-Currently only supported on iOS via: https://apps.apple.com/de/app/webxr-viewer/id1295998056
+
+
+on IOS it is only supported via: https://apps.apple.com/de/app/webxr-viewer/id1295998056
+
+on Android it works via Chrome Browser
 
 ## GitHub Pages Version
 
@@ -41,7 +45,7 @@ Online auto-deploy version available here: <https://bassadin.github.io/Three.LS>
 
 Clone the project and install dependencies:
 
-Install latest node version here: https://nodejs.org/en/
+Install node version 14.18.1 here: https://nodejs.org/en/download/releases/
 
 No global dependency is needed other than node and npm. Local dependencies are installed into the repository via package.json.
 The project works operating system independent. However, the AR application on IOS only works as described above.

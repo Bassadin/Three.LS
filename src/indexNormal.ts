@@ -50,11 +50,12 @@ function initTestingScene(turtle: Turtle) {
     renderer.setPixelRatio(window.devicePixelRatio);
     document.body.appendChild(renderer.domElement);
 
+    // far is that high, that we can see the whole tree without zoom out = 10000 instaed of 2000
     camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
 
     controls = new TrackballControls(camera, renderer.domElement);
-    controls.rotateSpeed = 2;
-    camera.position.set(0, 0, 15);
+    controls.rotateSpeed = 2; //set control rotation speed to 2 to have more speed
+    camera.position.set(0, 0, 15); // set cam position in z-direction to look at the whole scene
     controls.update();
 
     scene = new THREE.Scene();
@@ -65,7 +66,7 @@ function initTestingScene(turtle: Turtle) {
     scene.add(generatedMeshObject);
     scene.add(Utils.createPlane());
 
-    console.log(scene);
+    // console.log(scene);
 
     sceneClock.start();
 

@@ -59,11 +59,12 @@ export default class LindenmayerTree extends Object3D {
     }
     // create Euler rotation
     private getEulerRotationForElapsedTime(elapsedTime: number) {
+        //rotate with around all axis with different rotation value on each axis
         return new Euler(
             Math.sin(elapsedTime * this.animationPeriodMultiplicators.x + this.animationPeriodOffsets.x) * 0.02 - 0.01,
             Math.sin(elapsedTime * this.animationPeriodMultiplicators.y + this.animationPeriodOffsets.y) * 0.12 - 0.06,
             Math.sin(elapsedTime * this.animationPeriodMultiplicators.z + this.animationPeriodOffsets.z) * 0.02 - 0.01,
-            'XYZ',
+            'XYZ', //rotate with default order XYZ
         );
     }
 }
