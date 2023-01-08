@@ -14,8 +14,8 @@ jobs:
             - uses: actions/checkout@v2
             - name: Use Node.js
               uses: actions/setup-node@v1
-            - run: npm ci
-            - run: npm run build --if-present
+            - run: yarn install --frozen-lockfile
+            - run: yarn build --if-present
 
             - name: GitHub Pages action
               # You may pin to the exact commit or the version.
