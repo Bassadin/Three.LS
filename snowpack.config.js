@@ -4,10 +4,10 @@ module.exports = {
         src: '/_dist_',
     },
     buildOptions: {
-        sourceMaps: true,
+        sourcemap: true,
     },
     plugins: ['@snowpack/plugin-typescript', '@snowpack/plugin-sass'],
-    installOptions: {
+    packageOptions: {
         installTypes: true,
     },
 };
