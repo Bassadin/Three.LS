@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Clock, Scene } from 'three';
-import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
+import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
 import Turtle from './Turtle';
 import { LindenmayerFormular } from './LindenmayerFormular';
 import PerformanceStats from './PerformanceStats';

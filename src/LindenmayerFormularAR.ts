@@ -88,25 +88,25 @@ export class LindenmayerFormularAR {
         this.btnOne.addEventListener('click', (e) => {
             e.stopPropagation();
             this.presetNumber = 0;
-            document.getElementById('actPreset').innerHTML = this.presetNumber.toString();
+            document.getElementById('actPreset')?.innerHTML = this.presetNumber.toString();
         });
 
         this.btnTwo.addEventListener('click', (e) => {
             e.stopPropagation();
             this.presetNumber = 1;
-            document.getElementById('actPreset').innerHTML = this.presetNumber.toString();
+            document.getElementById('actPreset')?.innerHTML = this.presetNumber.toString();
         });
 
         this.btnThree.addEventListener('click', (e) => {
             e.stopPropagation();
             this.presetNumber = 2;
-            document.getElementById('actPreset').innerHTML = this.presetNumber.toString();
+            document.getElementById('actPreset')?.innerHTML = this.presetNumber.toString();
         });
 
         this.btnFour.addEventListener('click', (e) => {
             e.stopPropagation();
             this.presetNumber = 3;
-            document.getElementById('actPreset').innerHTML = this.presetNumber.toString();
+            document.getElementById('actPreset')?.innerHTML = this.presetNumber.toString();
         });
     }
 }

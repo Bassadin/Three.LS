@@ -1,13 +1,12 @@
 {
     "compilerOptions": {
         "outDir": "./dist/",
+        "strict": true,
         "noImplicitAny": true,
         "sourceMap": true,
-        "module": "es6",
-        "target": "es6",
-        "moduleResolution": "node",
-        "jsx": "react",
-        "allowJs": true
+        "module": "ESNext",
+        "target": "ESNext",
+        "moduleResolution": "Node"
     },
     "include": ["./src/**/*.ts"]
 }
